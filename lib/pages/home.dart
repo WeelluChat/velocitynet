@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:velocity_net/components/appbar/app_bar_component.dart';
 import 'package:velocity_net/components/drawer/drawer_component.dart';
+import 'package:velocity_net/pages/main.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -18,9 +19,10 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(250),
+        preferredSize: const Size.fromHeight(140),
         child: AppBarComponent(),
       ),
+      body: const Main(),
       endDrawer: SizedBox(
           width: 200, child: mobile ? DrawerComponent(mobile: mobile) : null),
       // appBar: PreferredSize(

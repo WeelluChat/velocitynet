@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:infinite_carousel/infinite_carousel.dart';
 
 class PlansComponent extends StatefulWidget {
   const PlansComponent({super.key});
@@ -34,6 +33,37 @@ class _PlansComponentState extends State<PlansComponent> {
                 Container(
                   padding: const EdgeInsets.only(left: 10, right: 10),
                   width: 300,
+                  child: Column(
+                    children: [
+                      Image.asset("plans/plano1.png"),
+                      SizedBox(
+                        height: 50,
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.zero,
+                              ),
+                            ),
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.blue),
+                          ),
+                          onPressed: () {},
+                          child: const Text(
+                            "ASSINE AGORA",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  width: 300,
+                  height: 550,
                   child: Column(
                     children: [
                       Image.asset("plans/plano1.png"),

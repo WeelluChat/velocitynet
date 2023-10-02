@@ -24,7 +24,7 @@ class _PlansComponentState extends State<PlansComponent> {
           Container(
             width: double.infinity,
             alignment: Alignment.center,
-            height: 1200,
+            height: 578,
             child: ListView(
               padding: const EdgeInsets.only(left: 20, right: 20),
               shrinkWrap: true,

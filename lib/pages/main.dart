@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:velocity_net/components/description/description.dart';
 import 'package:velocity_net/components/plans/plans.dart';
 import 'package:velocity_net/components/slider/slider.dart';
 import 'package:velocity_net/components/specialOffer/special_offer.dart';
@@ -15,7 +16,12 @@ class _MainState extends State<Main> {
   Widget build(BuildContext context) {
     return const SingleChildScrollView(
       child: Column(
-        children: [SliderComponent(), PlansComponent(), SpecialOffer()],
+        children: [
+          SliderComponent(),
+          PlansComponent(),
+          Descrption(),
+          SpecialOffer(),
+        ],
       ),
     );
   }

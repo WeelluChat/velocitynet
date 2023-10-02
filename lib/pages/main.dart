@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:velocity_net/components/plans/plans.dart';
 import 'package:velocity_net/components/slider/slider.dart';
 
 class Main extends StatefulWidget {
@@ -15,6 +16,7 @@ class _MainState extends State<Main> {
       child: Column(
         children: [
           SliderComponent(),
+          PlansComponent(),
         ],
       ),
     );

@@ -68,6 +68,7 @@ flutter:
     - assets/slider/slider3.png
     - assets/plans/plano1.png
     - assets/plans/plano2.png
+    - assets/description/descrption_image.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

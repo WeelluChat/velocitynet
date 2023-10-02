@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:velocity_net/components/description/description.dart';
 import 'package:velocity_net/components/plans/plans.dart';
 import 'package:velocity_net/components/slider/slider.dart';
 
@@ -17,6 +18,7 @@ class _MainState extends State<Main> {
         children: [
           SliderComponent(),
           PlansComponent(),
+          Descrption(),
         ],
       ),
     );

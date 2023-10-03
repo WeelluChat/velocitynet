@@ -6,7 +6,7 @@ class SpecialOffer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(left: 20, right: 20),
+      padding: const EdgeInsets.only(top: 50, bottom: 50, left: 20, right: 20),
       alignment: Alignment.center,
       width: 1280,
       child: Row(
@@ -18,7 +18,7 @@ class SpecialOffer extends StatelessWidget {
                 children: [
                   const Text(
                     'Obtenha internet banda larga a um preço incomparável.',
-                    style: TextStyle(fontSize: 50),
+                    style: TextStyle(fontSize: 45),
                   ),
                   const SizedBox(
                     height: 20,
@@ -86,7 +86,7 @@ class SpecialOffer extends StatelessWidget {
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                           const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                            borderRadius: BorderRadius.all(Radius.circular(0)),
                           ),
                         ),
                         backgroundColor: MaterialStateProperty.all(Colors.blue),

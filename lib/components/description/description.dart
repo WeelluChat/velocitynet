@@ -431,7 +431,6 @@ class _DescrptionState extends State<Descrption> {
             ],
           ),
         ),
-        const Text('DK')
       ],
     ));
   }

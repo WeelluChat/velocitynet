@@ -70,6 +70,7 @@ flutter:
     - assets/plans/plano2.png
     - assets/offer.jpg
     - assets/description/descrption_image.jpg
+    - assets/benefits.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

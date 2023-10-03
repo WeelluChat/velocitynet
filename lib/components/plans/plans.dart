@@ -18,7 +18,10 @@ class _PlansComponentState extends State<PlansComponent> {
             margin: const EdgeInsets.only(bottom: 45),
             child: const Text(
               'Escolha o melhor plano para você!',
-              style: TextStyle(color: Colors.black, fontSize: 40),
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold),
             ),
           ),
           Container(

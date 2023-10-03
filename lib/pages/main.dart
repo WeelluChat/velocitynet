@@ -23,11 +23,8 @@ class _MainState extends State<Main> {
           PlansComponent(),
           Descrption(),
           SpecialOffer(),
-<<<<<<< HEAD
           Questions(),
-=======
           Benefits()
->>>>>>> main
         ],
       ),
     );

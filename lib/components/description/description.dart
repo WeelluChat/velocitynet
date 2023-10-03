@@ -15,8 +15,7 @@ class _DescrptionState extends State<Descrption> {
   bool _isHovering5 = false;
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Column(
+    return Column(
       children: [
         const Padding(
           padding: EdgeInsets.only(top: 50, bottom: 50),
@@ -432,6 +431,6 @@ class _DescrptionState extends State<Descrption> {
           ),
         ),
       ],
-    ));
+    );
   }
 }

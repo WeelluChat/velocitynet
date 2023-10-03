@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:velocity_net/components/description/description.dart';
 import 'package:velocity_net/components/plans/plans.dart';
+import 'package:velocity_net/components/questions/questions.dart';
 import 'package:velocity_net/components/slider/slider.dart';
 import 'package:velocity_net/components/specialOffer/special_offer.dart';
 
@@ -21,6 +22,7 @@ class _MainState extends State<Main> {
           PlansComponent(),
           Descrption(),
           SpecialOffer(),
+          Questions(),
         ],
       ),
     );

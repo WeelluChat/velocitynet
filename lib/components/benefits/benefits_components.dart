@@ -17,6 +17,10 @@ class Benefits extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                SizedBox(
+                    width: 700,
+                    height: 300,
+                    child: Image.asset("benefits.png")),
                 const Text(
                   "Curta filmes, séries, esportes, programas de TV e muito mais",
                   textAlign: TextAlign.center,
@@ -30,36 +34,53 @@ class Benefits extends StatelessWidget {
                   style: TextStyle(fontSize: 20),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 30,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      margin: const EdgeInsets.only(right: 30),
-                      padding: const EdgeInsets.only(
-                          top: 5, bottom: 5, right: 43, left: 43),
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 1, color: Colors.blue),
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        padding: MaterialStateProperty.all(
+                          const EdgeInsets.only(
+                              top: 20, bottom: 20, right: 40, left: 40),
+                        ),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                            side: BorderSide(
+                              color: Colors.blue,
+                              width: 2.0,
+                            ), // Defina a cor da borda e a largura aqui
+                          ),
+                        ),
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.white),
                       ),
+                      onPressed: () {},
                       child: const Text(
                         "R\$ 99,99",
                         style: TextStyle(
-                            color: Colors.blue,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15),
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
                       ),
+                    ),
+                    const SizedBox(
+                      width: 50,
                     ),
                     ElevatedButton(
                       style: ButtonStyle(
                         padding: MaterialStateProperty.all(
                             const EdgeInsets.only(
-                                top: 5, bottom: 5, right: 40, left: 40)),
+                                top: 20, bottom: 20, right: 40, left: 40)),
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                           const RoundedRectangleBorder(
-                              // borderRadius: BorderRadius.all(Radius.circular(20)),
-                              ),
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                          ),
                         ),
                         backgroundColor: MaterialStateProperty.all(Colors.blue),
                       ),
@@ -69,7 +90,7 @@ class Benefits extends StatelessWidget {
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
-                            fontSize: 15),
+                            fontSize: 20),
                       ),
                     ),
                   ],

@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_image_slideshow: ^0.1.6
   infinite_carousel: ^1.0.3
+  card_swiper: ^3.0.1
 
 dev_dependencies:
   flutter_test:

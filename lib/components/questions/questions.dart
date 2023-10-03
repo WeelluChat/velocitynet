@@ -104,11 +104,19 @@ class _QuestionsState extends State<Questions> {
                             color: Colors.black,
                           ),
                         ),
-                        Container(
-                          padding: const EdgeInsets.all(10.0),
-                          child: const Text(
-                            'Como funciona a instalação?',
-                            style: TextStyle(color: Colors.black, fontSize: 22),
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              _isExpanded = !_isExpanded;
+                            });
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(10.0),
+                            child: const Text(
+                              'Como funciona a instalação?',
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 22),
+                            ),
                           ),
                         ),
                       ],
@@ -123,36 +131,37 @@ class _QuestionsState extends State<Questions> {
                       style: TextStyle(color: Color(0xff7A7A7A), fontSize: 18),
                     ),
                   ),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: const Color(0xffE1E6EE),
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      _isExpanded1 = !_isExpanded1;
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: const Color(0xffE1E6EE),
+                      ),
                     ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            setState(() {
-                              _isExpanded1 = !_isExpanded1;
-                            });
-                          },
-                          child: Icon(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Icon(
                             _isExpanded1 ? Icons.remove : Icons.add,
                             color: Colors.black,
                           ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(10.0),
-                          child: const Text(
-                            'Como funciona o pagamento?',
-                            style: TextStyle(color: Colors.black, fontSize: 22),
+                          Container(
+                            padding: const EdgeInsets.all(10.0),
+                            child: const Text(
+                              'Como funciona o pagamento?',
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 22),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -164,33 +173,34 @@ class _QuestionsState extends State<Questions> {
                       style: TextStyle(color: Color(0xff7A7A7A), fontSize: 18),
                     ),
                   ),
-                Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(color: const Color(0xffE1E6EE))),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            setState(() {
-                              _isExpanded2 = !_isExpanded2;
-                            });
-                          },
-                          child: Icon(
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      _isExpanded2 = !_isExpanded2;
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(color: const Color(0xffE1E6EE))),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Icon(
                             _isExpanded2 ? Icons.remove : Icons.add,
                             color: Colors.black,
                           ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(10.0),
-                          child: const Text(
-                            'Qual é a diferença entre os planos Corporativo?',
-                            style: TextStyle(color: Colors.black, fontSize: 22),
+                          Container(
+                            padding: const EdgeInsets.all(10.0),
+                            child: const Text(
+                              'Qual é a diferença entre os planos Corporativo?',
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 22),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -202,33 +212,34 @@ class _QuestionsState extends State<Questions> {
                       style: TextStyle(color: Color(0xff7A7A7A), fontSize: 18),
                     ),
                   ),
-                Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(color: const Color(0xffE1E6EE))),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            setState(() {
-                              _isExpanded3 = !_isExpanded3;
-                            });
-                          },
-                          child: Icon(
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      _isExpanded3 = !_isExpanded3;
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(color: const Color(0xffE1E6EE))),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Icon(
                             _isExpanded3 ? Icons.remove : Icons.add,
                             color: Colors.black,
                           ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(10.0),
-                          child: const Text(
-                            'Benefícios',
-                            style: TextStyle(color: Colors.black, fontSize: 22),
+                          Container(
+                            padding: const EdgeInsets.all(10.0),
+                            child: const Text(
+                              'Benefícios',
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 22),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),

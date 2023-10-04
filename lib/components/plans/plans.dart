@@ -11,17 +11,21 @@ class _PlansComponentState extends State<PlansComponent> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 1550,
       margin: const EdgeInsets.only(top: 45),
+      padding: const EdgeInsets.only(left: 20, right: 20),
       child: Column(
         children: [
           Container(
             margin: const EdgeInsets.only(bottom: 45),
-            child: const Text(
+            child: Text(
               'Escolha o melhor plano para você!',
+              textAlign: TextAlign.center,
               style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold),
+                color: Colors.black,
+                fontSize: MediaQuery.of(context).size.width < 600 ? 30 : 40,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           Container(

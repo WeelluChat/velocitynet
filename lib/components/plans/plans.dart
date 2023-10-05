@@ -12,8 +12,8 @@ class _PlansComponentState extends State<PlansComponent> {
   Widget build(BuildContext context) {
     return Container(
       width: 1550,
-      margin: const EdgeInsets.only(top: 45),
-      padding: const EdgeInsets.only(left: 20, right: 20),
+      // margin: const EdgeInsets.only(top: 45),
+      padding: const EdgeInsets.only(top: 50, bottom: 50, left: 20, right: 20),
       child: Column(
         children: [
           Container(

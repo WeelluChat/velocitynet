@@ -131,12 +131,12 @@ class SpecialOffer extends StatelessWidget {
           Visibility(
             visible: MediaQuery.of(context).size.width > 600,
             child: SizedBox(
-              width: 520,
-              height: 520,
+              width: 400,
+              height: 400,
               child: Image.asset(
                 'offer.jpg',
-                width: 520,
-                height: 520,
+                width: 400,
+                height: 400,
                 fit: BoxFit.cover,
               ),
             ),

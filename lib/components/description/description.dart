@@ -16,7 +16,7 @@ class _DescrptionState extends State<Descrption> {
   @override
   Widget build(BuildContext context) {
     return Container(
-       padding: const EdgeInsets.only(top: 100, bottom: 100),
+      padding: const EdgeInsets.only(top: 50, bottom: 50),
       width: double.infinity,
       decoration: const BoxDecoration(
           gradient: LinearGradient(colors: [
@@ -40,7 +40,7 @@ class _DescrptionState extends State<Descrption> {
             ],
           ),
           const SizedBox(
-            height: 100,
+            height: 50,
           ),
           Wrap(
             spacing: 20.00,
@@ -79,7 +79,8 @@ class _DescrptionState extends State<Descrption> {
                             : Colors.transparent,
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 15, top: 15, right: 10, bottom: 10 ),
+                        padding: const EdgeInsets.only(
+                            left: 15, top: 15, right: 10, bottom: 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -96,9 +97,8 @@ class _DescrptionState extends State<Descrption> {
                             Text(
                               'Internet Banda Larga',
                               style: TextStyle(
-                                color: _isHovering1
-                                    ? Colors.white
-                                    : Colors.white,
+                                color:
+                                    _isHovering1 ? Colors.white : Colors.white,
                                 fontSize: 25,
                               ),
                             ),
@@ -153,7 +153,8 @@ class _DescrptionState extends State<Descrption> {
                             : Colors.transparent,
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 15, top: 15, right: 10, bottom: 10 ),
+                        padding: const EdgeInsets.only(
+                            left: 15, top: 15, right: 10, bottom: 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -170,9 +171,8 @@ class _DescrptionState extends State<Descrption> {
                             Text(
                               'Tv por Assinatura',
                               style: TextStyle(
-                                color: _isHovering2
-                                    ? Colors.white
-                                    : Colors.white,
+                                color:
+                                    _isHovering2 ? Colors.white : Colors.white,
                                 fontSize: 25,
                               ),
                             ),
@@ -226,7 +226,8 @@ class _DescrptionState extends State<Descrption> {
                             : Colors.transparent,
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 15, top: 15, right: 10, bottom: 10 ),
+                        padding: const EdgeInsets.only(
+                            left: 15, top: 15, right: 10, bottom: 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -243,9 +244,8 @@ class _DescrptionState extends State<Descrption> {
                             Text(
                               'Equipamentos',
                               style: TextStyle(
-                                color: _isHovering3
-                                    ? Colors.white
-                                    : Colors.white,
+                                color:
+                                    _isHovering3 ? Colors.white : Colors.white,
                                 fontSize: 25,
                               ),
                             ),
@@ -299,7 +299,8 @@ class _DescrptionState extends State<Descrption> {
                             : Colors.transparent,
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 15, top: 15, right: 10, bottom: 10 ),
+                        padding: const EdgeInsets.only(
+                            left: 15, top: 15, right: 10, bottom: 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -316,9 +317,8 @@ class _DescrptionState extends State<Descrption> {
                             Text(
                               'Suporte',
                               style: TextStyle(
-                                color: _isHovering4
-                                    ? Colors.white
-                                    : Colors.white,
+                                color:
+                                    _isHovering4 ? Colors.white : Colors.white,
                                 fontSize: 25,
                               ),
                             ),
@@ -365,7 +365,6 @@ class _DescrptionState extends State<Descrption> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(
-
                           color: const Color(0xFFD4D4D4),
                         ),
                         color: _isHovering5
@@ -373,7 +372,8 @@ class _DescrptionState extends State<Descrption> {
                             : Colors.transparent,
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 15, top: 15, right: 10, bottom: 10 ),
+                        padding: const EdgeInsets.only(
+                            left: 15, top: 15, right: 10, bottom: 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -390,9 +390,8 @@ class _DescrptionState extends State<Descrption> {
                             Text(
                               'Equipe',
                               style: TextStyle(
-                                color: _isHovering5
-                                    ? Colors.white
-                                    : Colors.white,
+                                color:
+                                    _isHovering5 ? Colors.white : Colors.white,
                                 fontSize: 25,
                               ),
                             ),
@@ -421,4 +420,3 @@ class _DescrptionState extends State<Descrption> {
     );
   }
 }
-

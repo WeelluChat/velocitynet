@@ -6,98 +6,124 @@ class Benefits extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(top: 50, bottom: 50, left: 20, right: 20),
-      width: 700,
+      padding: const EdgeInsets.only(bottom: 50, left: 20, right: 20),
       alignment: Alignment.center,
+      decoration: const BoxDecoration(
+          gradient: LinearGradient(colors: [
+        Color(0xff08203E),
+        Color(0xff06141C),
+      ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
       child: Wrap(
-        direction: Axis.horizontal,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        runAlignment: WrapAlignment.center,
+        alignment: WrapAlignment.center,
         children: [
-          Expanded(
-            flex: 1,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                    width: 700,
-                    height: 300,
-                    child: Image.asset("benefits.png")),
-                const Text(
-                  "Curta filmes, séries, esportes, programas de TV e muito mais",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 45),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                const Text(
-                  "Contrate um de nossos planos e assista quando quiser de onde estiver.",
-                  style: TextStyle(fontSize: 20),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      style: ButtonStyle(
-                        padding: MaterialStateProperty.all(
-                          const EdgeInsets.only(
-                              top: 20, bottom: 20, right: 40, left: 40),
-                        ),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                            side: BorderSide(
-                              color: Colors.blue,
-                              width: 2.0,
-                            ), // Defina a cor da borda e a largura aqui
-                          ),
-                        ),
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.white),
-                      ),
-                      onPressed: () {},
-                      child: const Text(
-                        "R\$ 99,99",
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 50,
-                    ),
-                    ElevatedButton(
-                      style: ButtonStyle(
-                        padding: MaterialStateProperty.all(
-                            const EdgeInsets.only(
-                                top: 20, bottom: 20, right: 40, left: 40)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                          ),
-                        ),
-                        backgroundColor: MaterialStateProperty.all(Colors.blue),
-                      ),
-                      onPressed: () {},
-                      child: const Text(
-                        "SAIBA MAIS",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20),
-                      ),
-                    ),
-                  ],
-                )
-              ],
+          SizedBox(
+            height: 400,
+            width: 500,
+            child: Image.asset(
+              "benefits.png",
             ),
-          )
+          ),
+          SizedBox(
+            width: 750,
+            child: Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "Curta filmes, séries, esportes, programas de TV e muito mais",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize:
+                          MediaQuery.of(context).size.width < 600 ? 30 : 40,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Text(
+                    "Contrate um de nossos planos e assista quando quiser de onde estiver.",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Flexible(
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            padding: MaterialStateProperty.all(
+                              const EdgeInsets.only(
+                                  top: 20, bottom: 20, right: 40, left: 40),
+                            ),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                                side: BorderSide(
+                                  color: Colors.white,
+                                  width: 2.0,
+                                ), // Defina a cor da borda e a largura aqui
+                              ),
+                            ),
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                          ),
+                          onPressed: () {},
+                          child: const Text(
+                            "R\$ 99,99",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 50,
+                      ),
+                      Flexible(
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            padding: MaterialStateProperty.all(
+                                const EdgeInsets.only(
+                                    top: 20, bottom: 20, right: 40, left: 40)),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                              ),
+                            ),
+                            backgroundColor: MaterialStateProperty.all(
+                                const Color(0XFFFFB000)),
+                          ),
+                          onPressed: () {},
+                          child: const Text(
+                            "SAIBA MAIS",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );

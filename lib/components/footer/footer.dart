@@ -24,7 +24,7 @@ class _FooterState extends State<Footer> {
         Color(0xff06141C),
       ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
       child: Padding(
-        padding: const EdgeInsets.only(left: 20, top: 50, bottom: 40),
+        padding: const EdgeInsets.only(left: 20, top: 50, bottom: 10),
         child: Wrap(
           alignment: MediaQuery.of(context).size.width < 700
               ? WrapAlignment.start

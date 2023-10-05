@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:velocity_net/components/benefits/benefits_components.dart';
+import 'package:velocity_net/components/copyright/copyright.dart';
 import 'package:velocity_net/components/description/description.dart';
 import 'package:velocity_net/components/footer/footer.dart';
 import 'package:velocity_net/components/plans/plans.dart';
@@ -28,7 +29,8 @@ class _MainState extends State<Main> {
           Benefits(),
           Questions(),
           SpeedTest(),
-          Footer()
+          Footer(),
+          Copyright()
         ],
       ),
     );

@@ -98,7 +98,7 @@ class _QuestionsState extends State<Questions> {
                       style: TextStyle(
                         color: const Color(0xff7A7A7A),
                         fontSize:
-                            MediaQuery.of(context).size.width < 400 ? 18 : 22,
+                            MediaQuery.of(context).size.width < 400 ? 18 : 20,
                       ),
                     ),
                   ),
@@ -153,7 +153,7 @@ class _QuestionsState extends State<Questions> {
                       style: TextStyle(
                         color: const Color(0xff7A7A7A),
                         fontSize:
-                            MediaQuery.of(context).size.width < 400 ? 18 : 22,
+                            MediaQuery.of(context).size.width < 400 ? 18 : 20,
                       ),
                     ),
                   ),
@@ -206,7 +206,7 @@ class _QuestionsState extends State<Questions> {
                       style: TextStyle(
                         color: const Color(0xff7A7A7A),
                         fontSize:
-                            MediaQuery.of(context).size.width < 400 ? 18 : 22,
+                            MediaQuery.of(context).size.width < 400 ? 18 : 20,
                       ),
                     ),
                   ),
@@ -254,7 +254,7 @@ class _QuestionsState extends State<Questions> {
                       style: TextStyle(
                         color: const Color(0xff7A7A7A),
                         fontSize:
-                            MediaQuery.of(context).size.width < 400 ? 18 : 22,
+                            MediaQuery.of(context).size.width < 400 ? 18 :20,
                       ),
                     ),
                   ),

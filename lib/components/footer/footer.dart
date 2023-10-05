@@ -15,429 +15,389 @@ class _FooterState extends State<Footer> {
   bool isHovered3 = false;
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(right: 30),
-          child: SizedBox(
-            width: 340,
-            height: 260,
-            // color: Colors.red,
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Row(
-                          children: [
-                            Icon(
-                              Icons.headset_mic,
-                              color: Color(0xff1e73be),
-                              size: 50,
-                            ),
-                            SizedBox(
-                              width: 15,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Suporte',
-                                  style: TextStyle(
-                                      color: Color(0xff636363), fontSize: 16),
-                                ),
-                                Text(
-                                  '+55 (94) 99132-6169',
-                                  style: TextStyle(
-                                      color: Color(0xff171717),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        const Text(
-                          'Endereço',
-                          style: TextStyle(
-                              color: Color(0xff171717),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18),
-                        ),
-                        const Text(
-                          'Avenida B Quadra 298 Lote 23 Cidade\nJardim Paraupebas - PA',
-                          style:
-                              TextStyle(color: Color(0xff636363), fontSize: 16),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          children: [
-                            MouseRegion(
-                              onEnter: (_) {
-                                setState(() {
-                                  isHovered1 = true;
-                                });
-                              },
-                              onExit: (_) {
-                                setState(() {
-                                  isHovered1 = false;
-                                });
-                              },
-                              child: Container(
-                                width: 30,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                    color: const Color(0xFFE7E7E7),
-                                    borderRadius: BorderRadius.circular(50)),
-                                child: Icon(
-                                  Icons.facebook,
-                                  color: isHovered1
-                                      ? Colors.blue
-                                      : const Color(0xffA5ADBB),
-                                  size: 25.0,
-                                ),
+    return Container(
+      width: double.infinity,
+      // color: Colors.cyan,
+      decoration: const BoxDecoration(
+          gradient: LinearGradient(colors: [
+        Color(0xff08203E),
+        Color(0xff06141C),
+      ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 20, top: 50, bottom: 40),
+        child: Wrap(
+          alignment: MediaQuery.of(context).size.width < 700
+              ? WrapAlignment.start
+              : WrapAlignment.center,
+          runSpacing: 55,
+          spacing: 55,
+          children: [
+            SizedBox(
+              width: 280,
+              height: 220,
+              // color: Colors.red,
+              child: Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Row(
+                        children: [
+                          Icon(
+                            Icons.headset_mic,
+                            color: Color(0xffFFB000),
+                            size: 50,
+                          ),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Suporte',
+                                style: TextStyle(
+                                    color: Color(0xffDED4D4), fontSize: 16),
+                              ),
+                              Text(
+                                '+55 (94) 99132-6169',
+                                style: TextStyle(
+                                    color: Color(0xFFFFFFFF),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      const Text(
+                        'Endereço',
+                        style: TextStyle(
+                            color: Color(0xffffffff),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18),
+                      ),
+                      const Text(
+                        'Avenida B Quadra 298 Lote 23 Cidade\nJardim Paraupebas - PA',
+                        style:
+                            TextStyle(color: Color(0xffDED4D4), fontSize: 16),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        children: [
+                          MouseRegion(
+                            onEnter: (_) {
+                              setState(() {
+                                isHovered1 = true;
+                              });
+                            },
+                            onExit: (_) {
+                              setState(() {
+                                isHovered1 = false;
+                              });
+                            },
+                            child: Container(
+                              width: 30,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                  color: const Color(0xFF274972),
+                                  borderRadius: BorderRadius.circular(50)),
+                              child: Icon(
+                                Icons.facebook,
+                                color: isHovered1
+                                    ? Colors.blue
+                                    : const Color(0xfffffffff),
+                                size: 25.0,
                               ),
                             ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            MouseRegion(
-                              onEnter: (_) {
-                                setState(() {
-                                  isHovered2 = true;
-                                });
-                              },
-                              onExit: (_) {
-                                setState(() {
-                                  isHovered2 = false;
-                                });
-                              },
-                              child: Container(
-                                width: 30,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                    color: const Color(0xFFE7E7E7),
-                                    borderRadius: BorderRadius.circular(50)),
-                                child: PhosphorIcon(
-                                  isHovered2
-                                      ? PhosphorIcons.fill.twitterLogo
-                                      : PhosphorIcons.regular.twitterLogo,
-                                  color: isHovered2
-                                      ? Colors.blue
-                                      : const Color(0xffA5ADBB),
-                                  size: 25.0,
-                                ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          MouseRegion(
+                            onEnter: (_) {
+                              setState(() {
+                                isHovered2 = true;
+                              });
+                            },
+                            onExit: (_) {
+                              setState(() {
+                                isHovered2 = false;
+                              });
+                            },
+                            child: Container(
+                              width: 30,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                  color: const Color(0xFF274972),
+                                  borderRadius: BorderRadius.circular(50)),
+                              child: PhosphorIcon(
+                                isHovered2
+                                    ? PhosphorIcons.fill.twitterLogo
+                                    : PhosphorIcons.regular.twitterLogo,
+                                color: isHovered2
+                                    ? Colors.blue
+                                    : const Color(0xfffffffffff),
+                                size: 25.0,
                               ),
                             ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            MouseRegion(
-                              onEnter: (_) {
-                                setState(() {
-                                  isHovered3 = true;
-                                });
-                              },
-                              onExit: (_) {
-                                setState(() {
-                                  isHovered3 = false;
-                                });
-                              },
-                              child: Container(
-                                width: 30,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                    color: const Color(0xFFE7E7E7),
-                                    borderRadius: BorderRadius.circular(50)),
-                                child: PhosphorIcon(
-                                  isHovered3
-                                      ? PhosphorIcons.fill.instagramLogo
-                                      : PhosphorIcons.regular.instagramLogo,
-                                  color: isHovered3
-                                      ? const Color(0xffE1306C)
-                                      : const Color(0xffA5ADBB),
-                                  size: 25.0,
-                                ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          MouseRegion(
+                            onEnter: (_) {
+                              setState(() {
+                                isHovered3 = true;
+                              });
+                            },
+                            onExit: (_) {
+                              setState(() {
+                                isHovered3 = false;
+                              });
+                            },
+                            child: Container(
+                              width: 30,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                  color: const Color(0xFF274972),
+                                  borderRadius: BorderRadius.circular(50)),
+                              child: PhosphorIcon(
+                                isHovered3
+                                    ? PhosphorIcons.fill.instagramLogo
+                                    : PhosphorIcons.regular.instagramLogo,
+                                color: isHovered3
+                                    ? const Color(0xffE1306C)
+                                    : const Color(0xffffffff),
+                                size: 25.0,
                               ),
                             ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            MouseRegion(
-                              onEnter: (_) {
-                                setState(() {
-                                  isHovered = true;
-                                });
-                              },
-                              onExit: (_) {
-                                setState(() {
-                                  isHovered = false;
-                                });
-                              },
-                              child: Container(
-                                width: 30,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFFE7E7E7),
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                child: PhosphorIcon(
-                                  PhosphorIcons.fill.linkedinLogo,
-                                  color: isHovered
-                                      ? Colors.blue
-                                      : const Color(0xffA5ADBB),
-                                  size: 25.0,
-                                ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          MouseRegion(
+                            onEnter: (_) {
+                              setState(() {
+                                isHovered = true;
+                              });
+                            },
+                            onExit: (_) {
+                              setState(() {
+                                isHovered = false;
+                              });
+                            },
+                            child: Container(
+                              width: 30,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF274972),
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              child: PhosphorIcon(
+                                PhosphorIcons.fill.linkedinLogo,
+                                color: isHovered
+                                    ? Colors.blue
+                                    : const Color(0xfffffffff),
+                                size: 22.0,
                               ),
                             ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                )
-              ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ),
-        const Padding(
-          padding: EdgeInsets.only(left: 30),
-          child: SizedBox(
-            width: 280,
-            height: 260,
-            // color: Colors.red,
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              'CATEGORIAS',
-                              style: TextStyle(
-                                color: Color(0xff171717),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          'Internet Resídencial',
-                          style: TextStyle(
-                              color: Color(0xff636363),
-                              fontSize: 16,
-                              height: 2),
-                        ),
-                        Text(
-                          'Internet Corporativa',
-                          style: TextStyle(
-                              color: Color(0xff636363),
-                              fontSize: 16,
-                              height: 2),
-                        ),
-                        Text(
-                          'Link Dedicado',
-                          style: TextStyle(
-                              color: Color(0xff636363),
-                              fontSize: 18,
-                              height: 2),
-                        ),
-                        Text(
-                          'TV por Assinatura',
-                          style: TextStyle(
-                              color: Color(0xff636363),
-                              fontSize: 16,
-                              height: 2),
-                        ),
-                      ],
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
-        ),
-        const Padding(
-          padding: EdgeInsets.only(left: 30),
-          child: SizedBox(
-            width: 280,
-            height: 260,
-            // color: Colors.red,
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              'SOBRE A VELOCITYNET',
-                              style: TextStyle(
-                                  color: Color(0xff171717),
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          'Sobre Nós',
-                          style: TextStyle(
-                              color: Color(0xff636363),
-                              fontSize: 16,
-                              height: 2),
-                        ),
-                        Text(
-                          'Contato',
-                          style: TextStyle(
-                              color: Color(0xff636363),
-                              fontSize: 16,
-                              height: 2),
-                        ),
-                        Text(
-                          'Politica de Privacidade',
-                          style: TextStyle(
-                              color: Color(0xff636363),
-                              fontSize: 16,
-                              height: 2),
-                        ),
-                        Text(
-                          'Politica de Privacidade',
-                          style: TextStyle(
-                              color: Color(0xff636363),
-                              fontSize: 16,
-                              height: 2),
-                        ),
-                        Text(
-                          'Termos e Condições',
-                          style: TextStyle(
-                              color: Color(0xff636363),
-                              fontSize: 16,
-                              height: 2),
-                        ),
-                        Text(
-                          'Missão & Visão',
-                          style: TextStyle(
-                              color: Color(0xff636363),
-                              fontSize: 16,
-                              height: 2),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-        const Padding(
-          padding: EdgeInsets.only(left: 30),
-          child: SizedBox(
-            width: 280,
-            height: 260,
-            // color: Colors.red,
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              'HORARIO ATENDIMENTO',
-                              style: TextStyle(
-                                  color: Color(0xff171717),
+            const SizedBox(
+              width: 280,
+              height: 220,
+              //  color: Colors.red,
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                'CATEGORIAS',
+                                style: TextStyle(
+                                  color: Color(0xffffffff),
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 18),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          'Segunda - Sexta',
-                          style:
-                              TextStyle(fontSize: 16, color: Color(0xff636363)),
-                        ),
-                        Text(
-                          '08:00 AM - 18:00 PM',
-                          style: TextStyle(
-                              color: Color(0xff171717),
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              height: 2),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          'Sábado',
-                          style:
-                              TextStyle(color: Color(0xff636363), fontSize: 16),
-                        ),
-                        Text(
-                          '08:00 AM - 12:00 PM',
-                          style: TextStyle(
-                              color: Color(0xff171717),
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              height: 2),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              'Domingo',
-                              style: TextStyle(
-                                color: Color(0xff636363),
-                                fontSize: 16,
+                                  fontSize: 18,
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              'Fechado',
-                              style: TextStyle(
-                                color: Color(0xff1e73be),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            'Internet Resídencial',
+                            style: TextStyle(
+                                color: Color(0xffDED4D4),
                                 fontSize: 16,
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ],
-                )
-              ],
+                                height: 2),
+                          ),
+                          Text(
+                            'Internet Corporativa',
+                            style: TextStyle(
+                                color: Color(0xffDED4D4),
+                                fontSize: 16,
+                                height: 2),
+                          ),
+                          Text(
+                            'Link Dedicado',
+                            style: TextStyle(
+                                color: Color(0xffDED4D4),
+                                fontSize: 16,
+                                height: 2),
+                          ),
+                          Text(
+                            'TV por Assinatura',
+                            style: TextStyle(
+                                color: Color(0xffDED4D4),
+                                fontSize: 16,
+                                height: 2),
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
-          ),
-        )
-      ],
+            const SizedBox(
+              width: 280,
+              height: 260,
+              //  color: Colors.red,
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                'SOBRE A VELOCITYNET',
+                                style: TextStyle(
+                                    color: Color(0xffffffff),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            'Sobre Nós',
+                            style: TextStyle(
+                                color: Color(0xffDED4D4),
+                                fontSize: 16,
+                                height: 2),
+                          ),
+                          Text(
+                            'Contato',
+                            style: TextStyle(
+                                color: Color(0xffDED4D4),
+                                fontSize: 16,
+                                height: 2),
+                          ),
+                          Text(
+                            'Politica de Privacidade',
+                            style: TextStyle(
+                                color: Color(0xffDED4D4),
+                                fontSize: 16,
+                                height: 2),
+                          ),
+                          Text(
+                            'Politica de Privacidade',
+                            style: TextStyle(
+                                color: Color(0xffDED4D4),
+                                fontSize: 16,
+                                height: 2),
+                          ),
+                          Text(
+                            'Termos e Condições',
+                            style: TextStyle(
+                                color: Color(0xffDED4D4),
+                                fontSize: 16,
+                                height: 2),
+                          ),
+                          Text(
+                            'Missão & Visão',
+                            style: TextStyle(
+                                color: Color(0xffDED4D4),
+                                fontSize: 16,
+                                height: 2),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              width: 280,
+              height: 150,
+              //  color: Colors.red,
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                'HORARIO ATENDIMENTO',
+                                style: TextStyle(
+                                    color: Color(0xffffffff),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            'Segunda - Domingo',
+                            style: TextStyle(
+                                fontSize: 16, color: Color(0xffDED4D4)),
+                          ),
+                          Text(
+                            '08:00 AM - 18:00 PM',
+                            style: TextStyle(
+                                color: Color(0xffffffff),
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                height: 2),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

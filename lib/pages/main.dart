@@ -6,6 +6,7 @@ import 'package:velocity_net/components/plans/plans.dart';
 import 'package:velocity_net/components/questions/questions.dart';
 import 'package:velocity_net/components/slider/slider.dart';
 import 'package:velocity_net/components/specialOffer/special_offer.dart';
+import 'package:velocity_net/components/speedtest/speedtest.dart';
 
 class Main extends StatefulWidget {
   const Main({super.key});
@@ -26,6 +27,7 @@ class _MainState extends State<Main> {
           SpecialOffer(),
           Benefits(),
           Questions(),
+          SpeedTest(),
           Footer()
         ],
       ),

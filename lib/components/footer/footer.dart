@@ -81,7 +81,7 @@ class _FooterState extends State<Footer> {
                             fontSize: 18),
                       ),
                       const Text(
-                        'Avenida B Quadra 298 Lote 23 Cidade\nJardim Paraupebas - PA',
+                        'Avenida B Quadra 298 Lote 23 \nCidade Jardim Paraupebas - PA',
                         style:
                             TextStyle(color: Color(0xffDED4D4), fontSize: 16),
                       ),

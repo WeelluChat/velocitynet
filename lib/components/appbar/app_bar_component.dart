@@ -74,136 +74,134 @@ class _AppBarComponentState extends State<AppBarComponent> {
             Container(
               margin: const EdgeInsets.only(top: 20),
               width: 1280,
-              child: Expanded(
-                child: Flex(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  direction: Axis.horizontal,
-                  children: [
-                    Image.asset(
-                      'logo.png',
-                      width: 200,
+              child: Flex(
+                mainAxisAlignment: MainAxisAlignment.center,
+                direction: Axis.horizontal,
+                children: [
+                  Image.asset(
+                    'logo.png',
+                    width: 200,
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      // _scrollController.animateTo(
+                      //   _scrollController.position.minScrollExtent,
+                      //   duration: const Duration(milliseconds: 1000),
+                      //   curve: Curves.easeInQuad,
+                      // );
+                      print('aqui e o butão');
+                    },
+                    child: const Text(
+                      "INÍCIO",
+                      style: TextStyle(fontSize: 18, color: Colors.black),
                     ),
-                    const SizedBox(
-                      width: 10,
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      _scrollController.animateTo(
+                        600,
+                        duration: const Duration(microseconds: 500),
+                        curve: Curves.easeOut,
+                      );
+                    },
+                    child: const Text(
+                      "INTERNET",
+                      style: TextStyle(fontSize: 18, color: Colors.black),
                     ),
-                    InkWell(
-                      onTap: () {
-                        // _scrollController.animateTo(
-                        //   _scrollController.position.minScrollExtent,
-                        //   duration: const Duration(milliseconds: 1000),
-                        //   curve: Curves.easeInQuad,
-                        // );
-                        print('aqui e o butão');
-                      },
-                      child: const Text(
-                        "INÍCIO",
-                        style: TextStyle(fontSize: 18, color: Colors.black),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      'TV',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      'SOBRE NÓS',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      'CONTATOS',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  ElevatedButton(
+                    style: const ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll(
+                        Color(0xFF0C13A2),
                       ),
                     ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        _scrollController.animateTo(
-                          600,
-                          duration: const Duration(microseconds: 500),
-                          curve: Curves.easeOut,
-                        );
-                      },
-                      child: const Text(
-                        "INTERNET",
-                        style: TextStyle(fontSize: 18, color: Colors.black),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'TV',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'SOBRE NÓS',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'CONTATOS',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    ElevatedButton(
-                      style: const ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll(
-                          Color(0xFF0C13A2),
+                    onPressed: () {},
+                    child: Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: TextButton.icon(
+                        onPressed: () {},
+                        label: const Text(
+                          "ASSINE JÁ",
+                          style: TextStyle(color: Colors.white),
                         ),
-                      ),
-                      onPressed: () {},
-                      child: Directionality(
-                        textDirection: TextDirection.rtl,
-                        child: TextButton.icon(
-                          onPressed: () {},
-                          label: const Text(
-                            "ASSINE JÁ",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          icon: const Directionality(
-                            textDirection: TextDirection.ltr,
-                            child: Icon(
-                              Icons.arrow_right_sharp,
-                              color: Colors.white,
-                            ),
+                        icon: const Directionality(
+                          textDirection: TextDirection.ltr,
+                          child: Icon(
+                            Icons.arrow_right_sharp,
+                            color: Colors.white,
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    ElevatedButton(
-                      style: const ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll(
-                          Color(0xFF0C13A2),
-                        ),
-                      ),
-                      onPressed: () {},
-                      child: Directionality(
-                        textDirection: TextDirection.rtl,
-                        child: TextButton.icon(
-                          onPressed: () {},
-                          label: const Text(
-                            "CENTRAL DO ASSINANTE",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          icon: const Directionality(
-                            textDirection: TextDirection.ltr,
-                            child: Icon(
-                              Icons.arrow_right_sharp,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  ElevatedButton(
+                    style: const ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll(
+                        Color(0xFF0C13A2),
                       ),
                     ),
-                  ],
-                ),
+                    onPressed: () {},
+                    child: Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: TextButton.icon(
+                        onPressed: () {},
+                        label: const Text(
+                          "CENTRAL DO ASSINANTE",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        icon: const Directionality(
+                          textDirection: TextDirection.ltr,
+                          child: Icon(
+                            Icons.arrow_right_sharp,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             )
           ],

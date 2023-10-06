@@ -63,6 +63,7 @@ flutter:
     - assets/logo.png
     - assets/whatsapp.png
     - assets/instagram.png
+    - assets/image_promocao.png
     - assets/slider/slider1.png
     - assets/slider/slider2.png
     - assets/slider/slider3.png
@@ -70,13 +71,10 @@ flutter:
     - assets/plans/plano2.png
     - assets/offer.jpg
     - assets/description/descrption_image.jpg
-    - assets/questions/mapa1.png
-    - assets/questions/mapa2.png
     - assets/benefits.png
-    - assets/speedtest/speed_banner.png
     - assets/speedtest/banner_01.jpg
-    - assets/speedtest/banner_02.jpg
-    - assets/speedtest/banner_03.jpg
+    - assets/speedtest/banner_speed.jpg
+    
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

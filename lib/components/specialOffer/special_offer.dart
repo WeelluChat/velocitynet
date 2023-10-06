@@ -13,6 +13,7 @@ class SpecialOffer extends StatelessWidget {
         crossAxisAlignment: WrapCrossAlignment.center,
         runAlignment: WrapAlignment.center,
         verticalDirection: VerticalDirection.up,
+        alignment: WrapAlignment.center,
         children: [
           SizedBox(
             width: 750,
@@ -53,14 +54,9 @@ class SpecialOffer extends StatelessWidget {
                           offset: const Offset(-25, 1),
                           alignment: Alignment.topLeft,
                           backgroundColor: Colors.transparent,
-                          label: const Text(
-                            'R\$',
-                            style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
-                          ),
                           child: RichText(
                             text: const TextSpan(
-                              text: '124,99',
+                              text: 'R\$ 124,99',
                               style: TextStyle(
                                   fontSize: 45,
                                   fontWeight: FontWeight.bold,

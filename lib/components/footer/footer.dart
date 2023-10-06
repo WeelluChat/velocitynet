@@ -109,9 +109,7 @@ class _FooterState extends State<Footer> {
                                   borderRadius: BorderRadius.circular(50)),
                               child: Icon(
                                 Icons.facebook,
-                                color: isHovered1
-                                    ? Colors.blue
-                                    : const Color(0xfffffffff),
+                                color: isHovered1 ? Colors.blue : Colors.white,
                                 size: 25.0,
                               ),
                             ),
@@ -140,9 +138,7 @@ class _FooterState extends State<Footer> {
                                 isHovered2
                                     ? PhosphorIcons.fill.twitterLogo
                                     : PhosphorIcons.regular.twitterLogo,
-                                color: isHovered2
-                                    ? Colors.blue
-                                    : const Color(0xfffffffffff),
+                                color: isHovered2 ? Colors.blue : Colors.white,
                                 size: 25.0,
                               ),
                             ),
@@ -201,9 +197,7 @@ class _FooterState extends State<Footer> {
                               ),
                               child: PhosphorIcon(
                                 PhosphorIcons.fill.linkedinLogo,
-                                color: isHovered
-                                    ? Colors.blue
-                                    : const Color(0xfffffffff),
+                                color: isHovered ? Colors.blue : Colors.white,
                                 size: 22.0,
                               ),
                             ),

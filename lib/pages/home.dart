@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:velocity_net/components/appbar/app_bar_component.dart';
-import 'package:velocity_net/components/drawer/drawer_component.dart';
+import 'package:velocity_net/components/appbar/app_bar_component_resize.dart';
 import 'package:velocity_net/pages/main.dart';
 
 class Home extends StatefulWidget {
@@ -15,16 +15,177 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    mobile = MediaQuery.of(context).size.width > 1300 ? false : true;
+    mobile = MediaQuery.of(context).size.width > 1200 ? false : true;
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(140),
-        child: AppBarComponent(),
-      ),
+          preferredSize: mobile == true
+              ? const Size.fromHeight(80)
+              : const Size.fromHeight(140),
+          child: Container(
+            margin: mobile == true
+                ? const EdgeInsets.only(top: 15)
+                : const EdgeInsets.only(top: 0),
+            child: (mobile == true)
+                ? const AppBarComponentResize()
+                : AppBarComponent(),
+          )),
       body: const Main(),
-      endDrawer: SizedBox(
-          width: 200, child: mobile ? DrawerComponent(mobile: mobile) : null),
+      endDrawer: mobile
+          ? Drawer(
+              child: ListView(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15, top: 15),
+                    child: InkWell(
+                      hoverColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () {
+                        // _scrollController.animateTo(
+                        //     _scrollController.position.minScrollExtent,
+                        //     duration: const Duration(milliseconds: 1000),
+                        //     curve: Curves.easeInQuad);
+                        // Navigator.pop(context);
+                      },
+                      child: const Text(
+                        "INÍCIO",
+                        style: TextStyle(fontSize: 18, color: Colors.black),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: InkWell(
+                      hoverColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () {
+                        // _scrollController.animateTo(
+                        //     _scrollController.position.minScrollExtent +
+                        //         580,
+                        //     duration: const Duration(milliseconds: 1000),
+                        //     curve: Curves.easeInQuad);
+                        // Navigator.pop(context);
+                      },
+                      child: const Text(
+                        "INTERNET",
+                        style: TextStyle(fontSize: 18, color: Colors.black),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: InkWell(
+                      hoverColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () {
+                        // _scrollController.animateTo(
+                        //     _scrollController.position.minScrollExtent +
+                        //         950,
+                        //     duration: const Duration(milliseconds: 1000),
+                        //     curve: Curves.easeInQuad);
+                        // Navigator.pop(context);
+                      },
+                      child: const Text(
+                        "TV",
+                        style: TextStyle(fontSize: 18, color: Colors.black),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: InkWell(
+                      hoverColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () {
+                        // _scrollController.animateTo(
+                        //     _scrollController.position.minScrollExtent +
+                        //         950,
+                        //     duration: const Duration(milliseconds: 1000),
+                        //     curve: Curves.easeInQuad);
+                        // Navigator.pop(context);
+                      },
+                      child: const Text(
+                        "SOBRE NÓS",
+                        style: TextStyle(fontSize: 18, color: Colors.black),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: InkWell(
+                      hoverColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () {
+                        // _scrollController.animateTo(
+                        //     _scrollController.position.minScrollExtent +
+                        //         950,
+                        //     duration: const Duration(milliseconds: 1000),
+                        //     curve: Curves.easeInQuad);
+                        // Navigator.pop(context);
+                      },
+                      child: const Text(
+                        "CONTATOS",
+                        style: TextStyle(fontSize: 18, color: Colors.black),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15, right: 15),
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                          backgroundColor: const Color(0XFF13294E)),
+                      onPressed: () {},
+                      child: const Text(
+                        "ASSINE JÁ",
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15, right: 15),
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                          backgroundColor: const Color(0XFF13294E)),
+                      onPressed: () {},
+                      child: const Text(
+                        "CENTRAL DO ASSINANTE",
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          : null,
       // appBar: PreferredSize(
       //   preferredSize: const Size.fromHeight(80),
       //   child: Container(

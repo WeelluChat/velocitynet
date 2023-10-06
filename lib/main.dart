@@ -15,19 +15,20 @@ class MyApp extends StatelessWidget {
       title: 'VelocityNet - VelocityNet',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: const ColorScheme(
-              brightness: Brightness.dark,
-              primary: Colors.black,
-              onPrimary: Colors.black,
-              secondary: Colors.black,
-              onSecondary: Colors.black,
-              error: Colors.black,
-              onError: Colors.black,
-              background: Colors.white,
-              onBackground: Colors.black,
-              surface: Colors.black,
-              onSurface: Colors.black)),
+        useMaterial3: true,
+        // colorScheme: const ColorScheme(
+        //     brightness: Brightness.dark,
+        //     primary: Colors.black,
+        //     onPrimary: Colors.black,
+        //     secondary: Colors.black,
+        //     onSecondary: Colors.black,
+        //     error: Colors.black,
+        //     onError: Colors.black,
+        //     background: Colors.white,
+        //     onBackground: Colors.black,
+        //     surface: Colors.black,
+        //     onSurface: Colors.black)),
+      ),
       home: const Home(),
     );
   }

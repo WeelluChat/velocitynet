@@ -12,6 +12,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   bool mobile = false;
+  final ScrollController scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -19,18 +20,18 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
       appBar: PreferredSize(
-          preferredSize: mobile == true
-              ? const Size.fromHeight(80)
-              : const Size.fromHeight(140),
-          child: Container(
-            margin: mobile == true
-                ? const EdgeInsets.only(top: 15)
-                : const EdgeInsets.only(top: 0),
-            child: (mobile == true)
-                ? const AppBarComponentResize()
-                : AppBarComponent(),
-          )),
-      body: const Main(),
+        preferredSize: mobile == true
+            ? const Size.fromHeight(80)
+            : const Size.fromHeight(140),
+        child: Container(
+          margin: mobile == true
+              ? const EdgeInsets.only(top: 15)
+              : const EdgeInsets.only(top: 0),
+          child: (mobile == true)
+              ? const AppBarComponentResize()
+              : AppBarComponent(scrollController: scrollController),
+        ),
+      ),
       endDrawer: mobile
           ? Drawer(
               child: ListView(
@@ -42,11 +43,12 @@ class _HomeState extends State<Home> {
                       splashColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () {
-                        // _scrollController.animateTo(
-                        //     _scrollController.position.minScrollExtent,
-                        //     duration: const Duration(milliseconds: 1000),
-                        //     curve: Curves.easeInQuad);
-                        // Navigator.pop(context);
+                        scrollController.animateTo(
+                            scrollController.position.minScrollExtent,
+                            duration: const Duration(milliseconds: 1000),
+                            curve: Curves.easeInQuad);
+                        // print('meu botão aqui');
+                        Navigator.pop(context);
                       },
                       child: const Text(
                         "INÍCIO",
@@ -65,15 +67,14 @@ class _HomeState extends State<Home> {
                       splashColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () {
-                        // _scrollController.animateTo(
-                        //     _scrollController.position.minScrollExtent +
-                        //         580,
-                        //     duration: const Duration(milliseconds: 1000),
-                        //     curve: Curves.easeInQuad);
-                        // Navigator.pop(context);
+                        scrollController.animateTo(
+                            scrollController.position.minScrollExtent + 600,
+                            duration: const Duration(milliseconds: 1000),
+                            curve: Curves.easeInQuad);
+                        Navigator.pop(context);
                       },
                       child: const Text(
-                        "INTERNET",
+                        "PLANOS",
                         style: TextStyle(fontSize: 18, color: Colors.black),
                       ),
                     ),
@@ -89,36 +90,11 @@ class _HomeState extends State<Home> {
                       splashColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () {
-                        // _scrollController.animateTo(
-                        //     _scrollController.position.minScrollExtent +
-                        //         950,
-                        //     duration: const Duration(milliseconds: 1000),
-                        //     curve: Curves.easeInQuad);
-                        // Navigator.pop(context);
-                      },
-                      child: const Text(
-                        "TV",
-                        style: TextStyle(fontSize: 18, color: Colors.black),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                    height: 10,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15),
-                    child: InkWell(
-                      hoverColor: Colors.transparent,
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () {
-                        // _scrollController.animateTo(
-                        //     _scrollController.position.minScrollExtent +
-                        //         950,
-                        //     duration: const Duration(milliseconds: 1000),
-                        //     curve: Curves.easeInQuad);
-                        // Navigator.pop(context);
+                        scrollController.animateTo(
+                            scrollController.position.minScrollExtent + 1400,
+                            duration: const Duration(milliseconds: 1000),
+                            curve: Curves.easeInQuad);
+                        Navigator.pop(context);
                       },
                       child: const Text(
                         "SOBRE NÓS",
@@ -137,15 +113,37 @@ class _HomeState extends State<Home> {
                       splashColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () {
-                        // _scrollController.animateTo(
-                        //     _scrollController.position.minScrollExtent +
-                        //         950,
-                        //     duration: const Duration(milliseconds: 1000),
-                        //     curve: Curves.easeInQuad);
-                        // Navigator.pop(context);
+                        scrollController.animateTo(
+                            scrollController.position.minScrollExtent + 3350,
+                            duration: const Duration(milliseconds: 1000),
+                            curve: Curves.easeInQuad);
+                        Navigator.pop(context);
                       },
                       child: const Text(
-                        "CONTATOS",
+                        "OFERTA",
+                        style: TextStyle(fontSize: 18, color: Colors.black),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: InkWell(
+                      hoverColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () {
+                        scrollController.animateTo(
+                            scrollController.position.minScrollExtent + 3850,
+                            duration: const Duration(milliseconds: 1000),
+                            curve: Curves.easeInQuad);
+                        Navigator.pop(context);
+                      },
+                      child: const Text(
+                        "BENEFÍCIOS",
                         style: TextStyle(fontSize: 18, color: Colors.black),
                       ),
                     ),
@@ -158,7 +156,8 @@ class _HomeState extends State<Home> {
                     padding: const EdgeInsets.only(left: 15, right: 15),
                     child: TextButton(
                       style: TextButton.styleFrom(
-                          backgroundColor: const Color(0XFF13294E)),
+                        backgroundColor: const Color(0XFF13294E),
+                      ),
                       onPressed: () {},
                       child: const Text(
                         "ASSINE JÁ",
@@ -186,262 +185,7 @@ class _HomeState extends State<Home> {
               ),
             )
           : null,
-      // appBar: PreferredSize(
-      //   preferredSize: const Size.fromHeight(80),
-      //   child: Container(
-      //     width: double.maxFinite,
-      //     margin:
-      //         const EdgeInsets.only(left: 40, right: 40, top: 10, bottom: 10),
-      //     child: AppBar(
-      //       // elevation: 0,
-      //       // backgroundColor: Colors.white,
-      //       iconTheme: const IconThemeData(color: Colors.black),
-      //       // leading: SizedBox(
-      //       //   width: 250,
-      //       //   child: Image.asset(
-      //       //     'assets/logo.png',
-      //       //     width: 500,
-      //       //   ),
-      //       // ),
-      //       centerTitle: true,
-      //       title: mobile
-      //           ? null
-      //           : SizedBox(
-      //               width: 1280,
-      //               child: Flex(
-      //                 direction: Axis.horizontal,
-      //                 children: [
-      //                   Image.asset(
-      //                     'logo.png',
-      //                     width: 200,
-      //                   ),
-      //                   const SizedBox(
-      //                     width: 10,
-      //                   ),
-      //                   TextButton(
-      //                     onPressed: () {},
-      //                     child: const Text(
-      //                       'INÍCIO',
-      //                       style: TextStyle(
-      //                         color: Colors.black,
-      //                       ),
-      //                     ),
-      //                   ),
-      //                   const SizedBox(
-      //                     width: 10,
-      //                   ),
-      //                   TextButton(
-      //                     onPressed: () {},
-      //                     child: const Text(
-      //                       'INTERNET',
-      //                       style: TextStyle(color: Colors.black),
-      //                     ),
-      //                   ),
-      //                   const SizedBox(
-      //                     width: 10,
-      //                   ),
-      //                   TextButton(
-      //                     onPressed: () {},
-      //                     child: const Text(
-      //                       'TV',
-      //                       style: TextStyle(color: Colors.black),
-      //                     ),
-      //                   ),
-      //                   const SizedBox(
-      //                     width: 10,
-      //                   ),
-      //                   TextButton(
-      //                     onPressed: () {},
-      //                     child: const Text(
-      //                       'SOBRE NÓS',
-      //                       style: TextStyle(color: Colors.black),
-      //                     ),
-      //                   ),
-      //                   const SizedBox(
-      //                     width: 10,
-      //                   ),
-      //                   TextButton(
-      //                     onPressed: () {},
-      //                     child: const Text(
-      //                       'CONTATOS',
-      //                       style: TextStyle(color: Colors.black),
-      //                     ),
-      //                   ),
-      //                   const SizedBox(
-      //                     width: 10,
-      //                   ),
-      //                   ElevatedButton(
-      //                     style: const ButtonStyle(
-      //                       backgroundColor: MaterialStatePropertyAll(
-      //                         Color(0xFF0C13A2),
-      //                       ),
-      //                     ),
-      //                     onPressed: () {},
-      //                     child: Directionality(
-      //                       textDirection: TextDirection.rtl,
-      //                       child: TextButton.icon(
-      //                         onPressed: () {},
-      //                         label: const Text("ASSINE JÁ"),
-      //                         icon: const Directionality(
-      //                           textDirection: TextDirection.ltr,
-      //                           child: Icon(
-      //                             Icons.arrow_right_sharp,
-      //                             color: Colors.white,
-      //                           ),
-      //                         ),
-      //                       ),
-      //                     ),
-      //                   ),
-      //                   const SizedBox(
-      //                     width: 20,
-      //                   ),
-      //                   ElevatedButton(
-      //                     style: const ButtonStyle(
-      //                       backgroundColor: MaterialStatePropertyAll(
-      //                         Color(0xFF0C13A2),
-      //                       ),
-      //                     ),
-      //                     onPressed: () {},
-      //                     child: Directionality(
-      //                       textDirection: TextDirection.rtl,
-      //                       child: TextButton.icon(
-      //                         onPressed: () {},
-      //                         label: const Text("CENTRAL DO ASSINANTE"),
-      //                         icon: const Directionality(
-      //                           textDirection: TextDirection.ltr,
-      //                           child: Icon(
-      //                             Icons.arrow_right_sharp,
-      //                             color: Colors.white,
-      //                           ),
-      //                         ),
-      //                       ),
-      //                     ),
-      //                   ),
-      //                 ],
-      //               ),
-      //             ),
-      //     ),
-      //   ),
-      // ),
-      // endDrawer: SizedBox(
-      //     width: 200,
-      //     child: mobile
-      //         ? Drawer(
-      //             child: ListView(children: [
-      //               Padding(
-      //                 padding: const EdgeInsets.only(left: 15, top: 15),
-      //                 child: InkWell(
-      //                   hoverColor: Colors.transparent,
-      //                   splashColor: Colors.transparent,
-      //                   highlightColor: Colors.transparent,
-      //                   onTap: () {
-      //                     // _scrollController.animateTo(
-      //                     //     _scrollController.position.minScrollExtent,
-      //                     //     duration: const Duration(milliseconds: 1000),
-      //                     //     curve: Curves.easeInQuad);
-      //                     Navigator.pop(context);
-      //                   },
-      //                   child: const Text(
-      //                     "Home",
-      //                     style: TextStyle(fontSize: 18, color: Colors.black),
-      //                   ),
-      //                 ),
-      //               ),
-      //               const SizedBox(
-      //                 width: 20,
-      //                 height: 10,
-      //               ),
-      //               Padding(
-      //                 padding: const EdgeInsets.only(left: 15),
-      //                 child: InkWell(
-      //                   hoverColor: Colors.transparent,
-      //                   splashColor: Colors.transparent,
-      //                   highlightColor: Colors.transparent,
-      //                   onTap: () {
-      //                     // _scrollController.animateTo(
-      //                     //     _scrollController.position.minScrollExtent + 580,
-      //                     //     duration: const Duration(milliseconds: 1000),
-      //                     //     curve: Curves.easeInQuad);
-      //                     Navigator.pop(context);
-      //                   },
-      //                   child: const Text(
-      //                     "Novidades",
-      //                     style: TextStyle(fontSize: 18, color: Colors.black),
-      //                   ),
-      //                 ),
-      //               ),
-      //               const SizedBox(
-      //                 width: 20,
-      //                 height: 10,
-      //               ),
-      //               Padding(
-      //                 padding: const EdgeInsets.only(left: 15),
-      //                 child: InkWell(
-      //                   hoverColor: Colors.transparent,
-      //                   splashColor: Colors.transparent,
-      //                   highlightColor: Colors.transparent,
-      //                   onTap: () {
-      //                     // _scrollController.animateTo(
-      //                     //     _scrollController.position.minScrollExtent + 950,
-      //                     //     duration: const Duration(milliseconds: 1000),
-      //                     //     curve: Curves.easeInQuad);
-      //                     Navigator.pop(context);
-      //                   },
-      //                   child: const Text(
-      //                     "Recursos",
-      //                     style: TextStyle(fontSize: 18, color: Colors.black),
-      //                   ),
-      //                 ),
-      //               ),
-      //               const SizedBox(
-      //                 width: 20,
-      //                 height: 10,
-      //               ),
-      //               Padding(
-      //                 padding: const EdgeInsets.only(left: 15),
-      //                 child: InkWell(
-      //                   hoverColor: Colors.transparent,
-      //                   splashColor: Colors.transparent,
-      //                   highlightColor: Colors.transparent,
-      //                   onTap: () {
-      //                     // _scrollController.animateTo(
-      //                     //     _scrollController.position.maxScrollExtent,
-      //                     //     duration: const Duration(milliseconds: 1000),
-      //                     //     curve: Curves.easeInQuad);
-      //                     Navigator.pop(context);
-      //                   },
-      //                   // style: TextButton.styleFrom(
-      //                   //   side: const BorderSide(
-      //                   //     width: 1.0,
-      //                   //     color: Color(0xFF05AC90),
-      //                   //   ),
-      //                   // ),
-      //                   child: const Text(
-      //                     "Fale Conosco",
-      //                     style:
-      //                         TextStyle(color: Color(0xFF05AC90), fontSize: 18),
-      //                   ),
-      //                 ),
-      //               ),
-      //               const SizedBox(
-      //                 width: 20,
-      //                 height: 10,
-      //               ),
-      //               Padding(
-      //                 padding: const EdgeInsets.only(left: 15, right: 15),
-      //                 child: TextButton(
-      //                   style: TextButton.styleFrom(
-      //                       backgroundColor: const Color(0xFF05AC90)),
-      //                   onPressed: () {},
-      //                   child: const Text(
-      //                     "Weellu Web",
-      //                     style: TextStyle(color: Colors.white, fontSize: 18),
-      //                   ),
-      //                 ),
-      //               ),
-      //             ]),
-      //           )
-      //         : null),
+      body: Main(scrollController: scrollController),
     );
   }
 }

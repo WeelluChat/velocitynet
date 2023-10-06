@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 
 class AppBarComponent extends AppBar {
-  AppBarComponent({super.key});
+  final ScrollController scrollController;
+
+  AppBarComponent({super.key, required this.scrollController});
 
   @override
   State<AppBarComponent> createState() => _AppBarComponentState();
 }
 
 class _AppBarComponentState extends State<AppBarComponent> {
-  final ScrollController _scrollController = ScrollController();
+  late final ScrollController scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController = widget.scrollController;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +27,7 @@ class _AppBarComponentState extends State<AppBarComponent> {
         child: Column(
           children: [
             Container(
-              color: const Color(0xFF080F54),
+              color: const Color(0XFF13294E),
               padding: const EdgeInsets.only(top: 10, bottom: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -84,20 +92,18 @@ class _AppBarComponentState extends State<AppBarComponent> {
                       width: 200,
                     ),
                     const SizedBox(
-                      width: 10,
+                      width: 30,
                     ),
                     InkWell(
                       onTap: () {
-                        // _scrollController.animateTo(
-                        //   _scrollController.position.minScrollExtent,
-                        //   duration: const Duration(milliseconds: 1000),
-                        //   curve: Curves.easeInQuad,
-                        // );
-                        print('aqui e o butão');
+                        scrollController.animateTo(
+                            scrollController.position.minScrollExtent,
+                            duration: const Duration(milliseconds: 1000),
+                            curve: Curves.easeInQuad);
                       },
                       child: const Text(
                         "INÍCIO",
-                        style: TextStyle(fontSize: 18, color: Colors.black),
+                        style: TextStyle(color: Colors.black),
                       ),
                     ),
                     const SizedBox(
@@ -105,44 +111,58 @@ class _AppBarComponentState extends State<AppBarComponent> {
                     ),
                     InkWell(
                       onTap: () {
-                        _scrollController.animateTo(
-                          600,
-                          duration: const Duration(microseconds: 500),
-                          curve: Curves.easeOut,
-                        );
+                        scrollController.animateTo(
+                            scrollController.position.minScrollExtent + 600,
+                            duration: const Duration(milliseconds: 1000),
+                            curve: Curves.easeInQuad);
                       },
                       child: const Text(
-                        "INTERNET",
-                        style: TextStyle(fontSize: 18, color: Colors.black),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'TV',
+                        "PLANOS",
                         style: TextStyle(color: Colors.black),
                       ),
                     ),
                     const SizedBox(
                       width: 10,
                     ),
-                    TextButton(
-                      onPressed: () {},
+                    InkWell(
+                      onTap: () {
+                        scrollController.animateTo(
+                            scrollController.position.minScrollExtent + 1400,
+                            duration: const Duration(milliseconds: 1000),
+                            curve: Curves.easeInQuad);
+                      },
                       child: const Text(
-                        'SOBRE NÓS',
+                        "SOBRE NÓS",
                         style: TextStyle(color: Colors.black),
                       ),
                     ),
                     const SizedBox(
                       width: 10,
                     ),
-                    TextButton(
-                      onPressed: () {},
+                    InkWell(
+                      onTap: () {
+                        scrollController.animateTo(
+                            scrollController.position.minScrollExtent + 1910,
+                            duration: const Duration(milliseconds: 1000),
+                            curve: Curves.easeInQuad);
+                      },
                       child: const Text(
-                        'CONTATOS',
+                        "OFERTA",
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        scrollController.animateTo(
+                            scrollController.position.minScrollExtent + 2410,
+                            duration: const Duration(milliseconds: 1000),
+                            curve: Curves.easeInQuad);
+                      },
+                      child: const Text(
+                        "BENEFÍCIOS",
                         style: TextStyle(color: Colors.black),
                       ),
                     ),
@@ -152,7 +172,7 @@ class _AppBarComponentState extends State<AppBarComponent> {
                     ElevatedButton(
                       style: const ButtonStyle(
                         backgroundColor: MaterialStatePropertyAll(
-                          Color(0xFF0C13A2),
+                          Color(0XFF13294E),
                         ),
                       ),
                       onPressed: () {},
@@ -180,7 +200,7 @@ class _AppBarComponentState extends State<AppBarComponent> {
                     ElevatedButton(
                       style: const ButtonStyle(
                         backgroundColor: MaterialStatePropertyAll(
-                          Color(0xFF0C13A2),
+                          Color(0XFF13294E),
                         ),
                       ),
                       onPressed: () {},

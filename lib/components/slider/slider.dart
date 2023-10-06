@@ -21,15 +21,11 @@ class _SliderComponentState extends State<SliderComponent> {
       isLoop: true,
       children: [
         Image.asset(
-          'slider/slider1.png',
+          'slider/banner_slide01.png',
           fit: BoxFit.cover,
         ),
         Image.asset(
-          'slider/slider2.png',
-          fit: BoxFit.cover,
-        ),
-        Image.asset(
-          'slider/slider2.png',
+          'slider/banner_slide02.png',
           fit: BoxFit.cover,
         ),
       ],

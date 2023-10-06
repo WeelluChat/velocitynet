@@ -19,60 +19,228 @@ class _QuestionsState extends State<Questions> {
           const EdgeInsets.only(top: 100, bottom: 100, left: 20, right: 20),
       width: double.infinity,
       // decoration: const BoxDecoration(color: Colors.red),
-      child: Wrap(
-        spacing: 20.00,
-        runSpacing: 20,
-        alignment: WrapAlignment.center,
+      child: Flex(
+        direction: Axis.horizontal,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        // spacing: 20.00,
+        // runSpacing: 20,
+        // alignment: WrapAlignment.center,
         children: [
-          Container(
-            width: MediaQuery.of(context).size.width < 600 ? 460 : 600,
-            decoration: const BoxDecoration(
-                // color: Colors.green,
-                ),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 20),
-                      child: Text(
-                        'Perguntas e Dúvidas\nFrequentes',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize:
-                              MediaQuery.of(context).size.width < 600 ? 30 : 40,
+          Flexible(
+            child: Container(
+              width: 600,
+              // MediaQuery.of(context).size.width < 600 ? 420 : 500,
+              decoration: const BoxDecoration(
+                  // color: Colors.green,
+                  ),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Flexible(
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: Text(
+                            'Perguntas e Dúvidas Frequentes',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize:
+                                  MediaQuery.of(context).size.width < 600 ? 30 : 40,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        _isExpanded = !_isExpanded;
+                      });
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: const Color(0xffE1E6EE),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(
+                              _isExpanded ? Icons.remove : Icons.add,
+                              color: Colors.black,
+                            ),
+                            Flexible(
+                              child: Container(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Text(
+                                  'Como funciona a Instalação?',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize:
+                                        MediaQuery.of(context).size.width < 400
+                                            ? 18
+                                            : 22,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  ],
-                ),
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      _isExpanded = !_isExpanded;
-                    });
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: const Color(0xffE1E6EE),
+                  ),
+                  if (_isExpanded)
+                    Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: Text(
+                        'Após a escolha de um dos nossos plano, será feito uma analise de viabilidade, para verificar se sua residencia está dentro da nossa cobertura',
+                        style: TextStyle(
+                          color: const Color(0xff7A7A7A),
+                          fontSize:
+                              MediaQuery.of(context).size.width < 400 ? 18 : 20,
+                        ),
                       ),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(
-                            _isExpanded ? Icons.remove : Icons.add,
-                            color: Colors.black,
-                          ),
-                          Flexible(
-                            child: Container(
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        _isExpanded1 = !_isExpanded1;
+                      });
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: const Color(0xffE1E6EE),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(
+                              _isExpanded1 ? Icons.remove : Icons.add,
+                              color: Colors.black,
+                            ),
+                            Flexible(
+                              child: Container(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Text(
+                                  'Como funciona o pagamento?',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize:
+                                        MediaQuery.of(context).size.width < 400
+                                            ? 18
+                                            : 22,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  if (_isExpanded1)
+                    Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: Text(
+                        'Você pode realizar o pagamento com pix ou boleto, via cartão de credito/débito e dinheiro',
+                        style: TextStyle(
+                          color: const Color(0xff7A7A7A),
+                          fontSize:
+                              MediaQuery.of(context).size.width < 400 ? 18 : 20,
+                        ),
+                      ),
+                    ),
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        _isExpanded2 = !_isExpanded2;
+                      });
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: const Color(0xffE1E6EE)),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(
+                              _isExpanded2 ? Icons.remove : Icons.add,
+                              color: Colors.black,
+                            ),
+                            Flexible(
+                              child: Container(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Text(
+                                  'Qual é a diferença entre os planos Corporativo?',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize:
+                                        MediaQuery.of(context).size.width < 400
+                                            ? 18
+                                            : 22,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  if (_isExpanded2)
+                    Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: Text(
+                        'Flutter teste',
+                        style: TextStyle(
+                          color: const Color(0xff7A7A7A),
+                          fontSize:
+                              MediaQuery.of(context).size.width < 400 ? 18 : 20,
+                        ),
+                      ),
+                    ),
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        _isExpanded3 = !_isExpanded3;
+                      });
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(color: const Color(0xffE1E6EE))),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(
+                              _isExpanded3 ? Icons.remove : Icons.add,
+                              color: Colors.black,
+                            ),
+                            Container(
                               padding: const EdgeInsets.all(10.0),
                               child: Text(
-                                'Como funciona a Instalação?',
+                                'Benefícios',
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize:
@@ -80,189 +248,31 @@ class _QuestionsState extends State<Questions> {
                                           ? 18
                                           : 22,
                                 ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 2,
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-                if (_isExpanded)
-                  Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: Text(
-                      'Após a escolha de um dos nossos plano, será feito uma analise de viabilidade, para verificar se sua residencia está dentro da nossa cobertura',
-                      style: TextStyle(
-                        color: const Color(0xff7A7A7A),
-                        fontSize:
-                            MediaQuery.of(context).size.width < 400 ? 18 : 20,
+                  if (_isExpanded3)
+                    Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: Text(
+                        'Flutter teste',
+                        style: TextStyle(
+                          color: const Color(0xff7A7A7A),
+                          fontSize:
+                              MediaQuery.of(context).size.width < 400 ? 18 :20,
+                        ),
                       ),
                     ),
-                  ),
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      _isExpanded1 = !_isExpanded1;
-                    });
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: const Color(0xffE1E6EE),
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(
-                            _isExpanded1 ? Icons.remove : Icons.add,
-                            color: Colors.black,
-                          ),
-                          Flexible(
-                            child: Container(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text(
-                                'Como funciona o pagamento?',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize:
-                                      MediaQuery.of(context).size.width < 400
-                                          ? 18
-                                          : 22,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 2,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                if (_isExpanded1)
-                  Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: Text(
-                      'Você pode realizar o pagamento com pix ou boleto, via cartão de credito/débito e dinheiro',
-                      style: TextStyle(
-                        color: const Color(0xff7A7A7A),
-                        fontSize:
-                            MediaQuery.of(context).size.width < 400 ? 18 : 20,
-                      ),
-                    ),
-                  ),
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      _isExpanded2 = !_isExpanded2;
-                    });
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: const Color(0xffE1E6EE)),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(
-                            _isExpanded2 ? Icons.remove : Icons.add,
-                            color: Colors.black,
-                          ),
-                          Flexible(
-                            child: Container(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text(
-                                'Qual é a diferença entre os planos Corporativo?',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize:
-                                      MediaQuery.of(context).size.width < 400
-                                          ? 18
-                                          : 22,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 2,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                if (_isExpanded2)
-                  Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: Text(
-                      'Flutter teste',
-                      style: TextStyle(
-                        color: const Color(0xff7A7A7A),
-                        fontSize:
-                            MediaQuery.of(context).size.width < 400 ? 18 : 20,
-                      ),
-                    ),
-                  ),
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      _isExpanded3 = !_isExpanded3;
-                    });
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(color: const Color(0xffE1E6EE))),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(
-                            _isExpanded3 ? Icons.remove : Icons.add,
-                            color: Colors.black,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text(
-                              'Benefícios',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize:
-                                    MediaQuery.of(context).size.width < 400
-                                        ? 18
-                                        : 22,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                if (_isExpanded3)
-                  Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: Text(
-                      'Flutter teste',
-                      style: TextStyle(
-                        color: const Color(0xff7A7A7A),
-                        fontSize:
-                            MediaQuery.of(context).size.width < 400 ? 18 :20,
-                      ),
-                    ),
-                  ),
-              ], // COLUMN
+                ], // COLUMN
+              ),
             ),
           ),
           Visibility(
-            visible: MediaQuery.of(context).size.width > 1000,
+            visible: MediaQuery.of(context).size.width > 1100,
             child: Column(
               children: [
                 Padding(

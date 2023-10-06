@@ -14,9 +14,8 @@ class Benefits extends StatelessWidget {
         Color(0xff06141C),
       ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
       child: Wrap(
-        crossAxisAlignment: WrapCrossAlignment.center,
-        runAlignment: WrapAlignment.center,
         alignment: WrapAlignment.center,
+        crossAxisAlignment: WrapCrossAlignment.center,   
         children: [
           SizedBox(
             height: 400,
@@ -27,101 +26,96 @@ class Benefits extends StatelessWidget {
           ),
           SizedBox(
             width: 750,
-            child: Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "Curta filmes, séries, esportes, programas de TV e muito mais",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize:
-                          MediaQuery.of(context).size.width < 600 ? 30 : 40,
-                    ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  "Curta filmes, séries, esportes, programas de TV e muito mais",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize:
+                        MediaQuery.of(context).size.width < 600 ? 30 : 40,
                   ),
-                  const SizedBox(
-                    height: 20,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  "Contrate um de nossos planos e assista quando quiser de onde estiver.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
                   ),
-                  const Text(
-                    "Contrate um de nossos planos e assista quando quiser de onde estiver.",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Flexible(
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                            padding: MaterialStateProperty.all(
-                              const EdgeInsets.only(
-                                  top: 20, bottom: 20, right: 40, left: 40),
-                            ),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              const RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                side: BorderSide(
-                                  color: Colors.white,
-                                  width: 2.0,
-                                ), // Defina a cor da borda e a largura aqui
-                              ),
-                            ),
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.transparent),
-                          ),
-                          onPressed: () {},
-                          child: const Text(
-                            "R\$ 99,99",
-                            style: TextStyle(
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Wrap(
+                  alignment: WrapAlignment.center,
+                  spacing: 20,
+                  runSpacing: 20,
+                  // mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        padding: MaterialStateProperty.all(
+                          const EdgeInsets.only(
+                              top: 20, bottom: 20, right: 40, left: 40),
+                        ),
+                        shape: MaterialStateProperty.all<
+                            RoundedRectangleBorder>(
+                          const RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10)),
+                            side: BorderSide(
                               color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
+                              width: 2.0,
+                            ), // Defina a cor da borda e a largura aqui
                           ),
                         ),
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.transparent),
                       ),
-                      const SizedBox(
-                        width: 50,
-                      ),
-                      Flexible(
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                            padding: MaterialStateProperty.all(
-                                const EdgeInsets.only(
-                                    top: 20, bottom: 20, right: 40, left: 40)),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              const RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                              ),
-                            ),
-                            backgroundColor: MaterialStateProperty.all(
-                                const Color(0XFFFFB000)),
-                          ),
-                          onPressed: () {},
-                          child: const Text(
-                            "SAIBA MAIS",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20),
-                          ),
+                      onPressed: () {},
+                      child: const Text(
+                        "R\$ 99,99",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
                         ),
                       ),
-                    ],
-                  )
-                ],
-              ),
+                    ),
+                    
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        padding: MaterialStateProperty.all(
+                            const EdgeInsets.only(
+                                top: 20, bottom: 20, right: 40, left: 40)),
+                        shape: MaterialStateProperty.all<
+                            RoundedRectangleBorder>(
+                          const RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10)),
+                          ),
+                        ),
+                        backgroundColor: MaterialStateProperty.all(
+                            const Color(0XFFFFB000)),
+                      ),
+                      onPressed: () {},
+                      child: const Text(
+                        "SAIBA MAIS",
+                        style: TextStyle(
+                            color: Color(0xff13294E),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20),
+                      ),
+                    ),
+                  ],
+                )
+              ],
             ),
           ),
         ],

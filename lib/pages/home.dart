@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:velocity_net/components/appbar/app_bar_component.dart';
 import 'package:velocity_net/components/appbar/app_bar_component_resize.dart';
+import 'package:velocity_net/helpers/url.dart';
 import 'package:velocity_net/pages/main.dart';
 
 class Home extends StatefulWidget {
@@ -158,7 +159,9 @@ class _HomeState extends State<Home> {
                       style: TextButton.styleFrom(
                         backgroundColor: const Color(0XFF13294E),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Url().urlWhatsApp();
+                      },
                       child: const Text(
                         "ASSINE JÁ",
                         style: TextStyle(color: Colors.white, fontSize: 18),

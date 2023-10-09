@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:velocity_net/helpers/url.dart';
 
 class Benefits extends StatelessWidget {
   const Benefits({super.key});
@@ -6,7 +7,7 @@ class Benefits extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(bottom: 50, left: 20, right: 20),
+      padding: const EdgeInsets.only(bottom: 50, left: 20, right: 20, top: 50),
       alignment: Alignment.center,
       decoration: const BoxDecoration(
           gradient: LinearGradient(colors: [
@@ -15,7 +16,7 @@ class Benefits extends StatelessWidget {
       ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
       child: Wrap(
         alignment: WrapAlignment.center,
-        crossAxisAlignment: WrapCrossAlignment.center,   
+        crossAxisAlignment: WrapCrossAlignment.center,
         children: [
           SizedBox(
             height: 400,
@@ -34,8 +35,7 @@ class Benefits extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize:
-                        MediaQuery.of(context).size.width < 600 ? 30 : 40,
+                    fontSize: MediaQuery.of(context).size.width < 600 ? 30 : 40,
                   ),
                 ),
                 const SizedBox(
@@ -64,11 +64,10 @@ class Benefits extends StatelessWidget {
                           const EdgeInsets.only(
                               top: 20, bottom: 20, right: 40, left: 40),
                         ),
-                        shape: MaterialStateProperty.all<
-                            RoundedRectangleBorder>(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
                           const RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10)),
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
                             side: BorderSide(
                               color: Colors.white,
                               width: 2.0,
@@ -88,23 +87,23 @@ class Benefits extends StatelessWidget {
                         ),
                       ),
                     ),
-                    
                     ElevatedButton(
                       style: ButtonStyle(
                         padding: MaterialStateProperty.all(
                             const EdgeInsets.only(
                                 top: 20, bottom: 20, right: 40, left: 40)),
-                        shape: MaterialStateProperty.all<
-                            RoundedRectangleBorder>(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
                           const RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10)),
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
                           ),
                         ),
-                        backgroundColor: MaterialStateProperty.all(
-                            const Color(0XFFFFB000)),
+                        backgroundColor:
+                            MaterialStateProperty.all(const Color(0XFFFFB000)),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Url().urlWhatsApp();
+                      },
                       child: const Text(
                         "SAIBA MAIS",
                         style: TextStyle(

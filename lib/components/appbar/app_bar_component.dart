@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:velocity_net/helpers/url.dart';
 
 class AppBarComponent extends AppBar {
   final ScrollController scrollController;
@@ -33,7 +34,9 @@ class _AppBarComponentState extends State<AppBarComponent> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      Url().urlMaps();
+                    },
                     icon: const Icon(
                       Icons.location_pin,
                       color: Color(0xFFDE7642),
@@ -44,7 +47,9 @@ class _AppBarComponentState extends State<AppBarComponent> {
                     ),
                   ),
                   TextButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      Url().urlWhatsApp();
+                    },
                     icon: Image.asset(
                       "whatsapp.png",
                       width: 20,
@@ -55,7 +60,9 @@ class _AppBarComponentState extends State<AppBarComponent> {
                     ),
                   ),
                   TextButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      Url().urlFacebook();
+                    },
                     icon: const Icon(
                       Icons.facebook,
                       color: Colors.blue,
@@ -66,7 +73,9 @@ class _AppBarComponentState extends State<AppBarComponent> {
                     ),
                   ),
                   TextButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      Url().urlInstagram();
+                    },
                     icon: Image.asset(
                       "instagram.png",
                       width: 20,
@@ -171,14 +180,16 @@ class _AppBarComponentState extends State<AppBarComponent> {
                   ElevatedButton(
                     style: const ButtonStyle(
                       backgroundColor: MaterialStatePropertyAll(
-                        Color(0xFF0C13A2),
+                        Color(0XFF13294E),
                       ),
                     ),
                     onPressed: () {},
                     child: Directionality(
                       textDirection: TextDirection.rtl,
                       child: TextButton.icon(
-                        onPressed: () {},
+                        onPressed: () {
+                          Url().urlWhatsApp();
+                        },
                         label: const Text(
                           "ASSINE JÁ",
                           style: TextStyle(color: Colors.white),
@@ -199,14 +210,16 @@ class _AppBarComponentState extends State<AppBarComponent> {
                   ElevatedButton(
                     style: const ButtonStyle(
                       backgroundColor: MaterialStatePropertyAll(
-                        Color(0xFF0C13A2),
+                        Color(0XFF13294E),
                       ),
                     ),
                     onPressed: () {},
                     child: Directionality(
                       textDirection: TextDirection.rtl,
                       child: TextButton.icon(
-                        onPressed: () {},
+                        onPressed: () {
+                          Url().urlCentralAssinante();
+                        },
                         label: const Text(
                           "CENTRAL DO ASSINANTE",
                           style: TextStyle(color: Colors.white),

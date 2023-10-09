@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:velocity_net/helpers/url.dart';
 
 class PlansComponent extends StatefulWidget {
   const PlansComponent({super.key});
@@ -54,13 +55,17 @@ class _PlansComponentState extends State<PlansComponent> {
                                 borderRadius: BorderRadius.zero,
                               ),
                             ),
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.blue),
+                            backgroundColor: MaterialStateProperty.all(
+                                const Color(0xffFFB000)),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Url().urlWhatsApp();
+                          },
                           child: const Text(
                             "ASSINE AGORA",
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(
+                                color: Color(0XFF13294E),
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                       )
@@ -85,13 +90,17 @@ class _PlansComponentState extends State<PlansComponent> {
                                 borderRadius: BorderRadius.zero,
                               ),
                             ),
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.blue),
+                            backgroundColor: MaterialStateProperty.all(
+                                const Color(0xffFFB000)),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Url().urlWhatsApp();
+                          },
                           child: const Text(
                             "ASSINE AGORA",
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(
+                                color: Color(0XFF13294E),
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                       )
@@ -115,13 +124,17 @@ class _PlansComponentState extends State<PlansComponent> {
                                 borderRadius: BorderRadius.zero,
                               ),
                             ),
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.blue),
+                            backgroundColor: MaterialStateProperty.all(
+                                const Color(0xffFFB000)),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Url().urlWhatsApp();
+                          },
                           child: const Text(
                             "ASSINE AGORA",
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(
+                                color: Color(0XFF13294E),
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                       )
@@ -145,13 +158,17 @@ class _PlansComponentState extends State<PlansComponent> {
                                 borderRadius: BorderRadius.zero,
                               ),
                             ),
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.blue),
+                            backgroundColor: MaterialStateProperty.all(
+                                const Color(0xffFFB000)),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Url().urlWhatsApp();
+                          },
                           child: const Text(
                             "ASSINE AGORA",
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(
+                                color: Color(0XFF13294E),
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                       )
@@ -175,13 +192,17 @@ class _PlansComponentState extends State<PlansComponent> {
                                 borderRadius: BorderRadius.zero,
                               ),
                             ),
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.blue),
+                            backgroundColor: MaterialStateProperty.all(
+                                const Color(0xffFFB000)),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Url().urlWhatsApp();
+                          },
                           child: const Text(
                             "ASSINE AGORA",
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(
+                                color: Color(0XFF13294E),
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                       )

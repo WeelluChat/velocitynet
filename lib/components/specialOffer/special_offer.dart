@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:velocity_net/helpers/url.dart';
 
 class SpecialOffer extends StatelessWidget {
   const SpecialOffer({super.key});
@@ -48,25 +49,22 @@ class SpecialOffer extends StatelessWidget {
                   Wrap(
                     alignment: WrapAlignment.center,
                     children: [
-                      Container(
-                        // color: Colors.red,
-                        child: RichText(
-                          text: const TextSpan(
-                            text: 'R\$ 67,49',
-                            style: TextStyle(
-                                fontSize: 45,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0XFF13294E)),
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: ' / Mês',
-                                style: TextStyle(
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.w300,
-                                    fontSize: 15),
-                              )
-                            ],
-                          ),
+                      RichText(
+                        text: const TextSpan(
+                          text: 'R\$ 67,49',
+                          style: TextStyle(
+                              fontSize: 45,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0XFF13294E)),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: ' / Mês',
+                              style: TextStyle(
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 15),
+                            )
+                          ],
                         ),
                       ),
                       TextButton.icon(
@@ -76,7 +74,7 @@ class SpecialOffer extends StatelessWidget {
                           color: Color(0XFF13294E),
                           size: 45,
                         ),
-                        label:  const SizedBox(
+                        label: const SizedBox(
                           // color: Colors.amber,
                           width: 230,
                           child: Text(
@@ -100,7 +98,9 @@ class SpecialOffer extends StatelessWidget {
                       backgroundColor:
                           MaterialStateProperty.all(const Color(0xffFFB000)),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Url().urlWhatsApp();
+                    },
                     child: const Text(
                       "SABER MAIS",
                       style: TextStyle(

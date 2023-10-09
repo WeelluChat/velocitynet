@@ -44,4 +44,10 @@ class Url {
       Uri.parse("mailto:velocitynetfinanceiro@gmail.com"),
     );
   }
+
+    Future<void> urlWeellu() async {
+    await launchUrl(
+      Uri.parse("https://webchat.weellu.com/"),
+    );
+  }
 }

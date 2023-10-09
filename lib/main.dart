@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:velocity_net/pages/contact.dart';
 import 'package:velocity_net/pages/home.dart';
 
 void main() {
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
         //     surface: Colors.black,
         //     onSurface: Colors.black)),
       ),
-      home: const Home(),
+      home: const Contact(),
     );
   }
 }

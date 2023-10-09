@@ -65,9 +65,6 @@ flutter:
     - assets/whatsapp.png
     - assets/instagram.png
     - assets/image_promocao.png
-    - assets/slider/slider1.png
-    - assets/slider/slider2.png
-    - assets/slider/slider3.png
     - assets/plans/plano1.png
     - assets/plans/plano2.png
     - assets/offer.jpg
@@ -75,6 +72,10 @@ flutter:
     - assets/benefits.png
     - assets/speedtest/banner_01.jpg
     - assets/speedtest/banner_speed.jpg
+    - assets/slider/banner_slide01.png
+    - assets/slider/banner_slide02.png
+    - assets/slider/banner_slide03.png
+    - assets/slider/banner_slide04.jpg
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

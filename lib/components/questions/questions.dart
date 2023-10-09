@@ -282,8 +282,8 @@ class _QuestionsState extends State<Questions> {
                     width: 400,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(250),
-                      child: Image.network(
-                        'https://scontent.fcks6-1.fna.fbcdn.net/v/t39.30808-6/313412083_487116486768328_8073133318826961181_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=a2f6c7&_nc_ohc=_qCi9k65-agAX_CWDKv&_nc_oc=AQlcs9DOhrU_bcUTOhfLHY5QkgQplrcn64M4kFZgI1oLSbOZjrewIIEoF5Iwe2w1bOI&_nc_ht=scontent.fcks6-1.fna&oh=00_AfBiDp40ppnLl0Ud8fk3H1Cmiklha8-wiDrqeQKIzJjWJQ&oe=6520D475',
+                      child: Image.asset(
+                        'velocitynet_image.jpg',
                         fit: BoxFit.cover,
                       ),
                     ),

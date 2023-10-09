@@ -38,4 +38,10 @@ class Url {
       Uri.parse("https://maps.app.goo.gl/AYWLVsUVsNWPtz2E6"),
     );
   }
+
+  Future<void> urlGmail() async {
+    await launchUrl(
+      Uri.parse("mailto:velocitynetfinanceiro@gmail.com"),
+    );
+  }
 }

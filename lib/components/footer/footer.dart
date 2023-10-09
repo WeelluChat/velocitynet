@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:velocity_net/helpers/url.dart';
 
 class Footer extends StatefulWidget {
   const Footer({super.key});
@@ -90,117 +91,107 @@ class _FooterState extends State<Footer> {
                       ),
                       Row(
                         children: [
-                          MouseRegion(
-                            onEnter: (_) {
-                              setState(() {
-                                isHovered1 = true;
-                              });
+                          InkWell(
+                            onTap: () {
+                              Url().urlFacebook();
                             },
-                            onExit: (_) {
-                              setState(() {
-                                isHovered1 = false;
-                              });
-                            },
-                            child: Container(
-                              width: 30,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                  color: const Color(0xFF274972),
-                                  borderRadius: BorderRadius.circular(50)),
-                              child: Icon(
-                                Icons.facebook,
-                                color: isHovered1 ? Colors.blue : Colors.white,
-                                size: 25.0,
+                            child: MouseRegion(
+                              onEnter: (_) {
+                                setState(() {
+                                  isHovered1 = true;
+                                });
+                              },
+                              onExit: (_) {
+                                setState(() {
+                                  isHovered1 = false;
+                                });
+                              },
+                              child: Container(
+                                width: 30,
+                                height: 30,
+                                decoration: BoxDecoration(
+                                    color: const Color(0xFF274972),
+                                    borderRadius: BorderRadius.circular(50)),
+                                child: Icon(
+                                  Icons.facebook,
+                                  color: isHovered1 ? Colors.blue : Colors.white,
+                                  size: 25.0,
+                                ),
                               ),
                             ),
                           ),
                           const SizedBox(
                             width: 10,
                           ),
-                          MouseRegion(
-                            onEnter: (_) {
-                              setState(() {
-                                isHovered2 = true;
-                              });
+                          InkWell(
+                            onTap: () {
+                                Url().urlGmail();
                             },
-                            onExit: (_) {
-                              setState(() {
-                                isHovered2 = false;
-                              });
-                            },
-                            child: Container(
-                              width: 30,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                  color: const Color(0xFF274972),
-                                  borderRadius: BorderRadius.circular(50)),
-                              child: PhosphorIcon(
-                                isHovered2
-                                    ? PhosphorIcons.fill.twitterLogo
-                                    : PhosphorIcons.regular.twitterLogo,
-                                color: isHovered2 ? Colors.blue : Colors.white,
-                                size: 25.0,
+                            child: MouseRegion(
+                              onEnter: (_) {
+                                setState(() {
+                                  isHovered2 = true;
+                                });
+                              },
+                              onExit: (_) {
+                                setState(() {
+                                  isHovered2 = false;
+                                });
+                              },
+                              child: Container(
+                                width: 30,
+                                height: 30,
+                                decoration: BoxDecoration(
+                                    color: const Color(0xFF274972),
+                                    borderRadius: BorderRadius.circular(50)),
+                                child: PhosphorIcon(
+                                  isHovered2
+                                      ? PhosphorIcons.fill.envelope
+                                      : PhosphorIcons.regular.envelope,
+                                  color: isHovered2 ? const Color(0xFFEA4335) : Colors.white,
+                                  size: 25.0,
+                                ),
                               ),
                             ),
                           ),
                           const SizedBox(
                             width: 10,
                           ),
-                          MouseRegion(
-                            onEnter: (_) {
-                              setState(() {
-                                isHovered3 = true;
-                              });
+                          InkWell(
+                            onTap: () {
+                              Url().urlInstagram();
                             },
-                            onExit: (_) {
-                              setState(() {
-                                isHovered3 = false;
-                              });
-                            },
-                            child: Container(
-                              width: 30,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                  color: const Color(0xFF274972),
-                                  borderRadius: BorderRadius.circular(50)),
-                              child: PhosphorIcon(
-                                isHovered3
-                                    ? PhosphorIcons.fill.instagramLogo
-                                    : PhosphorIcons.regular.instagramLogo,
-                                color: isHovered3
-                                    ? const Color(0xffE1306C)
-                                    : const Color(0xffffffff),
-                                size: 25.0,
+                            child: MouseRegion(
+                              onEnter: (_) {
+                                setState(() {
+                                  isHovered3 = true;
+                                });
+                              },
+                              onExit: (_) {
+                                setState(() {
+                                  isHovered3 = false;
+                                });
+                              },
+                              child: Container(
+                                width: 30,
+                                height: 30,
+                                decoration: BoxDecoration(
+                                    color: const Color(0xFF274972),
+                                    borderRadius: BorderRadius.circular(50)),
+                                child: PhosphorIcon(
+                                  isHovered3
+                                      ? PhosphorIcons.fill.instagramLogo
+                                      : PhosphorIcons.regular.instagramLogo,
+                                  color: isHovered3
+                                      ? const Color(0xffE1306C)
+                                      : const Color(0xffffffff),
+                                  size: 25.0,
+                                ),
                               ),
                             ),
                           ),
                           const SizedBox(
                             width: 10,
-                          ),
-                          MouseRegion(
-                            onEnter: (_) {
-                              setState(() {
-                                isHovered = true;
-                              });
-                            },
-                            onExit: (_) {
-                              setState(() {
-                                isHovered = false;
-                              });
-                            },
-                            child: Container(
-                              width: 30,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                color: const Color(0xFF274972),
-                                borderRadius: BorderRadius.circular(50),
-                              ),
-                              child: PhosphorIcon(
-                                PhosphorIcons.fill.linkedinLogo,
-                                color: isHovered ? Colors.blue : Colors.white,
-                                size: 22.0,
-                              ),
-                            ),
                           ),
                         ],
                       ),

@@ -120,14 +120,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.1"
-  meta_seo:
-    dependency: "direct main"
-    description:
-      name: meta_seo
-      sha256: d0dc2852c6e8337120b2f73c93c3add8dc34f0d216f536958bc95d1c050c7039
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.7"
   path:
     dependency: transitive
     description:

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:velocity_net/pages/contact.dart';
 import 'package:velocity_net/pages/home.dart';
 
 void main() {
@@ -9,7 +8,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,7 +28,10 @@ class MyApp extends StatelessWidget {
         //     surface: Colors.black,
         //     onSurface: Colors.black)),
       ),
-      home: const Contact(),
+      home: const Home(),
+      // routes: {
+      //   '/contatos': (context) => const Contact(),
+      // },
     );
   }
 }

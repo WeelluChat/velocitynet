@@ -37,6 +37,7 @@ dependencies:
   flutter_image_slideshow: ^0.1.6
   phosphor_flutter: ^2.0.0
   url_launcher: ^6.1.14
+  meta_seo: ^3.0.7
 
 dev_dependencies:
   flutter_test:
@@ -67,8 +68,6 @@ flutter:
     - assets/image_promocao.png
     - assets/velocitynet_image.jpg
     - assets/weellu_logo.png
-    - assets/plans/plano1.png
-    - assets/plans/plano2.png
     - assets/offer.jpg
     - assets/description/descrption_image.jpg
     - assets/benefits.png
@@ -78,7 +77,10 @@ flutter:
     - assets/slider/banner_slide02.png
     - assets/slider/banner_slide03.png
     - assets/slider/banner_slide04.jpg
-    
+    - assets/plans/plano1000.png
+    - assets/plans/plano900.png
+    - assets/plans/plano800.png
+    - assets/plans/plano700.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

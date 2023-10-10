@@ -43,7 +43,7 @@ class _PlansComponentState extends State<PlansComponent> {
                   width: 300,
                   child: Column(
                     children: [
-                      Image.asset("plans/plano1.png"),
+                      Image.asset("plans/plano500.png"),
                       SizedBox(
                         height: 50,
                         width: double.infinity,
@@ -78,7 +78,7 @@ class _PlansComponentState extends State<PlansComponent> {
                   height: 550,
                   child: Column(
                     children: [
-                      Image.asset("plans/plano1.png"),
+                      Image.asset("plans/plano700.png"),
                       SizedBox(
                         height: 50,
                         width: double.infinity,
@@ -112,7 +112,7 @@ class _PlansComponentState extends State<PlansComponent> {
                   width: 300,
                   child: Column(
                     children: [
-                      Image.asset("plans/plano1.png"),
+                      Image.asset("plans/plano800.png"),
                       SizedBox(
                         height: 50,
                         width: double.infinity,
@@ -146,7 +146,7 @@ class _PlansComponentState extends State<PlansComponent> {
                   width: 300,
                   child: Column(
                     children: [
-                      Image.asset("plans/plano1.png"),
+                      Image.asset("plans/plano900.png"),
                       SizedBox(
                         height: 50,
                         width: double.infinity,
@@ -180,7 +180,7 @@ class _PlansComponentState extends State<PlansComponent> {
                   width: 300,
                   child: Column(
                     children: [
-                      Image.asset("plans/plano1.png"),
+                      Image.asset("plans/plano1000.png"),
                       SizedBox(
                         height: 50,
                         width: double.infinity,

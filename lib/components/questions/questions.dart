@@ -46,8 +46,9 @@ class _QuestionsState extends State<Questions> {
                             'Perguntas e Dúvidas Frequentes',
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize:
-                                  MediaQuery.of(context).size.width < 600 ? 30 : 40,
+                              fontSize: MediaQuery.of(context).size.width < 600
+                                  ? 30
+                                  : 40,
                             ),
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
@@ -211,7 +212,7 @@ class _QuestionsState extends State<Questions> {
                     Padding(
                       padding: const EdgeInsets.all(15),
                       child: Text(
-                        'Flutter teste',
+                        'Plano Corporativo sem fidelidade, 50% de upload e atendimento ágil. Conecte-se eficientemente e impulsione seu negócio conosco.',
                         style: TextStyle(
                           color: const Color(0xff7A7A7A),
                           fontSize:
@@ -259,11 +260,11 @@ class _QuestionsState extends State<Questions> {
                     Padding(
                       padding: const EdgeInsets.all(15),
                       child: Text(
-                        'Flutter teste',
+                        'Desfrute de Benefícios Exclusivos: HBO, Olé TV e Ubook Livros.',
                         style: TextStyle(
                           color: const Color(0xff7A7A7A),
                           fontSize:
-                              MediaQuery.of(context).size.width < 400 ? 18 :20,
+                              MediaQuery.of(context).size.width < 400 ? 18 : 20,
                         ),
                       ),
                     ),

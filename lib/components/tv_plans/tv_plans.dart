@@ -1,5 +1,6 @@
 import 'package:contained_tab_bar_view_with_custom_page_navigator/contained_tab_bar_view_with_custom_page_navigator.dart';
 import 'package:flutter/material.dart';
+import 'package:velocity_net/helpers/url.dart';
 
 class TvPlans extends StatefulWidget {
   const TvPlans({super.key});
@@ -95,7 +96,9 @@ class _TvPlansState extends State<TvPlans> {
               height: 815,
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('banner_tv_planos.png',),
+                  image: AssetImage(
+                    'banner_tv_planos.png',
+                  ),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -117,17 +120,33 @@ class _TvPlansState extends State<TvPlans> {
                     height: 30,
                   ),
                   Wrap(
-                    alignment:WrapAlignment.center,
+                    alignment: WrapAlignment.center,
                     runSpacing: 10,
                     spacing: 20,
                     children: [
-                      Image.asset('googleplay.png', width: 200),
-                      Image.asset(
-                        'apple_store.png',
-                        width: 200,
+                      InkWell(
+                        child: Image.asset(
+                          'googleplay.png',
+                          width: 200,
+                          fit: BoxFit.cover,
+                        ),
+                        onTap: () {
+                          Url().urlPlayStore();
+                        },
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Url().urlAppStore();
+                        },
+                        child: Image.asset(
+                          'apple_store.png',
+                          width: 200,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ],
                   ),
+                  
                 ],
               ),
             ),
@@ -137,8 +156,7 @@ class _TvPlansState extends State<TvPlans> {
               child: Text(
                 textAlign: TextAlign.center,
                 'ESCOLHA O PLANO IDEAL PARA VOCÊ',
-                style:
-                    TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
               ),
             ),
             Padding(
@@ -156,20 +174,24 @@ class _TvPlansState extends State<TvPlans> {
                   tabs: const [
                     Text(
                       'LIFE LINE',
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
                     ),
                     Text(
                       'START HD',
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
                     ),
                     Text(
                       'TOP HD',
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
                     ),
                     Text(
                       textAlign: TextAlign.center,
                       'PREMIUM HD',
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
                     ),
                   ],
                   views: [
@@ -177,7 +199,7 @@ class _TvPlansState extends State<TvPlans> {
                       color: const Color(0xffF1F1F1),
                       child: Column(
                         children: [
-                           Padding(
+                          Padding(
                             padding: const EdgeInsets.only(top: 20, bottom: 20),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -188,21 +210,35 @@ class _TvPlansState extends State<TvPlans> {
                                       '+60 CANAIS DE TV',
                                       style: TextStyle(
                                           color: Colors.black,
-                                          fontSize: MediaQuery.of(context).size.width < 600 ? 20 : 25,
+                                          fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width <
+                                                  600
+                                              ? 20
+                                              : 25,
                                           fontWeight: FontWeight.bold),
                                     ),
-                                     Text(
+                                    Text(
                                       '+500h de VOD',
                                       style: TextStyle(
-                                          color: Colors.blue,
-                                          fontSize: MediaQuery.of(context).size.width < 600 ? 20 : 25,
+                                        color: Colors.blue,
+                                        fontSize:
+                                            MediaQuery.of(context).size.width <
+                                                    600
+                                                ? 20
+                                                : 25,
                                       ),
                                     ),
-                                     Text(
+                                    Text(
                                       'GRATIS PARA CLIENTES',
                                       style: TextStyle(
                                           color: Colors.green,
-                                          fontSize: MediaQuery.of(context).size.width < 600 ? 15 : 20,
+                                          fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width <
+                                                  600
+                                              ? 15
+                                              : 20,
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ],
@@ -244,7 +280,7 @@ class _TvPlansState extends State<TvPlans> {
                       color: const Color(0xffF1F1F1),
                       child: Column(
                         children: [
-                           Padding(
+                          Padding(
                             padding: const EdgeInsets.only(top: 20, bottom: 20),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -255,27 +291,41 @@ class _TvPlansState extends State<TvPlans> {
                                       '+80 CANAIS DE TV',
                                       style: TextStyle(
                                           color: Colors.black,
-                                          fontSize: MediaQuery.of(context).size.width < 600 ? 20 : 25,
+                                          fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width <
+                                                  600
+                                              ? 20
+                                              : 25,
                                           fontWeight: FontWeight.bold),
                                     ),
                                     Text(
                                       '+2000h de VOD',
                                       style: TextStyle(
-                                          color: Colors.blue,
-                                          fontSize: MediaQuery.of(context).size.width < 600 ? 20 : 25,
+                                        color: Colors.blue,
+                                        fontSize:
+                                            MediaQuery.of(context).size.width <
+                                                    600
+                                                ? 20
+                                                : 25,
                                       ),
                                     ),
                                     Text(
                                       'R\$ 79,90 por mês',
                                       style: TextStyle(
                                           color: Colors.green,
-                                          fontSize: MediaQuery.of(context).size.width < 600 ? 15 : 20,
+                                          fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width <
+                                                  600
+                                              ? 15
+                                              : 20,
                                           fontWeight: FontWeight.bold),
                                     ),
                                     const SizedBox(
-                                          height: 10,
-                                        ),
-                                     Row(
+                                      height: 10,
+                                    ),
+                                    Row(
                                       children: [
                                         const Icon(
                                           Icons.add_circle,
@@ -288,7 +338,12 @@ class _TvPlansState extends State<TvPlans> {
                                           'LIFE LINE',
                                           style: TextStyle(
                                               color: const Color(0xff081E38),
-                                              fontSize: MediaQuery.of(context).size.width < 600 ? 15 : 18,
+                                              fontSize: MediaQuery.of(context)
+                                                          .size
+                                                          .width <
+                                                      600
+                                                  ? 15
+                                                  : 18,
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ],
@@ -302,7 +357,8 @@ class _TvPlansState extends State<TvPlans> {
                             child: GridView.builder(
                               itemBuilder: (context, index) {
                                 return Container(
-                                  padding: MediaQuery.of(context).size.width < 600
+                                  padding:
+                                      MediaQuery.of(context).size.width < 600
                                           ? const EdgeInsets.all(5)
                                           : const EdgeInsets.all(20),
                                   decoration: BoxDecoration(
@@ -331,7 +387,7 @@ class _TvPlansState extends State<TvPlans> {
                       color: const Color(0xffF1F1F1),
                       child: Column(
                         children: [
-                           Padding(
+                          Padding(
                             padding: const EdgeInsets.only(top: 20, bottom: 20),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -342,27 +398,41 @@ class _TvPlansState extends State<TvPlans> {
                                       '+120 CANAIS DE TV',
                                       style: TextStyle(
                                           color: Colors.black,
-                                          fontSize: MediaQuery.of(context).size.width < 600 ? 20 : 25,
+                                          fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width <
+                                                  600
+                                              ? 20
+                                              : 25,
                                           fontWeight: FontWeight.bold),
                                     ),
                                     Text(
                                       '+3000h de VOD',
                                       style: TextStyle(
-                                          color: Colors.blue,
-                                          fontSize: MediaQuery.of(context).size.width < 600 ? 20 : 25,
+                                        color: Colors.blue,
+                                        fontSize:
+                                            MediaQuery.of(context).size.width <
+                                                    600
+                                                ? 20
+                                                : 25,
                                       ),
                                     ),
                                     Text(
                                       'R\$ 119,90 por mês',
                                       style: TextStyle(
                                           color: Colors.green,
-                                          fontSize: MediaQuery.of(context).size.width < 600 ? 15 : 20,
+                                          fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width <
+                                                  600
+                                              ? 15
+                                              : 20,
                                           fontWeight: FontWeight.bold),
                                     ),
                                     const SizedBox(
                                       height: 10,
                                     ),
-                                     Row(
+                                    Row(
                                       children: [
                                         const Icon(
                                           Icons.add_circle,
@@ -375,10 +445,17 @@ class _TvPlansState extends State<TvPlans> {
                                           'LIFE LINE',
                                           style: TextStyle(
                                               color: const Color(0xff081E38),
-                                              fontSize: MediaQuery.of(context).size.width < 600 ? 15 : 18,
+                                              fontSize: MediaQuery.of(context)
+                                                          .size
+                                                          .width <
+                                                      600
+                                                  ? 15
+                                                  : 18,
                                               fontWeight: FontWeight.bold),
                                         ),
-                                        const SizedBox(width: 20,),
+                                        const SizedBox(
+                                          width: 20,
+                                        ),
                                         const Icon(
                                           Icons.add_circle,
                                           color: Color(0xff081E38),
@@ -390,7 +467,12 @@ class _TvPlansState extends State<TvPlans> {
                                           'START HD',
                                           style: TextStyle(
                                               color: const Color(0xff081E38),
-                                              fontSize: MediaQuery.of(context).size.width < 600 ? 15 : 18,
+                                              fontSize: MediaQuery.of(context)
+                                                          .size
+                                                          .width <
+                                                      600
+                                                  ? 15
+                                                  : 18,
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ],
@@ -404,7 +486,8 @@ class _TvPlansState extends State<TvPlans> {
                             child: GridView.builder(
                               itemBuilder: (context, index) {
                                 return Container(
-                                  padding:  MediaQuery.of(context).size.width < 600
+                                  padding:
+                                      MediaQuery.of(context).size.width < 600
                                           ? const EdgeInsets.all(5)
                                           : const EdgeInsets.all(20),
                                   decoration: BoxDecoration(
@@ -433,7 +516,7 @@ class _TvPlansState extends State<TvPlans> {
                       color: const Color(0xffF1F1F1),
                       child: Column(
                         children: [
-                           Padding(
+                          Padding(
                             padding: const EdgeInsets.only(top: 20, bottom: 20),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -444,28 +527,41 @@ class _TvPlansState extends State<TvPlans> {
                                       '+130 CANAIS DE TV',
                                       style: TextStyle(
                                           color: Colors.black,
-                                          fontSize: MediaQuery.of(context).size.width < 600 ? 20 : 25,
+                                          fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width <
+                                                  600
+                                              ? 20
+                                              : 25,
                                           fontWeight: FontWeight.bold),
                                     ),
                                     Text(
                                       '+4000h de VOD',
                                       style: TextStyle(
-                                          color: Colors.blue,
-                                          fontSize: MediaQuery.of(context).size.width < 600 ? 20 : 25,
+                                        color: Colors.blue,
+                                        fontSize:
+                                            MediaQuery.of(context).size.width <
+                                                    600
+                                                ? 20
+                                                : 25,
                                       ),
                                     ),
-                                    
                                     Text(
                                       'R\$ 149,90 por mês',
                                       style: TextStyle(
                                           color: Colors.green,
-                                          fontSize: MediaQuery.of(context).size.width < 600 ? 15 : 20,
+                                          fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width <
+                                                  600
+                                              ? 15
+                                              : 20,
                                           fontWeight: FontWeight.bold),
                                     ),
                                     const SizedBox(
                                       height: 10,
                                     ),
-                                     Row(
+                                    Row(
                                       children: [
                                         const Icon(
                                           Icons.add_circle,
@@ -478,7 +574,12 @@ class _TvPlansState extends State<TvPlans> {
                                           'LIFE LINE',
                                           style: TextStyle(
                                               color: const Color(0xff081E38),
-                                              fontSize: MediaQuery.of(context).size.width < 600 ? 15 : 18,
+                                              fontSize: MediaQuery.of(context)
+                                                          .size
+                                                          .width <
+                                                      600
+                                                  ? 15
+                                                  : 18,
                                               fontWeight: FontWeight.bold),
                                         ),
                                         const SizedBox(
@@ -495,7 +596,12 @@ class _TvPlansState extends State<TvPlans> {
                                           'START HD',
                                           style: TextStyle(
                                               color: const Color(0xff081E38),
-                                              fontSize: MediaQuery.of(context).size.width < 600 ? 15 : 18,
+                                              fontSize: MediaQuery.of(context)
+                                                          .size
+                                                          .width <
+                                                      600
+                                                  ? 15
+                                                  : 18,
                                               fontWeight: FontWeight.bold),
                                         ),
                                         const SizedBox(
@@ -512,7 +618,12 @@ class _TvPlansState extends State<TvPlans> {
                                           'TOP HD',
                                           style: TextStyle(
                                               color: const Color(0xff081E38),
-                                              fontSize: MediaQuery.of(context).size.width < 600 ? 15 : 18,
+                                              fontSize: MediaQuery.of(context)
+                                                          .size
+                                                          .width <
+                                                      600
+                                                  ? 15
+                                                  : 18,
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ],
@@ -526,7 +637,8 @@ class _TvPlansState extends State<TvPlans> {
                             child: GridView.builder(
                               itemBuilder: (context, index) {
                                 return Container(
-                                  padding:  MediaQuery.of(context).size.width < 600
+                                  padding:
+                                      MediaQuery.of(context).size.width < 600
                                           ? const EdgeInsets.all(5)
                                           : const EdgeInsets.all(20),
                                   decoration: BoxDecoration(

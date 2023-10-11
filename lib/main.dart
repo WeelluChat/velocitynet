@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         //     surface: Colors.black,
         //     onSurface: Colors.black)),
       ),
-      home: const Contact(),
+      home: const Home(),
     );
   }
 }

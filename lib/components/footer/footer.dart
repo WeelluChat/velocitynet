@@ -114,7 +114,8 @@ class _FooterState extends State<Footer> {
                                     borderRadius: BorderRadius.circular(50)),
                                 child: Icon(
                                   Icons.facebook,
-                                  color: isHovered1 ? Colors.blue : Colors.white,
+                                  color:
+                                      isHovered1 ? Colors.blue : Colors.white,
                                   size: 25.0,
                                 ),
                               ),
@@ -125,7 +126,7 @@ class _FooterState extends State<Footer> {
                           ),
                           InkWell(
                             onTap: () {
-                                Url().urlGmail();
+                              Url().urlGmail();
                             },
                             child: MouseRegion(
                               onEnter: (_) {
@@ -148,7 +149,9 @@ class _FooterState extends State<Footer> {
                                   isHovered2
                                       ? PhosphorIcons.fill.envelope
                                       : PhosphorIcons.regular.envelope,
-                                  color: isHovered2 ? const Color(0xFFEA4335) : Colors.white,
+                                  color: isHovered2
+                                      ? const Color(0xFFEA4335)
+                                      : Colors.white,
                                   size: 25.0,
                                 ),
                               ),
@@ -261,7 +264,7 @@ class _FooterState extends State<Footer> {
                 ],
               ),
             ),
-            const SizedBox(
+            SizedBox(
               width: 280,
               height: 260,
               //  color: Colors.red,
@@ -272,7 +275,7 @@ class _FooterState extends State<Footer> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
+                          const Row(
                             children: [
                               Text(
                                 'SOBRE A VELOCITYNET',
@@ -283,50 +286,48 @@ class _FooterState extends State<Footer> {
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
-                          Text(
-                            'Sobre Nós',
-                            style: TextStyle(
-                                color: Color(0xffDED4D4),
-                                fontSize: 16,
-                                height: 2),
-                          ),
-                          Text(
+                          const Text(
                             'Contato',
                             style: TextStyle(
                                 color: Color(0xffDED4D4),
                                 fontSize: 16,
                                 height: 2),
                           ),
-                          Text(
+                          const Text(
                             'Politica de Privacidade',
                             style: TextStyle(
                                 color: Color(0xffDED4D4),
                                 fontSize: 16,
                                 height: 2),
                           ),
-                          Text(
+                          const Text(
                             'Politica de Privacidade',
                             style: TextStyle(
                                 color: Color(0xffDED4D4),
                                 fontSize: 16,
                                 height: 2),
                           ),
-                          Text(
+                          const Text(
                             'Termos e Condições',
                             style: TextStyle(
                                 color: Color(0xffDED4D4),
                                 fontSize: 16,
                                 height: 2),
                           ),
-                          Text(
-                            'Missão & Visão',
-                            style: TextStyle(
-                                color: Color(0xffDED4D4),
-                                fontSize: 16,
-                                height: 2),
+                          InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(context, '/missao-visao');
+                            },
+                            child: const Text(
+                              'Missão & Visão',
+                              style: TextStyle(
+                                  color: Color(0xffDED4D4),
+                                  fontSize: 16,
+                                  height: 2),
+                            ),
                           ),
                         ],
                       ),
@@ -335,9 +336,9 @@ class _FooterState extends State<Footer> {
                 ],
               ),
             ),
-            const SizedBox(
+             const SizedBox(
               width: 280,
-              height: 150,
+              height: 200,
               //  color: Colors.red,
               child: Column(
                 children: [
@@ -361,7 +362,23 @@ class _FooterState extends State<Footer> {
                             height: 20,
                           ),
                           Text(
-                            'Segunda - Domingo',
+                            'Segunda - Sábado',
+                            style: TextStyle(
+                                fontSize: 16, color: Color(0xffDED4D4)),
+                          ),
+                          Text(
+                            '08:00 AM - 20:00 PM',
+                            style: TextStyle(
+                                color: Color(0xffffffff),
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                height: 2),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            'Domingo',
                             style: TextStyle(
                                 fontSize: 16, color: Color(0xffDED4D4)),
                           ),

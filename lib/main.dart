@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:velocity_net/pages/company_values.dart';
 import 'package:velocity_net/pages/contact.dart';
 import 'package:velocity_net/pages/home.dart';
 import 'package:velocity_net/pages/tv_plans.dart';
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/contatos': (context) => const Contact(),
         '/tvplanos': (context) => const TvPlans(),
+        '/missao-visao': (context) => const CompanyValues(),
       },
     );
   }

@@ -50,4 +50,17 @@ class Url {
       Uri.parse("https://webchat.weellu.com/"),
     );
   }
+
+  Future<void> urlPlayStore() async {
+    await launchUrl(
+      Uri.parse("https://play.google.com/store/apps/details?id=br.tv.ole.oletv&hl=en_US"),
+    );
+  }
+
+Future<void> urlAppStore() async {
+    await launchUrl(
+      Uri.parse("https://apps.apple.com/br/app/ol%C3%A9-tv/id1301299065"),
+    );
+  }
+  
 }

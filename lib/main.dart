@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:velocity_net/pages/contact.dart';
 import 'package:velocity_net/pages/home.dart';
+import 'package:velocity_net/pages/tv_plans.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/contatos': (context) => const Contact(),
+        '/tvplanos': (context) => const TvPlans(),
       },
     );
   }

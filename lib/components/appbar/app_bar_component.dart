@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:velocity_net/helpers/url.dart';
-import 'package:velocity_net/pages/home.dart';
 
 class AppBarComponent extends AppBar {
   final ScrollController scrollController;
@@ -189,7 +188,7 @@ class _AppBarComponentState extends State<AppBarComponent> {
                         curve: Curves.easeInQuad);
                   },
                   child: const Text(
-                    "BENEFÍCIOS",
+                    "TV",
                     style: TextStyle(color: Colors.black),
                   ),
                 ),

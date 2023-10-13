@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:velocity_net/components/appbar/app_bar_component.dart';
 import 'package:velocity_net/components/appbar/app_bar_component_resize.dart';
-import 'package:velocity_net/components/tv_plans/tv_plans.dart';
 import 'package:velocity_net/helpers/url.dart';
 import 'package:velocity_net/pages/main.dart';
 
@@ -189,7 +188,9 @@ class _HomeState extends State<Home> {
               ),
             )
           : null,
-      body:const TvPlans(),
+      body: Main(
+        scrollController: scrollController,
+      ),
     );
   }
 }

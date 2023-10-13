@@ -1,5 +1,9 @@
 import 'package:contained_tab_bar_view_with_custom_page_navigator/contained_tab_bar_view_with_custom_page_navigator.dart';
 import 'package:flutter/material.dart';
+import 'package:velocity_net/components/appbar/app_bar_component.dart';
+import 'package:velocity_net/components/appbar/app_bar_component_resize.dart';
+import 'package:velocity_net/components/copyright/copyright.dart';
+import 'package:velocity_net/components/footer/footer.dart';
 import 'package:velocity_net/helpers/url.dart';
 
 class TvPlans extends StatefulWidget {
@@ -10,7 +14,9 @@ class TvPlans extends StatefulWidget {
 }
 
 class _TvPlansState extends State<TvPlans> {
-  final List<String> LifeLinePlans = [
+  bool mobile = false;
+  final ScrollController scrollController = ScrollController();
+  final List<String> lifeLinePlans = [
     'tv_plans/agro_canal.png',
     'tv_plans/aparecida_logo.png',
     'tv_plans/band_logo.png',
@@ -87,8 +93,177 @@ class _TvPlansState extends State<TvPlans> {
   ];
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
+    mobile = MediaQuery.of(context).size.width > 1200 ? false : true;
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: mobile == true
+            ? const Size.fromHeight(80)
+            : const Size.fromHeight(140),
+        child: Container(
+          margin: mobile == true
+              ? const EdgeInsets.only(top: 15)
+              : const EdgeInsets.only(top: 0),
+          child: (mobile == true)
+              ? const AppBarComponentResize()
+              : AppBarComponent(scrollController: scrollController),
+        ),
+      ),
+      endDrawer: mobile
+          ? Drawer(
+              child: ListView(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15, top: 15),
+                    child: InkWell(
+                      hoverColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () {
+                        scrollController.animateTo(
+                            scrollController.position.minScrollExtent,
+                            duration: const Duration(milliseconds: 1000),
+                            curve: Curves.easeInQuad);
+                        // print('meu botão aqui');
+                        Navigator.pop(context);
+                      },
+                      child: const Text(
+                        "INÍCIO",
+                        style: TextStyle(fontSize: 18, color: Colors.black),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: InkWell(
+                      hoverColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () {
+                        scrollController.animateTo(
+                            scrollController.position.minScrollExtent + 600,
+                            duration: const Duration(milliseconds: 1000),
+                            curve: Curves.easeInQuad);
+                        Navigator.pop(context);
+                      },
+                      child: const Text(
+                        "PLANOS",
+                        style: TextStyle(fontSize: 18, color: Colors.black),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: InkWell(
+                      hoverColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () {
+                        scrollController.animateTo(
+                            scrollController.position.minScrollExtent + 1400,
+                            duration: const Duration(milliseconds: 1000),
+                            curve: Curves.easeInQuad);
+                        Navigator.pop(context);
+                      },
+                      child: const Text(
+                        "SOBRE NÓS",
+                        style: TextStyle(fontSize: 18, color: Colors.black),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: InkWell(
+                      hoverColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () {
+                        scrollController.animateTo(
+                            scrollController.position.minScrollExtent + 3350,
+                            duration: const Duration(milliseconds: 1000),
+                            curve: Curves.easeInQuad);
+                        Navigator.pop(context);
+                      },
+                      child: const Text(
+                        "OFERTA",
+                        style: TextStyle(fontSize: 18, color: Colors.black),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: InkWell(
+                      hoverColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () {
+                        scrollController.animateTo(
+                            scrollController.position.minScrollExtent + 3850,
+                            duration: const Duration(milliseconds: 1000),
+                            curve: Curves.easeInQuad);
+                        Navigator.pop(context);
+                      },
+                      child: const Text(
+                        "BENEFÍCIOS",
+                        style: TextStyle(fontSize: 18, color: Colors.black),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15, right: 15),
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                        backgroundColor: const Color(0XFF13294E),
+                      ),
+                      onPressed: () {
+                        Url().urlWhatsApp();
+                      },
+                      child: const Text(
+                        "ASSINE JÁ",
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15, right: 15),
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                          backgroundColor: const Color(0XFF13294E)),
+                      onPressed: () {},
+                      child: const Text(
+                        "CENTRAL DO ASSINANTE",
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          : null,
+      body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
@@ -146,13 +321,12 @@ class _TvPlansState extends State<TvPlans> {
                       ),
                     ],
                   ),
-                  
                 ],
               ),
             ),
             const Padding(
               padding:
-                  EdgeInsets.only(top: 30, bottom: 30, left: 20, right: 20),
+                  EdgeInsets.only(top: 50, bottom: 50, left: 20, right: 20),
               child: Text(
                 textAlign: TextAlign.center,
                 'ESCOLHA O PLANO IDEAL PARA VOCÊ',
@@ -160,7 +334,7 @@ class _TvPlansState extends State<TvPlans> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 50),
               child: Container(
                 padding: const EdgeInsets.all(8.0),
                 color: const Color(0xff081E38),
@@ -258,11 +432,11 @@ class _TvPlansState extends State<TvPlans> {
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Image.asset(
-                                    LifeLinePlans[index],
+                                    lifeLinePlans[index],
                                   ),
                                 );
                               },
-                              itemCount: LifeLinePlans.length,
+                              itemCount: lifeLinePlans.length,
                               padding: const EdgeInsets.only(
                                   left: 20, right: 20, bottom: 20),
                               gridDelegate:
@@ -664,10 +838,11 @@ class _TvPlansState extends State<TvPlans> {
                       ),
                     ),
                   ],
-                  onChange: (index) => print(index),
                 ),
               ),
             ),
+            const Footer(),
+            const Copyright(),
           ],
         ),
       ),

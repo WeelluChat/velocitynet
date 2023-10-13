@@ -102,7 +102,7 @@ class Benefits extends StatelessWidget {
                             MaterialStateProperty.all(const Color(0XFFFFB000)),
                       ),
                       onPressed: () {
-                        Url().urlWhatsApp();
+                        Navigator.pushNamed(context, '/tvplanos');
                       },
                       child: const Text(
                         "SAIBA MAIS",

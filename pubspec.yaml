@@ -74,8 +74,6 @@ flutter:
     - assets/speedtest/banner_speed.jpg
     - assets/slider/banner_slide01.png
     - assets/slider/banner_slide02.png
-    - assets/slider/banner_slide03.png
-    - assets/slider/banner_slide04.jpg
     - assets/plans/plano1000.png
     - assets/plans/plano900.png
     - assets/plans/plano800.png

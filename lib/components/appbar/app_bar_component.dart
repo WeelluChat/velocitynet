@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:velocity_net/helpers/url.dart';
+import 'package:velocity_net/pages/home.dart';
 
 class AppBarComponent extends AppBar {
   final ScrollController scrollController;
@@ -21,6 +22,8 @@ class _AppBarComponentState extends State<AppBarComponent> {
 
   @override
   Widget build(BuildContext context) {
+    final currentRoute = ModalRoute.of(context)?.settings.name;
+
     return Container(
       constraints: const BoxConstraints(
         maxWidth: 500.0,
@@ -104,6 +107,10 @@ class _AppBarComponentState extends State<AppBarComponent> {
                 ),
                 InkWell(
                   onTap: () {
+                    if (currentRoute != "/") {
+                      Navigator.pushNamed(context, '/');
+                    }
+
                     scrollController.animateTo(
                         scrollController.position.minScrollExtent,
                         duration: const Duration(milliseconds: 1000),
@@ -119,6 +126,9 @@ class _AppBarComponentState extends State<AppBarComponent> {
                 ),
                 InkWell(
                   onTap: () {
+                    if (currentRoute != "/") {
+                      Navigator.pushNamed(context, '/');
+                    }
                     scrollController.animateTo(
                         scrollController.position.minScrollExtent + 600,
                         duration: const Duration(milliseconds: 1000),
@@ -134,6 +144,9 @@ class _AppBarComponentState extends State<AppBarComponent> {
                 ),
                 InkWell(
                   onTap: () {
+                    if (currentRoute != "/") {
+                      Navigator.pushNamed(context, '/');
+                    }
                     scrollController.animateTo(
                         scrollController.position.minScrollExtent + 1400,
                         duration: const Duration(milliseconds: 1000),
@@ -149,6 +162,9 @@ class _AppBarComponentState extends State<AppBarComponent> {
                 ),
                 InkWell(
                   onTap: () {
+                    if (currentRoute != "/") {
+                      Navigator.pushNamed(context, '/');
+                    }
                     scrollController.animateTo(
                         scrollController.position.minScrollExtent + 1910,
                         duration: const Duration(milliseconds: 1000),
@@ -164,6 +180,9 @@ class _AppBarComponentState extends State<AppBarComponent> {
                 ),
                 InkWell(
                   onTap: () {
+                    if (currentRoute != "/") {
+                      Navigator.pushNamed(context, '/');
+                    }
                     scrollController.animateTo(
                         scrollController.position.minScrollExtent + 2410,
                         duration: const Duration(milliseconds: 1000),
@@ -177,15 +196,15 @@ class _AppBarComponentState extends State<AppBarComponent> {
                 const SizedBox(
                   width: 20,
                 ),
-                // InkWell(
-                //   onTap: () {
-                //     Navigator.of(context).pushNamed('/contatos');
-                //   },
-                //   child: const Text(
-                //     "CONTATOS",
-                //     style: TextStyle(color: Colors.black),
-                //   ),
-                // ),
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/contatos');
+                  },
+                  child: const Text(
+                    "CONTATOS",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
                 const SizedBox(
                   width: 20,
                 ),

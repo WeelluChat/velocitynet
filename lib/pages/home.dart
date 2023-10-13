@@ -18,6 +18,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     mobile = MediaQuery.of(context).size.width > 1200 ? false : true;
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: mobile == true

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:velocity_net/helpers/url.dart';
 
 class Benefits extends StatelessWidget {
   const Benefits({super.key});

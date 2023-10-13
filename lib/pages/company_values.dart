@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hexagon/hexagon.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:velocity_net/components/appbar/app_bar_component.dart';
 import 'package:velocity_net/components/appbar/app_bar_component_resize.dart';
@@ -206,25 +205,38 @@ class _CompanyValuesState extends State<CompanyValues> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset('logo2.png', width: MediaQuery.of(context).size.width < 700 ? 400 : 700),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20, right: 20),
+                    child: Image.asset(
+                      'logo2.png',
+                      width:
+                          MediaQuery.of(context).size.width < 700 ? 400 : 700,
+                    ),
+                  )
                 ],
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.only(top: 50, bottom: 50),
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 20, right: 20, top: 50, bottom: 50),
               child: Text(
-                  'Guiados por Missão, Moldados por Visão, Sustentados por Valores', textAlign: TextAlign.center, style: TextStyle(fontSize: 40),),
+                'Guiados por Missão, Moldados por Visão, Sustentados por Valores',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width < 600 ? 30 : 40,
+                ),
+              ),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 50),
+              padding: const EdgeInsets.only(bottom: 50, right: 20, left: 20),
               child: Wrap(
-                runSpacing:20,
+                runSpacing: 20,
                 alignment: WrapAlignment.center,
                 spacing: 30,
                 children: [
                   Container(
-                    height: 490,
-                    width: 400,
+                    height: MediaQuery.of(context).size.width < 600 ? 400 : 490,
+                    width: MediaQuery.of(context).size.width < 600 ? 300 : 390,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage(
@@ -241,24 +253,29 @@ class _CompanyValuesState extends State<CompanyValues> {
                           color: Colors.white,
                           size: 60,
                         ),
-                        const Text(
+                        Text(
                           'MISSÃO',
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: 45,
+                              fontSize: MediaQuery.of(context).size.width < 600
+                                  ? 30
+                                  : 40,
                               fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(
                           height: 20,
                         ),
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
                           child: Text(
                             textAlign: TextAlign.center,
                             'O propósito, a razão pela qual a empresa existe',
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 30,
+                                fontSize:
+                                    MediaQuery.of(context).size.width < 600
+                                        ? 25
+                                        : 30,
                                 fontWeight: FontWeight.normal),
                           ),
                         ),
@@ -269,8 +286,8 @@ class _CompanyValuesState extends State<CompanyValues> {
                     ),
                   ),
                   Container(
-                    height: 490,
-                    width: 400,
+                    height: MediaQuery.of(context).size.width < 600 ? 400 : 490,
+                    width: MediaQuery.of(context).size.width < 600 ? 300 : 390,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage(
@@ -287,24 +304,29 @@ class _CompanyValuesState extends State<CompanyValues> {
                           color: Colors.white,
                           size: 60,
                         ),
-                        const Text(
+                        Text(
                           'VISÃO',
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: 45,
+                              fontSize: MediaQuery.of(context).size.width < 600
+                                  ? 30
+                                  : 40,
                               fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(
                           height: 20,
                         ),
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
                           child: Text(
                             textAlign: TextAlign.center,
                             'Onde a empresa deseja chegar no futuro ',
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 30,
+                                fontSize:
+                                    MediaQuery.of(context).size.width < 600
+                                        ? 25
+                                        : 30,
                                 fontWeight: FontWeight.normal),
                           ),
                         ),
@@ -315,8 +337,8 @@ class _CompanyValuesState extends State<CompanyValues> {
                     ),
                   ),
                   Container(
-                    height: 490,
-                    width: 400,
+                    height: MediaQuery.of(context).size.width < 600 ? 400 : 490,
+                    width: MediaQuery.of(context).size.width < 600 ? 300 : 390,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage(
@@ -333,24 +355,29 @@ class _CompanyValuesState extends State<CompanyValues> {
                           color: Colors.white,
                           size: 60,
                         ),
-                        const Text(
+                        Text(
                           'VALORES',
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: 45,
+                              fontSize: MediaQuery.of(context).size.width < 600
+                                  ? 30
+                                  : 40,
                               fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(
                           height: 20,
                         ),
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
                           child: Text(
                             textAlign: TextAlign.center,
                             'Ponte entre o que a empresa é e onde ela quer chegar.',
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 30,
+                                fontSize:
+                                    MediaQuery.of(context).size.width < 600
+                                        ? 25
+                                        : 30,
                                 fontWeight: FontWeight.normal),
                           ),
                         ),
@@ -363,8 +390,8 @@ class _CompanyValuesState extends State<CompanyValues> {
                 ],
               ),
             ),
-             const Footer(),
-               const Copyright()
+            const Footer(),
+            const Copyright()
           ],
         ),
       ),

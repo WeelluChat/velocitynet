@@ -289,12 +289,17 @@ class _FooterState extends State<Footer> {
                           const SizedBox(
                             height: 20,
                           ),
-                          const Text(
-                            'Contato',
-                            style: TextStyle(
-                                color: Color(0xffDED4D4),
-                                fontSize: 16,
-                                height: 2),
+                          InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(context, '/contatos');
+                            },
+                            child: const Text(
+                              'Contatos',
+                              style: TextStyle(
+                                  color: Color(0xffDED4D4),
+                                  fontSize: 16,
+                                  height: 2),
+                            ),
                           ),
                           const Text(
                             'Politica de Privacidade',
@@ -336,7 +341,7 @@ class _FooterState extends State<Footer> {
                 ],
               ),
             ),
-             const SizedBox(
+            const SizedBox(
               width: 280,
               height: 200,
               //  color: Colors.red,

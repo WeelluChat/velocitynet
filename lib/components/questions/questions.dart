@@ -190,7 +190,7 @@ class _QuestionsState extends State<Questions> {
                               child: Container(
                                 padding: const EdgeInsets.all(10.0),
                                 child: Text(
-                                  'Qual é a diferença entre os planos Corporativo?',
+                                  'Qual é a diferença entre os planos corporativo?',
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize:

@@ -391,7 +391,6 @@ class _CompanyValuesState extends State<CompanyValues> {
               ),
             ),
             const Footer(),
-            const Copyright()
           ],
         ),
       ),

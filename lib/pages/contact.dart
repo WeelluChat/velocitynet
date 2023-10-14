@@ -347,7 +347,6 @@ class _ContactState extends State<Contact> {
                 ),
               ),
               const Footer(),
-              const Copyright()
             ],
           ),
         ),

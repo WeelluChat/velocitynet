@@ -60,7 +60,7 @@ class _DescrptionState extends State<Descrption> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Image.asset(
-                            'description/descrption_image.jpg',
+                            'card_overlay.png',
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -74,9 +74,9 @@ class _DescrptionState extends State<Descrption> {
                         border: Border.all(
                           color: const Color(0xFFD4D4D4),
                         ),
-                        color: _isHovering1
-                            ? Colors.black.withOpacity(0.7)
-                            : Colors.transparent,
+                        // color: _isHovering1
+                        //     ? Colors.black.withOpacity(0.7)
+                        //     : Colors.transparent,
                       ),
                       child: Padding(
                         padding: const EdgeInsets.only(
@@ -134,7 +134,7 @@ class _DescrptionState extends State<Descrption> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Image.asset(
-                            'description/descrption_image.jpg',
+                            'card_overlay.png',
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -148,9 +148,7 @@ class _DescrptionState extends State<Descrption> {
                         border: Border.all(
                           color: const Color(0xFFD4D4D4),
                         ),
-                        color: _isHovering2
-                            ? Colors.black.withOpacity(0.7)
-                            : Colors.transparent,
+                        
                       ),
                       child: Padding(
                         padding: const EdgeInsets.only(
@@ -207,7 +205,7 @@ class _DescrptionState extends State<Descrption> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Image.asset(
-                            'description/descrption_image.jpg',
+                            'card_overlay.png',
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -221,9 +219,7 @@ class _DescrptionState extends State<Descrption> {
                         border: Border.all(
                           color: const Color(0xFFD4D4D4),
                         ),
-                        color: _isHovering3
-                            ? Colors.black.withOpacity(0.7)
-                            : Colors.transparent,
+                        
                       ),
                       child: Padding(
                         padding: const EdgeInsets.only(
@@ -280,7 +276,7 @@ class _DescrptionState extends State<Descrption> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Image.asset(
-                            'description/descrption_image.jpg',
+                            'card_overlay.png',
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -294,9 +290,7 @@ class _DescrptionState extends State<Descrption> {
                         border: Border.all(
                           color: const Color(0xFFD4D4D4),
                         ),
-                        color: _isHovering4
-                            ? Colors.black.withOpacity(0.7)
-                            : Colors.transparent,
+                       
                       ),
                       child: Padding(
                         padding: const EdgeInsets.only(
@@ -353,7 +347,7 @@ class _DescrptionState extends State<Descrption> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Image.asset(
-                            'description/descrption_image.jpg',
+                            'card_overlay.png',
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -367,9 +361,7 @@ class _DescrptionState extends State<Descrption> {
                         border: Border.all(
                           color: const Color(0xFFD4D4D4),
                         ),
-                        color: _isHovering5
-                            ? Colors.black.withOpacity(0.7)
-                            : Colors.transparent,
+
                       ),
                       child: Padding(
                         padding: const EdgeInsets.only(

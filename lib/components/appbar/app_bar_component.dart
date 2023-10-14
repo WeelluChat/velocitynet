@@ -35,19 +35,19 @@ class _AppBarComponentState extends State<AppBarComponent> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                TextButton.icon(
-                  onPressed: () {
-                    Url().urlMaps();
-                  },
-                  icon: const Icon(
-                    Icons.location_pin,
-                    color: Color(0xFFDE7642),
-                  ),
-                  label: const Text(
-                    "Av: B QD: 298 LT:23 - Cidade Jardim, Parauapebas - PA, 68515-000",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
+                // TextButton.icon(
+                //   onPressed: () {
+                //     Url().urlMaps();
+                //   },
+                //   icon: const Icon(
+                //     Icons.location_pin,
+                //     color: Color(0xFFDE7642),
+                //   ),
+                //   label: const Text(
+                //     "Av: B QD: 298 LT:23 - Cidade Jardim, Parauapebas - PA, 68515-000",
+                //     style: TextStyle(color: Colors.white),
+                //   ),
+                // ),
                 TextButton.icon(
                   onPressed: () {
                     Url().urlWhatsApp();
@@ -86,7 +86,20 @@ class _AppBarComponentState extends State<AppBarComponent> {
                     "@velocitynet_oficial",
                     style: TextStyle(color: Colors.white),
                   ),
-                )
+                ),
+                TextButton.icon(
+                  onPressed: () {
+                    //  
+                  },
+                  icon: const Icon(
+                    Icons.location_pin,
+                    color: Color(0xFFDE7642),
+                  ),
+                  label: const Text(
+                    "Parauapebas",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
               ],
             ),
           ),

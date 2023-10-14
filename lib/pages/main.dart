@@ -39,9 +39,8 @@ class _MainState extends State<Main> {
           SpecialOffer(),
           Benefits(),
           Questions(),
-          SpeedTest(),
           Footer(),
-          Copyright()
+          // Copyright()
         ],
       ),
     );

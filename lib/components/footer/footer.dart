@@ -27,7 +27,7 @@ class _FooterState extends State<Footer> {
         Color(0xff06141C),
       ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
       child: Padding(
-        padding: const EdgeInsets.only(left: 20, top: 50, bottom: 10),
+        padding: const EdgeInsets.only(left: 20, top: 50, bottom: 10, right:20),
         child: Wrap(
           alignment: MediaQuery.of(context).size.width < 700
               ? WrapAlignment.start
@@ -408,9 +408,27 @@ class _FooterState extends State<Footer> {
                       ),
                     ],
                   ),
+                 
                 ],
               ),
             ),
+             const Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Flexible(
+            child: Text(
+              '© 2023 VelocityNet | Todos os direitos reservados',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
+      ),
           ],
         ),
       ),

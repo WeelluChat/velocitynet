@@ -197,6 +197,10 @@ class _AppBarComponentState extends State<AppBarComponent> {
                 ),
                 InkWell(
                   onTap: () {
+                    if (currentRoute == '/contatos') {
+                      return;
+                    }
+
                     Navigator.of(context).pushNamed('/contatos');
                   },
                   child: const Text(

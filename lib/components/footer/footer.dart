@@ -16,6 +16,8 @@ class _FooterState extends State<Footer> {
   bool isHovered3 = false;
   @override
   Widget build(BuildContext context) {
+    final currentRoute = ModalRoute.of(context)?.settings.name;
+
     return Container(
       width: double.infinity,
       // color: Colors.cyan,
@@ -291,6 +293,9 @@ class _FooterState extends State<Footer> {
                           ),
                           InkWell(
                             onTap: () {
+                              if (currentRoute == '/contatos') {
+                                return;
+                              }
                               Navigator.pushNamed(context, '/contatos');
                             },
                             child: const Text(
@@ -324,6 +329,10 @@ class _FooterState extends State<Footer> {
                           ),
                           InkWell(
                             onTap: () {
+                              if (currentRoute == '/missao-visao') {
+                                return;
+                              }
+
                               Navigator.pushNamed(context, '/missao-visao');
                             },
                             child: const Text(

@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:velocity_net/components/benefits/benefits_components.dart';
-import 'package:velocity_net/components/copyright/copyright.dart';
 import 'package:velocity_net/components/description/description.dart';
 import 'package:velocity_net/components/footer/footer.dart';
 import 'package:velocity_net/components/plans/plans.dart';
 import 'package:velocity_net/components/questions/questions.dart';
 import 'package:velocity_net/components/slider/slider.dart';
 import 'package:velocity_net/components/specialOffer/special_offer.dart';
-import 'package:velocity_net/components/speedtest/speedtest.dart';
 
 class Main extends StatefulWidget {
   final ScrollController scrollController;

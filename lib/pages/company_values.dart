@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:velocity_net/components/appbar/app_bar_component.dart';
 import 'package:velocity_net/components/appbar/app_bar_component_resize.dart';
-import 'package:velocity_net/components/copyright/copyright.dart';
 import 'package:velocity_net/components/endDrawer/end_drawer.dart';
 import 'package:velocity_net/components/footer/footer.dart';
 

@@ -232,19 +232,17 @@ class _FooterState extends State<Footer> {
                           const SizedBox(
                             height: 20,
                           ),
-                          const Text(
-                            'Internet Corporativa',
-                            style: TextStyle(
-                                color: Color(0xffDED4D4),
-                                fontSize: 16,
-                                height: 2),
-                          ),
-                          const Text(
-                            'Link Dedicado',
-                            style: TextStyle(
-                                color: Color(0xffDED4D4),
-                                fontSize: 16,
-                                height: 2),
+                          InkWell(
+                            onTap: () {
+                              Url().urlWhatsApp();
+                            },
+                            child: const Text(
+                              'Link dedicado',
+                              style: TextStyle(
+                                  color: Color(0xffDED4D4),
+                                  fontSize: 16,
+                                  height: 2),
+                            ),
                           ),
                           InkWell(
                             onTap: () {
@@ -315,29 +313,29 @@ class _FooterState extends State<Footer> {
                           //       fontSize: 16,
                           //       height: 2),
                           // ),
-                          const Text(
-                            'Termos e Condições',
-                            style: TextStyle(
-                                color: Color(0xffDED4D4),
-                                fontSize: 16,
-                                height: 2),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              if (currentRoute == '/missao-visao') {
-                                return;
-                              }
+                          // const Text(
+                          //   'Termos e Condições',
+                          //   style: TextStyle(
+                          //       color: Color(0xffDED4D4),
+                          //       fontSize: 16,
+                          //       height: 2),
+                          // ),
+                          // InkWell(
+                          //   onTap: () {
+                          //     if (currentRoute == '/missao-visao') {
+                          //       return;
+                          //     }
 
-                              Navigator.pushNamed(context, '/missao-visao');
-                            },
-                            child: const Text(
-                              'Missão & Visão',
-                              style: TextStyle(
-                                  color: Color(0xffDED4D4),
-                                  fontSize: 16,
-                                  height: 2),
-                            ),
-                          ),
+                          //     Navigator.pushNamed(context, '/missao-visao');
+                          //   },
+                          //   child: const Text(
+                          //     'Missão & Visão',
+                          //     style: TextStyle(
+                          //         color: Color(0xffDED4D4),
+                          //         fontSize: 16,
+                          //         height: 2),
+                          //   ),
+                          // ),
                         ],
                       ),
                     ],

@@ -233,13 +233,6 @@ class _FooterState extends State<Footer> {
                             height: 20,
                           ),
                           const Text(
-                            'Internet Resídencial',
-                            style: TextStyle(
-                                color: Color(0xffDED4D4),
-                                fontSize: 16,
-                                height: 2),
-                          ),
-                          const Text(
                             'Internet Corporativa',
                             style: TextStyle(
                                 color: Color(0xffDED4D4),
@@ -315,20 +308,13 @@ class _FooterState extends State<Footer> {
                                   height: 2),
                             ),
                           ),
-                          const Text(
-                            'Politica de Privacidade',
-                            style: TextStyle(
-                                color: Color(0xffDED4D4),
-                                fontSize: 16,
-                                height: 2),
-                          ),
-                          const Text(
-                            'Politica de Privacidade',
-                            style: TextStyle(
-                                color: Color(0xffDED4D4),
-                                fontSize: 16,
-                                height: 2),
-                          ),
+                          // const Text(
+                          //   'Politica de Privacidade',
+                          //   style: TextStyle(
+                          //       color: Color(0xffDED4D4),
+                          //       fontSize: 16,
+                          //       height: 2),
+                          // ),
                           const Text(
                             'Termos e Condições',
                             style: TextStyle(

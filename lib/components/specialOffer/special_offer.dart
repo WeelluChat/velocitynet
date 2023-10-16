@@ -29,6 +29,7 @@ class SpecialOffer extends StatelessWidget {
                         ? TextAlign.center
                         : TextAlign.start,
                     style: TextStyle(
+                      fontWeight: FontWeight.bold,
                       fontSize:
                           MediaQuery.of(context).size.width < 600 ? 30 : 40,
                     ),

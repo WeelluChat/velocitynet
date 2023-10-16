@@ -49,6 +49,7 @@ class _QuestionsState extends State<Questions> {
                               fontSize: MediaQuery.of(context).size.width < 600
                                   ? 30
                                   : 40,
+                              fontWeight: FontWeight.bold,
                             ),
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,

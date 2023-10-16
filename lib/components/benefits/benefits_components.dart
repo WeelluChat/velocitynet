@@ -33,9 +33,10 @@ class Benefits extends StatelessWidget {
                   "Curta filmes, séries, esportes, programas de TV e muito mais",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.white,
-                    fontSize: MediaQuery.of(context).size.width < 600 ? 30 : 40,
-                  ),
+                      color: Colors.white,
+                      fontSize:
+                          MediaQuery.of(context).size.width < 600 ? 30 : 40,
+                      fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
                   height: 20,

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:velocity_net/pages/company_values.dart';
 import 'package:velocity_net/pages/contact.dart';
@@ -18,18 +20,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
-        // colorScheme: const ColorScheme(
-        //     brightness: Brightness.dark,
-        //     primary: Colors.black,
-        //     onPrimary: Colors.black,
-        //     secondary: Colors.black,
-        //     onSecondary: Colors.black,
-        //     error: Colors.black,
-        //     onError: Colors.black,
-        //     background: Colors.white,
-        //     onBackground: Colors.black,
-        //     surface: Colors.black,
-        //     onSurface: Colors.black)),
       ),
       home: const Home(),
       initialRoute: '/',
@@ -38,6 +28,14 @@ class MyApp extends StatelessWidget {
         '/tvplanos': (context) => const TvPlans(),
         '/missao-visao': (context) => const CompanyValues(),
       },
+      scrollBehavior: const MaterialScrollBehavior().copyWith(
+        dragDevices: {
+          PointerDeviceKind.mouse,
+          PointerDeviceKind.touch,
+          PointerDeviceKind.stylus,
+          PointerDeviceKind.unknown
+        },
+      ),
     );
   }
 }

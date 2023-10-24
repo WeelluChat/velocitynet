@@ -40,6 +40,7 @@ dependencies:
   contained_tab_bar_view_with_custom_page_navigator: ^0.1.3
   hexagon: ^0.2.0
   flutter_custom_clippers: ^2.1.0
+  http: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -79,25 +80,15 @@ flutter:
     - assets/banner_tv_planos.png
     - assets/playstore_download.png
 
-
     - assets/description/descrption_image.jpg
     - assets/benefits.png
     - assets/speedtest/banner_01.jpg
     - assets/speedtest/banner_speed.jpg
 
-
-    - assets/slider/banner_slide01.png
-    - assets/slider/banner_slide02.png
-
-
-
     - assets/plans/plano1000.png
     - assets/plans/plano900.png
     - assets/plans/plano800.png
     - assets/plans/plano700.png
-
-
-
 
     - assets/tv_plans/agro_canal.png
     - assets/tv_plans/aparecida_logo.png

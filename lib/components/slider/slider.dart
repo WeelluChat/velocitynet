@@ -14,8 +14,6 @@ class SliderComponent extends StatefulWidget {
 class _SliderComponentState extends State<SliderComponent> {
   List<String> sliderList = [];
 
-  final String baseUrl = "http://localhost:3000/api/v1/uploads/";
-
   slider() async {
     final sliderData = await Api().getSlider();
     final List<dynamic> jsonData = json.decode(sliderData);

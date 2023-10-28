@@ -20,7 +20,7 @@ class _PlansComponentState extends State<PlansComponent> {
     final List<dynamic> jsonData = json.decode(plansData);
     for (final item in jsonData) {
       if (item is Map<String, dynamic> && item.containsKey('name')) {
-        plansList.add(ApiConstants.baseUrlUploads + item['name']);
+        plansList.add("${ApiConstants.baseUrlUploads}/${item['name']}");
       }
     }
     setState(() {});

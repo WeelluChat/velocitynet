@@ -1,11 +1,43 @@
-import 'package:flutter/material.dart';
-import 'package:velocity_net/helpers/url.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
-class SpecialOffer extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:velocity_net/constants/api_constants.dart';
+import 'package:velocity_net/helpers/url.dart';
+import 'package:velocity_net/modules/specialOffer/model/offer_model.dart';
+import 'package:velocity_net/service/api.dart';
+
+class SpecialOffer extends StatefulWidget {
   const SpecialOffer({super.key});
 
   @override
+  State<SpecialOffer> createState() => _SpecialOfferState();
+}
+
+class _SpecialOfferState extends State<SpecialOffer> {
+  List<OfferModel> offerList = [];
+
+  offer() async {
+    final offerData = await Api().getOffer();
+    final jsonData = json.decode(offerData);
+
+    setState(() {
+      offerList.add(OfferModel.fromJson(jsonData[0]));
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    offer();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var offerData = offerList.isNotEmpty
+        ? offerList[0]
+        : OfferModel(title: '', description: '', value: '', image: '');
+
     return Container(
       padding: const EdgeInsets.only(top: 50, bottom: 50, left: 20, right: 20),
       // alignment: Alignment.center,
@@ -17,14 +49,13 @@ class SpecialOffer extends StatelessWidget {
           Flexible(
             child: SizedBox(
               width: 750,
-              // color: Colors.green,
               child: Column(
                 crossAxisAlignment: MediaQuery.of(context).size.width < 700
                     ? CrossAxisAlignment.center
                     : CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Obtenha internet banda larga a um preço incomparável.',
+                    offerData.title,
                     textAlign: MediaQuery.of(context).size.width < 600
                         ? TextAlign.center
                         : TextAlign.start,
@@ -38,7 +69,7 @@ class SpecialOffer extends StatelessWidget {
                     height: 20,
                   ),
                   Text(
-                    'Tenha agora 700MB de velocidade incrível por apenas R\$67,49/mês nos primeiros 3 meses! Após isso, continue navegando por apenas R\$124,99/mês. Não perca essa oportunidade de ter a internet que você merece! #Internet700MB #Promoção #Velocidade',
+                    offerData.description,
                     textAlign: MediaQuery.of(context).size.width < 600
                         ? TextAlign.center
                         : TextAlign.start,
@@ -51,13 +82,13 @@ class SpecialOffer extends StatelessWidget {
                     alignment: WrapAlignment.center,
                     children: [
                       RichText(
-                        text: const TextSpan(
-                          text: 'R\$ 67,49',
-                          style: TextStyle(
+                        text: TextSpan(
+                          text: "R\$ ${offerData.value}",
+                          style: const TextStyle(
                               fontSize: 45,
                               fontWeight: FontWeight.bold,
                               color: Color(0XFF13294E)),
-                          children: <TextSpan>[
+                          children: const <TextSpan>[
                             TextSpan(
                               text: ' / Mês',
                               style: TextStyle(
@@ -115,13 +146,29 @@ class SpecialOffer extends StatelessWidget {
           Visibility(
             visible: MediaQuery.of(context).size.width > 1200,
             child: SizedBox(
-              // color: Colors.red,
-              width: 510,
-              child: Image.asset(
-                'image_promocao.png',
-                fit: BoxFit.cover,
-              ),
-            ),
+                width: 510,
+                child: FutureBuilder(
+                  future: () async {
+                    try {
+                      final response = await http.get(Uri.parse(
+                          "${ApiConstants.baseUrlUploads}/${offerData.image}"));
+                      if (response.statusCode == 200) {
+                        return response.bodyBytes;
+                      }
+                    } catch (e) {
+                      print("Erro ao carregar imagem: $e");
+                    }
+                    return null;
+                  }(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done &&
+                        snapshot.data != null) {
+                      return Image.memory(snapshot.data!, fit: BoxFit.cover);
+                    } else {
+                      return const Placeholder();
+                    }
+                  },
+                )),
           ),
         ],
       ),

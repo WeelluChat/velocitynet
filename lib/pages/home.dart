@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:velocity_net/components/appbar/app_bar_component.dart';
-import 'package:velocity_net/components/appbar/app_bar_component_resize.dart';
-import 'package:velocity_net/components/endDrawer/end_drawer.dart';
+import 'package:velocity_net/modules/appbar/app_bar_component.dart';
+import 'package:velocity_net/modules/appbar/app_bar_component_resize.dart';
+import 'package:velocity_net/modules/endDrawer/end_drawer.dart';
 import 'package:velocity_net/pages/main.dart';
 
 class Home extends StatefulWidget {

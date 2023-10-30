@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:velocity_net/helpers/url.dart';
 
 class AppBarComponent extends AppBar {
@@ -52,9 +53,10 @@ class _AppBarComponentState extends State<AppBarComponent> {
                   onPressed: () {
                     Url().urlWhatsApp();
                   },
-                  icon: Image.asset(
-                    "whatsapp.png",
-                    width: 20,
+                  icon: PhosphorIcon(
+                    PhosphorIcons.fill.whatsappLogo,
+                    color: Colors.green,
+                    size: 25.0,
                   ),
                   label: const Text(
                     "+55 (94) 99132-6169",
@@ -65,9 +67,10 @@ class _AppBarComponentState extends State<AppBarComponent> {
                   onPressed: () {
                     Url().urlFacebook();
                   },
-                  icon: const Icon(
-                    Icons.facebook,
+                  icon: PhosphorIcon(
+                    PhosphorIcons.fill.facebookLogo,
                     color: Colors.blue,
+                    size: 25.0,
                   ),
                   label: const Text(
                     "@velocitynettelecom",
@@ -78,9 +81,10 @@ class _AppBarComponentState extends State<AppBarComponent> {
                   onPressed: () {
                     Url().urlInstagram();
                   },
-                  icon: Image.asset(
-                    "instagram.png",
-                    width: 20,
+                  icon: PhosphorIcon(
+                    PhosphorIcons.fill.instagramLogo,
+                    color: const Color(0xFFEA4335),
+                    size: 25.0,
                   ),
                   label: const Text(
                     "@velocitynet_oficial",
@@ -89,11 +93,12 @@ class _AppBarComponentState extends State<AppBarComponent> {
                 ),
                 TextButton.icon(
                   onPressed: () {
-                    //  
+                    //
                   },
-                  icon: const Icon(
-                    Icons.location_pin,
-                    color: Color(0xFFDE7642),
+                  icon: PhosphorIcon(
+                    PhosphorIcons.fill.mapPin,
+                    color: Colors.orange,
+                    size: 25.0,
                   ),
                   label: const Text(
                     "Parauapebas",

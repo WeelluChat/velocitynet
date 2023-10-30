@@ -88,9 +88,9 @@ class _DescrptionState extends State<Descrption> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Icon(
-                                Icons.wifi_rounded,
-                                color: Color(0xffFFB000),
+                              Icon(
+                                cardData.icon,
+                                color: const Color(0xffFFB000),
                                 size: 70,
                               ),
                               const SizedBox(

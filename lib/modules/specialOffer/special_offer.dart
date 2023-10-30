@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
@@ -36,7 +37,12 @@ class _SpecialOfferState extends State<SpecialOffer> {
   Widget build(BuildContext context) {
     var offerData = offerList.isNotEmpty
         ? offerList[0]
-        : OfferModel(title: '', description: '', value: '', image: '');
+        : OfferModel(
+            title: '',
+            description: '',
+            value: '',
+            image: '',
+          );
 
     return Container(
       padding: const EdgeInsets.only(top: 50, bottom: 50, left: 20, right: 20),
@@ -146,29 +152,32 @@ class _SpecialOfferState extends State<SpecialOffer> {
           Visibility(
             visible: MediaQuery.of(context).size.width > 1200,
             child: SizedBox(
-                width: 510,
-                child: FutureBuilder(
-                  future: () async {
-                    try {
-                      final response = await http.get(Uri.parse(
-                          "${ApiConstants.baseUrlUploads}/${offerData.image}"));
-                      if (response.statusCode == 200) {
-                        return response.bodyBytes;
-                      }
-                    } catch (e) {
+              width: 510,
+              child: FutureBuilder(
+                future: () async {
+                  try {
+                    final response = await http.get(Uri.parse(
+                        "${ApiConstants.baseUrlUploads}/${offerData.image}"));
+                    if (response.statusCode == 200) {
+                      return response.bodyBytes;
+                    }
+                  } catch (e) {
+                    if (kDebugMode) {
                       print("Erro ao carregar imagem: $e");
                     }
-                    return null;
-                  }(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done &&
-                        snapshot.data != null) {
-                      return Image.memory(snapshot.data!, fit: BoxFit.cover);
-                    } else {
-                      return const Placeholder();
-                    }
-                  },
-                )),
+                  }
+                  return null;
+                }(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done &&
+                      snapshot.data != null) {
+                    return Image.memory(snapshot.data!, fit: BoxFit.cover);
+                  } else {
+                    return const Placeholder();
+                  }
+                },
+              ),
+            ),
           ),
         ],
       ),

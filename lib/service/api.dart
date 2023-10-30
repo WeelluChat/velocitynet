@@ -53,4 +53,16 @@ class Api {
       throw Exception('Falha na solicitação: ${response.statusCode}');
     }
   }
+
+  getTv() async {
+    final Uri uri = Uri.parse("${ApiConstants.baseApi}/tv");
+
+    final response = await http.get(uri);
+
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      throw Exception('Falha na solicitação: ${response.statusCode}');
+    }
+  }
 }

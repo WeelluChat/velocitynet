@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-class CardData {
+class CardModel {
   final String title;
   final String description;
   final IconData icon;
 
-  CardData({
+  CardModel({
     required this.title,
     required this.description,
     required this.icon,
   });
 
-  factory CardData.fromJson(Map<String, dynamic> json) {
+  factory CardModel.fromJson(Map<String, dynamic> json) {
     final Map<String, IconData> iconMappings = {
       "Icons.wifi_rounded": Icons.wifi_rounded,
       "Icons.connected_tv": Icons.connected_tv,
@@ -29,7 +29,7 @@ class CardData {
       }
     }
 
-    return CardData(
+    return CardModel(
       title: json['name'],
       description: json['description'],
       icon: iconData,

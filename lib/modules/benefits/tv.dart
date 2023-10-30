@@ -1,10 +1,46 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:velocity_net/constants/api_constants.dart';
+import 'package:velocity_net/modules/benefits/model/tv_model.dart';
+import 'package:velocity_net/service/api.dart';
 
-class Benefits extends StatelessWidget {
-  const Benefits({super.key});
+class Tv extends StatefulWidget {
+  const Tv({super.key});
+
+  @override
+  State<Tv> createState() => _TvState();
+}
+
+class _TvState extends State<Tv> {
+  List<TvModel> tvList = [];
+
+  tv() async {
+    final tvData = await Api().getTv();
+    final jsonData = json.decode(tvData);
+
+    setState(() {
+      tvList.add(TvModel.fromJson(jsonData[0]));
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    tv();
+  }
 
   @override
   Widget build(BuildContext context) {
+    var tvData = tvList.isNotEmpty
+        ? tvList[0]
+        : TvModel(
+            title: '',
+            description: '',
+            value: '',
+            image: '',
+          );
     return Container(
       padding: const EdgeInsets.only(bottom: 50, left: 20, right: 20, top: 50),
       alignment: Alignment.center,
@@ -20,8 +56,29 @@ class Benefits extends StatelessWidget {
           SizedBox(
             height: 400,
             width: 500,
-            child: Image.asset(
-              "benefits.png",
+            child: FutureBuilder(
+              future: () async {
+                try {
+                  final response = await http.get(Uri.parse(
+                      "${ApiConstants.baseUrlUploads}/${tvData.image}"));
+                  if (response.statusCode == 200) {
+                    return response.bodyBytes;
+                  }
+                } catch (e) {
+                  if (kDebugMode) {
+                    print("Erro ao carregar imagem: $e");
+                  }
+                }
+                return null;
+              }(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done &&
+                    snapshot.data != null) {
+                  return Image.memory(snapshot.data!, fit: BoxFit.cover);
+                } else {
+                  return const Placeholder();
+                }
+              },
             ),
           ),
           SizedBox(
@@ -30,7 +87,7 @@ class Benefits extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "Curta filmes, séries, esportes, programas de TV e muito mais",
+                  tvData.title,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: Colors.white,
@@ -41,10 +98,10 @@ class Benefits extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                const Text(
-                  "Contrate um de nossos planos e assista quando quiser de onde estiver.",
+                Text(
+                  tvData.description,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20,
                     color: Colors.white,
                   ),
@@ -56,7 +113,6 @@ class Benefits extends StatelessWidget {
                   alignment: WrapAlignment.center,
                   spacing: 20,
                   runSpacing: 20,
-                  // mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton(
                       style: ButtonStyle(
@@ -71,16 +127,16 @@ class Benefits extends StatelessWidget {
                             side: BorderSide(
                               color: Colors.white,
                               width: 2.0,
-                            ), // Defina a cor da borda e a largura aqui
+                            ),
                           ),
                         ),
                         backgroundColor:
                             MaterialStateProperty.all(Colors.transparent),
                       ),
                       onPressed: () {},
-                      child: const Text(
-                        "R\$ 99,99",
-                        style: TextStyle(
+                      child: Text(
+                        "R\$ ${tvData.value}",
+                        style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 20,

@@ -18,22 +18,14 @@ class _QuestionsState extends State<Questions> {
       padding:
           const EdgeInsets.only(top: 100, bottom: 100, left: 20, right: 20),
       width: double.infinity,
-      // decoration: const BoxDecoration(color: Colors.red),
       child: Flex(
         direction: Axis.horizontal,
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
-        // spacing: 20.00,
-        // runSpacing: 20,
-        // alignment: WrapAlignment.center,
         children: [
           Flexible(
-            child: Container(
+            child: SizedBox(
               width: 600,
-              // MediaQuery.of(context).size.width < 600 ? 420 : 500,
-              decoration: const BoxDecoration(
-                  // color: Colors.green,
-                  ),
               child: Column(
                 children: [
                   Row(

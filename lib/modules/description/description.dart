@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:velocity_net/model/card_data.dart';
+import 'package:velocity_net/modules/description/model/card_model.dart';
 import 'package:velocity_net/service/api.dart';
 
 class Descrption extends StatefulWidget {
@@ -12,7 +12,7 @@ class Descrption extends StatefulWidget {
 }
 
 class _DescrptionState extends State<Descrption> {
-  List<CardData> cardList = [];
+  List<CardModel> cardList = [];
 
   card() async {
     final cardData = await Api().getCards();
@@ -20,7 +20,7 @@ class _DescrptionState extends State<Descrption> {
 
     for (final item in jsonData) {
       setState(() {
-        cardList.add(CardData.fromJson(item));
+        cardList.add(CardModel.fromJson(item));
       });
     }
   }

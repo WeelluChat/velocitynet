@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:velocity_net/modules/benefits/benefits_components.dart';
+import 'package:velocity_net/modules/benefits/tv.dart';
 import 'package:velocity_net/modules/description/description.dart';
 import 'package:velocity_net/modules/footer/footer.dart';
 import 'package:velocity_net/modules/plans/plans.dart';
@@ -35,7 +35,7 @@ class _MainState extends State<Main> {
           PlansComponent(),
           Descrption(),
           SpecialOffer(),
-          Benefits(),
+          Tv(),
           Questions(),
           Footer(),
           // Copyright()

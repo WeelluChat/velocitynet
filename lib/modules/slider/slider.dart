@@ -45,7 +45,7 @@ class _SliderComponentState extends State<SliderComponent> {
         children: sliderList.map((url) {
           return Image.network(
             url,
-            fit: BoxFit.contain,
+            fit: BoxFit.cover,
           );
         }).toList(),
       );

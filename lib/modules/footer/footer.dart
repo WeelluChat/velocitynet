@@ -36,170 +36,75 @@ class _FooterState extends State<Footer> {
           runSpacing: 55,
           spacing: 55,
           children: [
-            SizedBox(
+            const SizedBox(
               width: 280,
-              height: 220,
+              height: 250,
               // color: Colors.red,
               child: Row(
                 children: [
+
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Row(
-                        children: [
-                          Icon(
-                            Icons.headset_mic,
-                            color: Color(0xffFFB000),
-                            size: 50,
-                          ),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Suporte',
-                                style: TextStyle(
-                                    color: Color(0xffDED4D4), fontSize: 16),
-                              ),
-                              Text(
-                                '+55 (94) 99132-6169',
-                                style: TextStyle(
-                                    color: Color(0xFFFFFFFF),
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const Text(
-                        'Endereço',
+                      
+                      Text(
+                        'ENDEREÇO',
                         style: TextStyle(
-                            color: Color(0xffffffff),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18),
+                          color: Color(0xffffffff),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
                       ),
-                      const Text(
+                      //      const SizedBox(
+                      //   height: 20,
+                      // ),
+                      // const Row(
+                      //   children: [
+                      //     Icon(
+                      //       Icons.headset_mic,
+                      //       color: Color(0xffFFB000),
+                      //       size: 50,
+                      //     ),
+                      //     SizedBox(
+                      //       width: 15,
+                      //     ),
+                      //     Column(
+                      //       crossAxisAlignment: CrossAxisAlignment.start,
+                      //       children: [
+                      //         Text(
+                      //           'Suporte',
+                      //           style: TextStyle(
+                      //               color: Color(0xffDED4D4), fontSize: 16),
+                      //         ),
+                      //         Text(
+                      //           '+55 (94) 99132-6169',
+                      //           style: TextStyle(
+                      //               color: Color(0xFFFFFFFF),
+                      //               fontWeight: FontWeight.bold,
+                      //               fontSize: 18),
+                      //         ),
+                      //       ],
+                      //     )
+                      //   ],
+                      // ),
+                      // SizedBox(
+                      //   height: 20,
+                      // ),
+                      // Text(
+                      //   'Endereço',
+                      //   style: TextStyle(
+                      //       color: Color(0xffffffff),
+                      //       fontWeight: FontWeight.bold,
+                      //       fontSize: 18),
+                      // ),
+                                        SizedBox(height:20,),
+                      Text(
                         'Avenida B Quadra 298 Lote 23 \nCidade Jardim Paraupebas - PA',
                         style:
                             TextStyle(color: Color(0xffDED4D4), fontSize: 16),
                       ),
-                      const SizedBox(
+                      SizedBox(
                         height: 20,
-                      ),
-                      Row(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              Url().urlFacebook();
-                            },
-                            child: MouseRegion(
-                              onEnter: (_) {
-                                setState(() {
-                                  isHovered1 = true;
-                                });
-                              },
-                              onExit: (_) {
-                                setState(() {
-                                  isHovered1 = false;
-                                });
-                              },
-                              child: Container(
-                                width: 30,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                    color: const Color(0xFF274972),
-                                    borderRadius: BorderRadius.circular(50)),
-                                child: Icon(
-                                  Icons.facebook,
-                                  color:
-                                      isHovered1 ? Colors.blue : Colors.white,
-                                  size: 25.0,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          InkWell(
-                            onTap: () {
-                              Url().urlGmail();
-                            },
-                            child: MouseRegion(
-                              onEnter: (_) {
-                                setState(() {
-                                  isHovered2 = true;
-                                });
-                              },
-                              onExit: (_) {
-                                setState(() {
-                                  isHovered2 = false;
-                                });
-                              },
-                              child: Container(
-                                width: 30,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                    color: const Color(0xFF274972),
-                                    borderRadius: BorderRadius.circular(50)),
-                                child: PhosphorIcon(
-                                  isHovered2
-                                      ? PhosphorIcons.fill.envelope
-                                      : PhosphorIcons.regular.envelope,
-                                  color: isHovered2
-                                      ? const Color(0xFFEA4335)
-                                      : Colors.white,
-                                  size: 25.0,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          InkWell(
-                            onTap: () {
-                              Url().urlInstagram();
-                            },
-                            child: MouseRegion(
-                              onEnter: (_) {
-                                setState(() {
-                                  isHovered3 = true;
-                                });
-                              },
-                              onExit: (_) {
-                                setState(() {
-                                  isHovered3 = false;
-                                });
-                              },
-                              child: Container(
-                                width: 30,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                    color: const Color(0xFF274972),
-                                    borderRadius: BorderRadius.circular(50)),
-                                child: PhosphorIcon(
-                                  isHovered3
-                                      ? PhosphorIcons.fill.instagramLogo
-                                      : PhosphorIcons.regular.instagramLogo,
-                                  color: isHovered3
-                                      ? const Color(0xffE1306C)
-                                      : const Color(0xffffffff),
-                                  size: 25.0,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                        ],
                       ),
                     ],
                   ),
@@ -266,7 +171,7 @@ class _FooterState extends State<Footer> {
                 ],
               ),
             ),
-            SizedBox(
+             SizedBox(
               width: 280,
               height: 260,
               //  color: Colors.red,
@@ -280,7 +185,7 @@ class _FooterState extends State<Footer> {
                           const Row(
                             children: [
                               Text(
-                                'SOBRE A VELOCITYNET',
+                                'CANAIS DE ATENDIMENTO',
                                 style: TextStyle(
                                     color: Color(0xffffffff),
                                     fontSize: 18,
@@ -291,21 +196,185 @@ class _FooterState extends State<Footer> {
                           const SizedBox(
                             height: 20,
                           ),
+                          const Row(
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Suporte / Outros',
+                                    style: TextStyle(
+                                        color: Color(0xffDED4D4), fontSize: 16),
+                                  ),
+                                  Text(
+                                    '+55 (94) 99132-6169',
+                                    style: TextStyle(
+                                        color: Color(0xFFFFFFFF),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          const Row(
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Financeiro',
+                                    style: TextStyle(
+                                        color: Color(0xffDED4D4), fontSize: 16),
+                                  ),
+                                  Text(
+                                    '+55 (94) 99104-5810',
+                                    style: TextStyle(
+                                        color: Color(0xFFFFFFFF),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18),
+                                  ),
+                                ],
+                              )
+                              
+                            ],
+                          ),
+                          const SizedBox(height: 10,),
+                          const Text(
+                                    'Redes Sociais',
+                                    style: TextStyle(
+                                        color: Color(0xffDED4D4), fontSize: 16),
+                                  ),
+                                  const SizedBox(height: 5,),
+                          Row(
+                        children: [
+                          
                           InkWell(
                             onTap: () {
-                              if (currentRoute == '/contatos') {
-                                return;
-                              }
-                              Navigator.pushNamed(context, '/contatos');
+                              Url().urlFacebook();
                             },
-                            child: const Text(
-                              'Contatos',
-                              style: TextStyle(
-                                  color: Color(0xffDED4D4),
-                                  fontSize: 16,
-                                  height: 2),
+                            child: MouseRegion(
+                              onEnter: (_) {
+                                setState(() {
+                                  isHovered1 = true;
+                                });
+                              },
+                              onExit: (_) {
+                                setState(() {
+                                  isHovered1 = false;
+                                });
+                              },
+                              child: Container(
+                                width: 30,
+                                height: 30,
+                                decoration: BoxDecoration(
+                                    color: const Color(0xFF274972),
+                                    borderRadius: BorderRadius.circular(50)),
+                                child: Icon(
+                                  Icons.facebook,
+                                  color:
+                                      isHovered1 ? Colors.blue : Colors.white,
+                                  size: 25.0,
+                                ),
+                              ),
                             ),
                           ),
+                           const SizedBox(
+                            width: 10,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Url().urlGmail();
+                            },
+                            child: MouseRegion(
+                              onEnter: (_) {
+                                setState(() {
+                                  isHovered2 = true;
+                                });
+                              },
+                              onExit: (_) {
+                                setState(() {
+                                  isHovered2 = false;
+                                });
+                              },
+                              child: Container(
+                                width: 30,
+                                height: 30,
+                                decoration: BoxDecoration(
+                                    color: const Color(0xFF274972),
+                                    borderRadius: BorderRadius.circular(50)),
+                                child: PhosphorIcon(
+                                  isHovered2
+                                      ? PhosphorIcons.fill.envelope
+                                      : PhosphorIcons.regular.envelope,
+                                  color: isHovered2
+                                      ? const Color(0xFFEA4335)
+                                      : Colors.white,
+                                  size: 25.0,
+                                ),
+                              ),
+                            ),
+                          ),
+                           const SizedBox(
+                            width: 10,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Url().urlInstagram();
+                            },
+                            child: MouseRegion(
+                              onEnter: (_) {
+                                setState(() {
+                                  isHovered3 = true;
+                                });
+                              },
+                              onExit: (_) {
+                                setState(() {
+                                  isHovered3 = false;
+                                });
+                              },
+                              child: Container(
+                                width: 30,
+                                height: 30,
+                                decoration: BoxDecoration(
+                                    color: const Color(0xFF274972),
+                                    borderRadius: BorderRadius.circular(50)),
+                                child: PhosphorIcon(
+                                  isHovered3
+                                      ? PhosphorIcons.fill.instagramLogo
+                                      : PhosphorIcons.regular.instagramLogo,
+                                  color: isHovered3
+                                      ? const Color(0xffE1306C)
+                                      : const Color(0xffffffff),
+                                  size: 25.0,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                        ],
+                      ),
+
+                          // InkWell(
+                          //   onTap: () {
+                          //     if (currentRoute == '/contatos') {
+                          //       return;
+                          //     }
+                          //     Navigator.pushNamed(context, '/contatos');
+                          //   },
+                          //   child: const Text(
+                          //     'Contatos',
+                          //     style: TextStyle(
+                          //         color: Color(0xffDED4D4),
+                          //         fontSize: 16,
+                          //         height: 2),
+                          //   ),
+                          // ),
                           // const Text(
                           //   'Politica de Privacidade',
                           //   style: TextStyle(
@@ -343,6 +412,7 @@ class _FooterState extends State<Footer> {
                 ],
               ),
             ),
+            
             const SizedBox(
               width: 280,
               height: 200,
@@ -385,7 +455,7 @@ class _FooterState extends State<Footer> {
                             height: 20,
                           ),
                           Text(
-                            'Domingo',
+                            'Domingo / Feriado',
                             style: TextStyle(
                                 fontSize: 16, color: Color(0xffDED4D4)),
                           ),

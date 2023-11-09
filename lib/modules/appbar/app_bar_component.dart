@@ -36,19 +36,6 @@ class _AppBarComponentState extends State<AppBarComponent> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // TextButton.icon(
-                //   onPressed: () {
-                //     Url().urlMaps();
-                //   },
-                //   icon: const Icon(
-                //     Icons.location_pin,
-                //     color: Color(0xFFDE7642),
-                //   ),
-                //   label: const Text(
-                //     "Av: B QD: 298 LT:23 - Cidade Jardim, Parauapebas - PA, 68515-000",
-                //     style: TextStyle(color: Colors.white),
-                //   ),
-                // ),
                 TextButton.icon(
                   onPressed: () {
                     Url().urlWhatsApp();
@@ -197,13 +184,10 @@ class _AppBarComponentState extends State<AppBarComponent> {
                 ),
                 InkWell(
                   onTap: () {
-                    if (currentRoute != "/") {
-                      Navigator.pushNamed(context, '/');
+                    if (currentRoute == '/tvplanos') {
+                      return;
                     }
-                    scrollController.animateTo(
-                        scrollController.position.minScrollExtent + 2410,
-                        duration: const Duration(milliseconds: 1000),
-                        curve: Curves.easeInQuad);
+                    Navigator.pushNamed(context, '/tvplanos');
                   },
                   child: const Text(
                     "TV",

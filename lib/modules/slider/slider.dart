@@ -36,7 +36,7 @@ class _SliderComponentState extends State<SliderComponent> {
     if (sliderList.isNotEmpty) {
       return ImageSlideshow(
         width: double.infinity,
-        height: 550,
+        height: MediaQuery.of(context).size.width < 1280 ? 500 : 600,
         initialPage: 0,
         indicatorColor: Colors.blue,
         indicatorBackgroundColor: Colors.grey,
@@ -45,12 +45,12 @@ class _SliderComponentState extends State<SliderComponent> {
         children: sliderList.map((url) {
           return Image.network(
             url,
-            fit: BoxFit.cover,
+            fit: BoxFit.fill,
           );
         }).toList(),
       );
     } else {
-      return const CircularProgressIndicator(); // Ou qualquer outro indicador de carregamento
+      return const CircularProgressIndicator();
     }
   }
 }

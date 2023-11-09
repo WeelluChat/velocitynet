@@ -146,8 +146,9 @@ class _TvState extends State<Tv> {
                     ElevatedButton(
                       style: ButtonStyle(
                         padding: MaterialStateProperty.all(
-                            const EdgeInsets.only(
-                                top: 20, bottom: 20, right: 40, left: 40)),
+                          const EdgeInsets.only(
+                              top: 20, bottom: 20, right: 40, left: 40),
+                        ),
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                           const RoundedRectangleBorder(
@@ -161,7 +162,7 @@ class _TvState extends State<Tv> {
                         Navigator.pushNamed(context, '/tvplanos');
                       },
                       child: const Text(
-                        "SAIBA MAIS",
+                        "TV",
                         style: TextStyle(
                             color: Color(0xff13294E),
                             fontWeight: FontWeight.bold,

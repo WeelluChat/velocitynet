@@ -40,7 +40,7 @@ class _SliderComponentState extends State<SliderComponent> {
         initialPage: 0,
         indicatorColor: Colors.blue,
         indicatorBackgroundColor: Colors.grey,
-        autoPlayInterval: 5000,
+        autoPlayInterval: 10000,
         isLoop: true,
         children: sliderList.map((url) {
           return Image.network(

@@ -14,6 +14,7 @@ class _FooterState extends State<Footer> {
   bool isHovered1 = false;
   bool isHovered2 = false;
   bool isHovered3 = false;
+  bool isHovered4 = false;
   @override
   Widget build(BuildContext context) {
     final currentRoute = ModalRoute.of(context)?.settings.name;
@@ -53,6 +54,48 @@ class _FooterState extends State<Footer> {
                           fontSize: 18,
                         ),
                       ),
+                      //      const SizedBox(
+                      //   height: 20,
+                      // ),
+                      // const Row(
+                      //   children: [
+                      //     Icon(
+                      //       Icons.headset_mic,
+                      //       color: Color(0xffFFB000),
+                      //       size: 50,
+                      //     ),
+                      //     SizedBox(
+                      //       width: 15,
+                      //     ),
+                      //     Column(
+                      //       crossAxisAlignment: CrossAxisAlignment.start,
+                      //       children: [
+                      //         Text(
+                      //           'Suporte',
+                      //           style: TextStyle(
+                      //               color: Color(0xffDED4D4), fontSize: 16),
+                      //         ),
+                      //         Text(
+                      //           '+55 (94) 99132-6169',
+                      //           style: TextStyle(
+                      //               color: Color(0xFFFFFFFF),
+                      //               fontWeight: FontWeight.bold,
+                      //               fontSize: 18),
+                      //         ),
+                      //       ],
+                      //     )
+                      //   ],
+                      // ),
+                      // SizedBox(
+                      //   height: 20,
+                      // ),
+                      // Text(
+                      //   'Endereço',
+                      //   style: TextStyle(
+                      //       color: Color(0xffffffff),
+                      //       fontWeight: FontWeight.bold,
+                      //       fontSize: 18),
+                      // ),
                       SizedBox(
                         height: 20,
                       ),
@@ -320,6 +363,42 @@ class _FooterState extends State<Footer> {
                               ),
                               const SizedBox(
                                 width: 10,
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Url().urlInstagram();
+                                },
+                                child: MouseRegion(
+                                  onEnter: (_) {
+                                    setState(() {
+                                      isHovered4 = true;
+                                    });
+                                  },
+                                  onExit: (_) {
+                                    setState(() {
+                                      isHovered4 = false;
+                                    });
+                                  },
+                                  child: Container(
+                                    width: 30,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                        color: const Color(0xFF274972),
+                                        borderRadius:
+                                            BorderRadius.circular(50)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(5),
+                                      child: Image.asset(
+                                        (isHovered4
+                                            ? 'vetor_velocitynet_brasil.png'
+                                            : 'vetor_velocitynet_brasil.png'),
+                                        color: isHovered4
+                                            ? Colors.green
+                                            : const Color(0xffffffff),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ],
                           ),

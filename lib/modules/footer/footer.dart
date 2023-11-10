@@ -14,6 +14,7 @@ class _FooterState extends State<Footer> {
   bool isHovered1 = false;
   bool isHovered2 = false;
   bool isHovered3 = false;
+  bool isHovered4 = false;
   @override
   Widget build(BuildContext context) {
     final currentRoute = ModalRoute.of(context)?.settings.name;
@@ -42,11 +43,9 @@ class _FooterState extends State<Footer> {
               // color: Colors.red,
               child: Row(
                 children: [
-
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      
                       Text(
                         'ENDEREÇO',
                         style: TextStyle(
@@ -97,7 +96,9 @@ class _FooterState extends State<Footer> {
                       //       fontWeight: FontWeight.bold,
                       //       fontSize: 18),
                       // ),
-                                        SizedBox(height:20,),
+                      SizedBox(
+                        height: 20,
+                      ),
                       Text(
                         'Avenida B Quadra 298 Lote 23 \nCidade Jardim Paraupebas - PA',
                         style:
@@ -171,7 +172,7 @@ class _FooterState extends State<Footer> {
                 ],
               ),
             ),
-             SizedBox(
+            SizedBox(
               width: 280,
               height: 260,
               //  color: Colors.red,
@@ -239,126 +240,168 @@ class _FooterState extends State<Footer> {
                                   ),
                                 ],
                               )
-                              
                             ],
                           ),
-                          const SizedBox(height: 10,),
+                          const SizedBox(
+                            height: 10,
+                          ),
                           const Text(
-                                    'Redes Sociais',
-                                    style: TextStyle(
-                                        color: Color(0xffDED4D4), fontSize: 16),
-                                  ),
-                                  const SizedBox(height: 5,),
-                          Row(
-                        children: [
-                          
-                          InkWell(
-                            onTap: () {
-                              Url().urlFacebook();
-                            },
-                            child: MouseRegion(
-                              onEnter: (_) {
-                                setState(() {
-                                  isHovered1 = true;
-                                });
-                              },
-                              onExit: (_) {
-                                setState(() {
-                                  isHovered1 = false;
-                                });
-                              },
-                              child: Container(
-                                width: 30,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                    color: const Color(0xFF274972),
-                                    borderRadius: BorderRadius.circular(50)),
-                                child: Icon(
-                                  Icons.facebook,
-                                  color:
-                                      isHovered1 ? Colors.blue : Colors.white,
-                                  size: 25.0,
-                                ),
-                              ),
-                            ),
-                          ),
-                           const SizedBox(
-                            width: 10,
-                          ),
-                          InkWell(
-                            onTap: () {
-                              Url().urlGmail();
-                            },
-                            child: MouseRegion(
-                              onEnter: (_) {
-                                setState(() {
-                                  isHovered2 = true;
-                                });
-                              },
-                              onExit: (_) {
-                                setState(() {
-                                  isHovered2 = false;
-                                });
-                              },
-                              child: Container(
-                                width: 30,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                    color: const Color(0xFF274972),
-                                    borderRadius: BorderRadius.circular(50)),
-                                child: PhosphorIcon(
-                                  isHovered2
-                                      ? PhosphorIcons.fill.envelope
-                                      : PhosphorIcons.regular.envelope,
-                                  color: isHovered2
-                                      ? const Color(0xFFEA4335)
-                                      : Colors.white,
-                                  size: 25.0,
-                                ),
-                              ),
-                            ),
-                          ),
-                           const SizedBox(
-                            width: 10,
-                          ),
-                          InkWell(
-                            onTap: () {
-                              Url().urlInstagram();
-                            },
-                            child: MouseRegion(
-                              onEnter: (_) {
-                                setState(() {
-                                  isHovered3 = true;
-                                });
-                              },
-                              onExit: (_) {
-                                setState(() {
-                                  isHovered3 = false;
-                                });
-                              },
-                              child: Container(
-                                width: 30,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                    color: const Color(0xFF274972),
-                                    borderRadius: BorderRadius.circular(50)),
-                                child: PhosphorIcon(
-                                  isHovered3
-                                      ? PhosphorIcons.fill.instagramLogo
-                                      : PhosphorIcons.regular.instagramLogo,
-                                  color: isHovered3
-                                      ? const Color(0xffE1306C)
-                                      : const Color(0xffffffff),
-                                  size: 25.0,
-                                ),
-                              ),
-                            ),
+                            'Redes Sociais',
+                            style: TextStyle(
+                                color: Color(0xffDED4D4), fontSize: 16),
                           ),
                           const SizedBox(
-                            width: 10,
+                            height: 5,
                           ),
-                        ],
-                      ),
+                          Row(
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  Url().urlFacebook();
+                                },
+                                child: MouseRegion(
+                                  onEnter: (_) {
+                                    setState(() {
+                                      isHovered1 = true;
+                                    });
+                                  },
+                                  onExit: (_) {
+                                    setState(() {
+                                      isHovered1 = false;
+                                    });
+                                  },
+                                  child: Container(
+                                    width: 30,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                        color: const Color(0xFF274972),
+                                        borderRadius:
+                                            BorderRadius.circular(50)),
+                                    child: Icon(
+                                      Icons.facebook,
+                                      color: isHovered1
+                                          ? Colors.blue
+                                          : Colors.white,
+                                      size: 25.0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Url().urlGmail();
+                                },
+                                child: MouseRegion(
+                                  onEnter: (_) {
+                                    setState(() {
+                                      isHovered2 = true;
+                                    });
+                                  },
+                                  onExit: (_) {
+                                    setState(() {
+                                      isHovered2 = false;
+                                    });
+                                  },
+                                  child: Container(
+                                    width: 30,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                        color: const Color(0xFF274972),
+                                        borderRadius:
+                                            BorderRadius.circular(50)),
+                                    child: PhosphorIcon(
+                                      isHovered2
+                                          ? PhosphorIcons.fill.envelope
+                                          : PhosphorIcons.regular.envelope,
+                                      color: isHovered2
+                                          ? const Color(0xFFEA4335)
+                                          : Colors.white,
+                                      size: 25.0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Url().urlInstagram();
+                                },
+                                child: MouseRegion(
+                                  onEnter: (_) {
+                                    setState(() {
+                                      isHovered3 = true;
+                                    });
+                                  },
+                                  onExit: (_) {
+                                    setState(() {
+                                      isHovered3 = false;
+                                    });
+                                  },
+                                  child: Container(
+                                    width: 30,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                        color: const Color(0xFF274972),
+                                        borderRadius:
+                                            BorderRadius.circular(50)),
+                                    child: PhosphorIcon(
+                                      isHovered3
+                                          ? PhosphorIcons.fill.instagramLogo
+                                          : PhosphorIcons.regular.instagramLogo,
+                                      color: isHovered3
+                                          ? const Color(0xffE1306C)
+                                          : const Color(0xffffffff),
+                                      size: 25.0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Url().urlInstagram();
+                                },
+                                child: MouseRegion(
+                                  onEnter: (_) {
+                                    setState(() {
+                                      isHovered4 = true;
+                                    });
+                                  },
+                                  onExit: (_) {
+                                    setState(() {
+                                      isHovered4 = false;
+                                    });
+                                  },
+                                  child: Container(
+                                    width: 30,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                        color: const Color(0xFF274972),
+                                        borderRadius:
+                                            BorderRadius.circular(50)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(5),
+                                      child: Image.asset(
+                                        (isHovered4
+                                            ? 'vetor_velocitynet_brasil.png'
+                                            : 'vetor_velocitynet_brasil.png'),
+                                        color: isHovered4
+                                            ? Colors.green
+                                            : const Color(0xffffffff),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
 
                           // InkWell(
                           //   onTap: () {
@@ -412,7 +455,6 @@ class _FooterState extends State<Footer> {
                 ],
               ),
             ),
-            
             const SizedBox(
               width: 280,
               height: 200,

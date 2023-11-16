@@ -521,7 +521,7 @@ class _FooterState extends State<Footer> {
               children: [
                 Flexible(
                   child: Text(
-                    '© 2023 VelocityNet | Todos os direitos reservados',
+                    '© 2023 VelocityNet Telecom | Todos os direitos reservados',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 15,

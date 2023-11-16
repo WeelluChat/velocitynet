@@ -137,14 +137,10 @@ class _EndDrawerState extends State<EndDrawer> {
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () {
-                if (currentRoute != "/") {
-                  Navigator.pushNamed(context, '/');
+                if (currentRoute == '/tvplanos') {
+                  return;
                 }
-                scrollController.animateTo(
-                    scrollController.position.minScrollExtent + 3850,
-                    duration: const Duration(milliseconds: 1000),
-                    curve: Curves.easeInQuad);
-                Navigator.pop(context);
+                Navigator.pushNamed(context, '/tvplanos');
               },
               child: const Text(
                 "TV",

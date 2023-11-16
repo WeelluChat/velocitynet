@@ -366,7 +366,7 @@ class _FooterState extends State<Footer> {
                               ),
                               InkWell(
                                 onTap: () {
-                                  Url().urlInstagram();
+                                  Url().urlWeellu();
                                 },
                                 child: MouseRegion(
                                   onEnter: (_) {

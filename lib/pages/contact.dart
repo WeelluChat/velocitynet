@@ -76,7 +76,7 @@ class _ContactState extends State<Contact> {
                         label: const Text(
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          "Weellu Social",
+                          "Weellu Social / Velocitynet Telecom",
                           style: TextStyle(fontSize: 22),
                         ),
                         onPressed: () {

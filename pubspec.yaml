@@ -147,6 +147,12 @@ flutter:
     - assets/mission_vision_values/visao.png
     - assets/mission_vision_values/valores.png
 
+    - assets/plans/1000.png
+    - assets/plans/900.png
+    - assets/plans/800.png
+    - assets/plans/700.png
+    - assets/plans/500.png
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

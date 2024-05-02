@@ -42,6 +42,8 @@ dependencies:
   flutter_custom_clippers: ^2.1.0
   http: ^1.1.0
   google_fonts: ^6.2.0
+  dropdown_button2: ^2.3.9
+  brasil_fields: ^1.14.3
 
 dev_dependencies:
   flutter_test:
@@ -146,6 +148,17 @@ flutter:
     - assets/mission_vision_values/missao.png
     - assets/mission_vision_values/visao.png
     - assets/mission_vision_values/valores.png
+    
+    - assets/card_500.png
+    
+
+    - assets/500Mega.png
+    - assets/1000Mega.png
+    - assets/globoplay.png
+    - assets/premiere.png
+    - assets/telecine.png
+    - assets/MAX.png
+
 
     - assets/plans/1000.png
     - assets/plans/900.png

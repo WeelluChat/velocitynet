@@ -19,6 +19,11 @@ class MyApp extends StatelessWidget {
       title: 'VelocityNet - Telecom',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        scrollbarTheme: const ScrollbarThemeData(
+          thumbColor: MaterialStatePropertyAll(
+            Colors.black,
+          ),
+        ),
         colorScheme: const ColorScheme.light(background: Colors.white),
         useMaterial3: true,
       ),

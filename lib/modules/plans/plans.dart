@@ -271,24 +271,155 @@ class _PlansComponentState extends State<PlansComponent>
         Container(
           color: const Color(0xffF1F1F1),
           width: 1070,
-          height: 600,
+          height: 700,
           child: TabBarView(
             controller: _tabController,
             children: <Widget>[
               Container(
                   width: double.infinity,
                   color: const Color(0xffF1F1F1),
-                  child: Row(
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
                     children: [
                       Container(
                         padding: const EdgeInsets.only(left: 10, right: 10),
                         width: 300,
                         child: Column(
                           children: [
-                            Image.asset(
-                              "assets/plans/500.png",
-                              width: 300,
-                              height: 500,
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image.asset(
+                                "assets/plans/novo_card.png",
+                                width: 300,
+                                // height: 600,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 50,
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                style: ButtonStyle(
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                  ),
+                                  backgroundColor: MaterialStateProperty.all(
+                                      const Color(0xffFFB000)),
+                                ),
+                                onPressed: () {
+                                  Url().urlWhatsApp();
+                                },
+                                child: const Text(
+                                  "ASSINE AGORA",
+                                  style: TextStyle(
+                                      color: Color(0XFF13294E),
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.only(left: 10, right: 10),
+                        width: 300,
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image.asset(
+                                "assets/plans/novo_card.png",
+                                width: 300,
+                                // height: 600,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 50,
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                style: ButtonStyle(
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                  ),
+                                  backgroundColor: MaterialStateProperty.all(
+                                      const Color(0xffFFB000)),
+                                ),
+                                onPressed: () {
+                                  Url().urlWhatsApp();
+                                },
+                                child: const Text(
+                                  "ASSINE AGORA",
+                                  style: TextStyle(
+                                      color: Color(0XFF13294E),
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.only(left: 10, right: 10),
+                        width: 300,
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image.asset(
+                                "assets/plans/novo_card.png",
+                                width: 300,
+                                // height: 600,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 50,
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                style: ButtonStyle(
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                  ),
+                                  backgroundColor: MaterialStateProperty.all(
+                                      const Color(0xffFFB000)),
+                                ),
+                                onPressed: () {
+                                  Url().urlWhatsApp();
+                                },
+                                child: const Text(
+                                  "ASSINE AGORA",
+                                  style: TextStyle(
+                                      color: Color(0XFF13294E),
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.only(left: 10, right: 10),
+                        width: 300,
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image.asset(
+                                "assets/plans/novo_card.png",
+                                width: 300,
+                                // height: 600,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                             SizedBox(
                               height: 50,

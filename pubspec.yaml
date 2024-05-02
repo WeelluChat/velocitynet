@@ -152,6 +152,7 @@ flutter:
     - assets/plans/800.png
     - assets/plans/700.png
     - assets/plans/500.png
+    - assets/plans/novo_card.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

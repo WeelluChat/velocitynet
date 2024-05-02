@@ -1,12 +1,17 @@
 import 'dart:convert';
 
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:velocity_net/constants/api_constants.dart';
 import 'package:velocity_net/helpers/url.dart';
+import 'package:velocity_net/modules/plans/mount_your_card.dart';
+import 'package:velocity_net/modules/plans/mounted_card.dart';
+import 'package:velocity_net/modules/plans/preview_card.dart';
 import 'package:velocity_net/service/api.dart';
 
 class PlansComponent extends StatefulWidget {
@@ -62,7 +67,13 @@ class _PlansComponentState extends State<PlansComponent>
     super.initState();
     plans();
     // _pageViewController = PageController();
-    _tabController = TabController(length: 5, vsync: this);
+    _tabController = TabController(length: 5, vsync: this, initialIndex: 1);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
@@ -93,7 +104,6 @@ class _PlansComponentState extends State<PlansComponent>
             isScrollable: true,
             controller: _tabController,
             indicatorColor: Colors.transparent,
-            labelColor: Colors.pink,
             unselectedLabelColor: Colors.grey,
             labelStyle: const TextStyle(
               fontSize: 16,
@@ -105,6 +115,39 @@ class _PlansComponentState extends State<PlansComponent>
               color: Color(0xffF1F1F1),
             ),
             tabs: <Widget>[
+              Tab(
+                child: Container(
+                  padding: const EdgeInsets.only(
+                    left: 70,
+                    right: 70,
+                  ),
+                  alignment: Alignment.center,
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      top: BorderSide(color: Color(0xFFf1f1f1), width: 1),
+                      left: BorderSide(color: Color(0xFFf1f1f1), width: 1),
+                      right: BorderSide(color: Color(0xFFf1f1f1), width: 1),
+                    ),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(5),
+                      topRight: Radius.circular(5),
+                    ),
+                  ),
+                  child: const Text(
+                    'Monte seu plano',
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: Color(0xff00244E),
+                        fontWeight: FontWeight.bold),
+                    // style: GoogleFonts.getFont('Poppins',
+                    //     color: isVisibleHoje == true
+                    //         ? ColorsDashboard().white
+                    //         : ColorsDashboard().grey,
+                    //     fontSize: 15,
+                    //     fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ),
               Tab(
                 child: Container(
                   padding: const EdgeInsets.only(
@@ -271,10 +314,28 @@ class _PlansComponentState extends State<PlansComponent>
         Container(
           color: const Color(0xffF1F1F1),
           width: 1070,
-          height: 600,
+          height: 700,
           child: TabBarView(
             controller: _tabController,
             children: <Widget>[
+              Container(
+                padding: const EdgeInsets.only(
+                    left: 60, right: 40, top: 20, bottom: 20),
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: const [
+                    MountYourCard(),
+                    SizedBox(
+                      width: 40,
+                    ),
+                    MountedCard(),
+                    SizedBox(
+                      width: 40,
+                    ),
+                    PreviewCard(),
+                  ],
+                ),
+              ),
               Container(
                   width: double.infinity,
                   color: const Color(0xffF1F1F1),

@@ -14,28 +14,28 @@ class Api {
     if (response.statusCode == 200) {
       return response.body;
     } else {
-      throw Exception('Falha na solicitação: ${response.statusCode}');
+      throw Exception('Falha na solicitação: ${response.body}');
     }
   }
 
-  getPlans() async {
-    final Uri uri = Uri.parse("${ApiConstants.baseApi}/plans");
+  // getPlans() async {
+  //   final Uri uri = Uri.parse("${ApiConstants.baseApi}/plans");
 
-    final response = await http.get(
-      uri,
-      // headers: {
-      //   "Content-Type": "application/json",
-      //   'Authorization':
-      //       'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZTYwZWRkY2ExZWI5MzM0NzYyZDdlOCIsImVtYWlsIjoidmVsb2NpdHluZXRmaW5hbmNlaXJvQGdtYWlsLmNvbSIsImlhdCI6MTcwOTU3NjM0M30.A-k4SowLsSISogNm5TREo2a80Ogb7ewPtXbIIFkOpcA',
-      // },
-    );
+  //   final response = await http.get(
+  //     uri,
+  //     // headers: {
+  //     //   "Content-Type": "application/json",
+  //     //   'Authorization':
+  //     //       'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZTYwZWRkY2ExZWI5MzM0NzYyZDdlOCIsImVtYWlsIjoidmVsb2NpdHluZXRmaW5hbmNlaXJvQGdtYWlsLmNvbSIsImlhdCI6MTcwOTU3NjM0M30.A-k4SowLsSISogNm5TREo2a80Ogb7ewPtXbIIFkOpcA',
+  //     // },
+  //   );
 
-    if (response.statusCode == 200) {
-      return response.body;
-    } else {
-      throw Exception('Falha na solicitação: ${response.statusCode}');
-    }
-  }
+  //   if (response.statusCode == 200) {
+  //     return response.body;
+  //   } else {
+  //     throw Exception('Falha na solicitação: ${response.statusCode}');
+  //   }
+  // }
 
   getCards() async {
     final Uri uri = Uri.parse("${ApiConstants.baseApi}/card");

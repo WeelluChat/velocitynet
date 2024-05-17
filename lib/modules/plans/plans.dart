@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:velocity_net/constants/api_constants.dart';
+import 'package:velocity_net/helpers/url.dart';
 
 class PlansComponent extends StatefulWidget {
   const PlansComponent({super.key});
@@ -30,14 +31,13 @@ class _PlansComponentState extends State<PlansComponent>
   getCategoryPlans() async {
     final Uri uri = Uri.parse("${ApiConstants.baseApi}/category-plan");
 
-    var dados = await http.post(
-      uri,
-      headers: {
-        "Content-Type": "application/json",
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZTYwZWRkY2ExZWI5MzM0NzYyZDdlOCIsImVtYWlsIjoidmVsb2NpdHluZXRmaW5hbmNlaXJvQGdtYWlsLmNvbSIsImlhdCI6MTcwOTU3NjM0M30.A-k4SowLsSISogNm5TREo2a80Ogb7ewPtXbIIFkOpcA',
-      },
-    );
+    var dados = await http.get(uri
+        // headers: {
+        //   "Content-Type": "application/json",
+        //   "Authorization":
+        //       "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZTYwZWRkY2ExZWI5MzM0NzYyZDdlOCIsImVtYWlsIjoidmVsb2NpdHluZXRmaW5hbmNlaXJvQGdtYWlsLmNvbSIsImlhdCI6MTcxNTg4NjQzOH0.2zY2kHTrf2KTWKgH0JyL24BNDcSqxiyXYRJ_fmuzBoA",
+        // },
+        );
     setState(() {
       jsonDate = json.decode(dados.body);
       lengtDate = jsonDate.length;
@@ -206,15 +206,13 @@ class _PlansComponentState extends State<PlansComponent>
                       itemBuilder: (context, index) {
                         return Container(
                           padding: const EdgeInsets.only(left: 10, right: 10),
-                          width: 300,
+                          width: 320,
                           child: Column(
                             children: [
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Image.network(
                                   "${ApiConstants.baseUrlUploads}/${imagens[index]}", // Acesse imagens[index] em vez de e[index]["images"]
-                                  width: 300,
-                                  height: 600,
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -232,7 +230,9 @@ class _PlansComponentState extends State<PlansComponent>
                                     backgroundColor: MaterialStateProperty.all(
                                         const Color(0xffFFB000)),
                                   ),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Url().urlWhatsApp();
+                                  },
                                   child: const Text(
                                     "Entre em contato",
                                     style: TextStyle(

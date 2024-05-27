@@ -44,6 +44,7 @@ dependencies:
   google_fonts: ^6.2.0
   dropdown_button2: ^2.3.9
   brasil_fields: ^1.14.3
+  provider: ^6.1.2
 
 dev_dependencies:
   flutter_test:

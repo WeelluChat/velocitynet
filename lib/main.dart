@@ -1,6 +1,7 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:velocity_net/modules/plans/provider/plan_provider.dart';
 import 'package:velocity_net/pages/company_values.dart';
 import 'package:velocity_net/pages/contact.dart';
 import 'package:velocity_net/pages/home.dart';
@@ -12,35 +13,41 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'VelocityNet - Telecom',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        scrollbarTheme: const ScrollbarThemeData(
-          thumbColor: MaterialStatePropertyAll(
-            Colors.black,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<PlanProvider>(
+          create: (context) => PlanProvider(),
+        )
+      ],
+      child: MaterialApp(
+        title: 'VelocityNet - Telecom',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          scrollbarTheme: const ScrollbarThemeData(
+            thumbColor: MaterialStatePropertyAll(
+              Colors.black,
+            ),
           ),
+          colorScheme: const ColorScheme.light(background: Colors.white),
+          useMaterial3: true,
         ),
-        colorScheme: const ColorScheme.light(background: Colors.white),
-        useMaterial3: true,
-      ),
-      home: const Home(),
-      initialRoute: '/',
-      routes: {
-        '/contatos': (context) => const Contact(),
-        '/tvplanos': (context) => const TvPlans(),
-        '/missao-visao': (context) => const CompanyValues(),
-      },
-      scrollBehavior: const MaterialScrollBehavior().copyWith(
-        dragDevices: {
-          PointerDeviceKind.mouse,
-          PointerDeviceKind.touch,
-          PointerDeviceKind.stylus,
-          PointerDeviceKind.unknown
+        home: const Home(),
+        initialRoute: '/',
+        routes: {
+          '/contatos': (context) => const Contact(),
+          '/tvplanos': (context) => const TvPlans(),
+          '/missao-visao': (context) => const CompanyValues(),
         },
+        scrollBehavior: const MaterialScrollBehavior().copyWith(
+          dragDevices: {
+            PointerDeviceKind.mouse,
+            PointerDeviceKind.touch,
+            PointerDeviceKind.stylus,
+            PointerDeviceKind.unknown
+          },
+        ),
       ),
     );
   }

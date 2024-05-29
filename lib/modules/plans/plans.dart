@@ -5,9 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:velocity_net/constants/api_constants.dart';
 import 'package:velocity_net/helpers/url.dart';
 import 'package:velocity_net/modules/plans/group_monted_plan.dart';
-import 'package:velocity_net/modules/plans/mount_your_card.dart';
-import 'package:velocity_net/modules/plans/mounted_card.dart';
-import 'package:velocity_net/modules/plans/preview_card.dart';
 
 class PlansComponent extends StatefulWidget {
   const PlansComponent({super.key});

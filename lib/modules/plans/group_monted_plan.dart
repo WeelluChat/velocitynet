@@ -144,20 +144,6 @@ class _GroupMontedPlanState extends State<GroupMontedPlan> {
                         return DropdownButtonHideUnderline(
                           child: DropdownButton2<String>(
                             isExpanded: true,
-                            // hint: const Row(
-                            // children: [
-                            // Expanded(
-                            //   child: Text(
-                            //     'Plano Residencial',
-                            //     style: TextStyle(
-                            //       fontSize: 14,
-                            //       fontWeight: FontWeight.bold,
-                            //     ),
-                            //     overflow: TextOverflow.ellipsis,
-                            //   ),
-                            // ),
-                            // ],
-                            // ),
                             items: categoryPlanName
                                 .map((String item) => DropdownMenuItem<String>(
                                       value: item,
@@ -232,6 +218,7 @@ class _GroupMontedPlanState extends State<GroupMontedPlan> {
                               ),
                               child: const Text('Selecione um plano'));
                         }
+
                         var category = controller.category!
                             .where((element) => element.nome == categoryName);
 
@@ -242,30 +229,16 @@ class _GroupMontedPlanState extends State<GroupMontedPlan> {
                         var plansCast = plans!.where(
                             (element) => element.idCategoria == idCategory);
 
-                        plansNameList!.addAll(plansCast
+                        plansNameList = plansCast
                             .map((e) => e.nome)
                             .cast<String>()
-                            .toList());
+                            .toList();
 
                         plansNameList!.insert(0, 'Selecione');
 
                         return DropdownButtonHideUnderline(
                           child: DropdownButton2<String>(
                             isExpanded: true,
-                            // hint: const Row(
-                            // children: [
-                            // Expanded(
-                            //   child: Text(
-                            //     '500 MB',
-                            //     style: TextStyle(
-                            //       fontSize: 14,
-                            //       fontWeight: FontWeight.bold,
-                            //     ),
-                            //     overflow: TextOverflow.ellipsis,
-                            //   ),
-                            // ),
-                            // ],
-                            // ),
                             items: plansNameList!
                                 .map((String item) => DropdownMenuItem<String>(
                                       value: item,
@@ -315,8 +288,10 @@ class _GroupMontedPlanState extends State<GroupMontedPlan> {
 
                                 imagePlanBase = planBase.first;
                                 imageLogoBase = imageLogo.first;
+
                                 valuePlan +=
                                     double.parse(price[0]["\$numberDecimal"]);
+
                                 descriptionPlan = description.first;
 
                                 idPlanSelected = idPlan.first;
@@ -617,7 +592,6 @@ class _GroupMontedPlanState extends State<GroupMontedPlan> {
                                 "contatoCliente": phoneController.text,
                                 "adicionais": nameAdditional
                               });
-                              print(planClientDetails);
                             });
                           },
                           child: Text(
@@ -637,7 +611,6 @@ class _GroupMontedPlanState extends State<GroupMontedPlan> {
           const SizedBox(
             width: 40,
           ),
-          // const MountedCard(),
           Column(
             children: [
               Text(
@@ -853,7 +826,6 @@ class _GroupMontedPlanState extends State<GroupMontedPlan> {
           const SizedBox(
             width: 40,
           ),
-          // const PreviewCard(),
           Column(
             children: [
               Text(
@@ -865,12 +837,12 @@ class _GroupMontedPlanState extends State<GroupMontedPlan> {
                 height: 10,
               ),
               imagePlanBase == ""
-                  ? SizedBox(
-                      height: 615,
-                      child: Image.asset(
-                        'assets/card_500.png',
-                        fit: BoxFit.cover,
-                      ),
+                  ? Container(
+                      width: 280,
+                      height: 610,
+                      decoration: BoxDecoration(
+                          color: const Color(0xff13294E),
+                          borderRadius: BorderRadius.circular(10)),
                     )
                   : SizedBox(
                       height: 615,

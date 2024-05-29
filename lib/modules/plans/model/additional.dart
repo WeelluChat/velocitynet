@@ -3,14 +3,14 @@ class AdditionalModel {
   final String? nome;
   final String? image;
   final Map<String, dynamic>? preco;
-  final List<Map<String, dynamic>>? idPlans;
+  final String idPlan;
 
   const AdditionalModel({
     required this.id,
     required this.nome,
     required this.image,
     required this.preco,
-    required this.idPlans,
+    required this.idPlan,
   });
 
   factory AdditionalModel.fromJson(Map<String, dynamic> json) {
@@ -19,9 +19,7 @@ class AdditionalModel {
       nome: json['nome'],
       image: json['image'],
       preco: json['preco'],
-      idPlans: (json['idPlans'] as List)
-          .map((item) => item as Map<String, dynamic>)
-          .toList(),
+      idPlan: json['idPlan'],
     );
   }
 }

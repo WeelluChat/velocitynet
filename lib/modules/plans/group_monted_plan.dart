@@ -360,11 +360,16 @@ class _GroupMontedPlanState extends State<GroupMontedPlan> {
                           }
                           additionals = controller.additionals!;
 
-                          var result = additionals.where((element) {
-                            var ids =
-                                element.idPlans!.map((e) => e['id']).toList();
-                            return ids.contains(idPlanSelected);
-                          }).toList();
+                          // var result = additionals.where((element) {
+                          //   element.idPlan == idPlanSelected;
+                          //   // var ids =
+                          //   //     element.idPlans!.map((e) => e['id']).toList();
+                          //   // return ids.contains(idPlanSelected);
+                          // }).toList();
+                          var result = additionals
+                              .where(
+                                  (element) => element.idPlan == idPlanSelected)
+                              .toList();
 
                           additionalsList = result;
 

@@ -37,81 +37,81 @@ class _FooterState extends State<Footer> {
           runSpacing: 55,
           spacing: 55,
           children: [
-            const SizedBox(
-              width: 280,
-              height: 250,
-              // color: Colors.red,
-              child: Row(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'ENDEREÇO',
-                        style: TextStyle(
-                          color: Color(0xffffffff),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                      ),
-                      //      const SizedBox(
-                      //   height: 20,
-                      // ),
-                      // const Row(
-                      //   children: [
-                      //     Icon(
-                      //       Icons.headset_mic,
-                      //       color: Color(0xffFFB000),
-                      //       size: 50,
-                      //     ),
-                      //     SizedBox(
-                      //       width: 15,
-                      //     ),
-                      //     Column(
-                      //       crossAxisAlignment: CrossAxisAlignment.start,
-                      //       children: [
-                      //         Text(
-                      //           'Suporte',
-                      //           style: TextStyle(
-                      //               color: Color(0xffDED4D4), fontSize: 16),
-                      //         ),
-                      //         Text(
-                      //           '+55 (94) 99132-6169',
-                      //           style: TextStyle(
-                      //               color: Color(0xFFFFFFFF),
-                      //               fontWeight: FontWeight.bold,
-                      //               fontSize: 18),
-                      //         ),
-                      //       ],
-                      //     )
-                      //   ],
-                      // ),
-                      // SizedBox(
-                      //   height: 20,
-                      // ),
-                      // Text(
-                      //   'Endereço',
-                      //   style: TextStyle(
-                      //       color: Color(0xffffffff),
-                      //       fontWeight: FontWeight.bold,
-                      //       fontSize: 18),
-                      // ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        'Avenida B Quadra 298 Lote 23 \nCidade Jardim Paraupebas - PA',
-                        style:
-                            TextStyle(color: Color(0xffDED4D4), fontSize: 16),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+            // const SizedBox(
+            //   width: 280,
+            //   height: 250,
+            //   // color: Colors.red,
+            //   child: Row(
+            //     children: [
+            //       Column(
+            //         crossAxisAlignment: CrossAxisAlignment.start,
+            //         children: [
+            //           Text(
+            //             'ENDEREÇO',
+            //             style: TextStyle(
+            //               color: Color(0xffffffff),
+            //               fontWeight: FontWeight.bold,
+            //               fontSize: 18,
+            //             ),
+            //           ),
+            //           //      const SizedBox(
+            //           //   height: 20,
+            //           // ),
+            //           // const Row(
+            //           //   children: [
+            //           //     Icon(
+            //           //       Icons.headset_mic,
+            //           //       color: Color(0xffFFB000),
+            //           //       size: 50,
+            //           //     ),
+            //           //     SizedBox(
+            //           //       width: 15,
+            //           //     ),
+            //           //     Column(
+            //           //       crossAxisAlignment: CrossAxisAlignment.start,
+            //           //       children: [
+            //           //         Text(
+            //           //           'Suporte',
+            //           //           style: TextStyle(
+            //           //               color: Color(0xffDED4D4), fontSize: 16),
+            //           //         ),
+            //           //         Text(
+            //           //           '+55 (94) 99132-6169',
+            //           //           style: TextStyle(
+            //           //               color: Color(0xFFFFFFFF),
+            //           //               fontWeight: FontWeight.bold,
+            //           //               fontSize: 18),
+            //           //         ),
+            //           //       ],
+            //           //     )
+            //           //   ],
+            //           // ),
+            //           // SizedBox(
+            //           //   height: 20,
+            //           // ),
+            //           // Text(
+            //           //   'Endereço',
+            //           //   style: TextStyle(
+            //           //       color: Color(0xffffffff),
+            //           //       fontWeight: FontWeight.bold,
+            //           //       fontSize: 18),
+            //           // ),
+            //           SizedBox(
+            //             height: 20,
+            //           ),
+            //           Text(
+            //             'Avenida B Quadra 298 Lote 23 \nCidade Jardim Paraupebas - PA',
+            //             style:
+            //                 TextStyle(color: Color(0xffDED4D4), fontSize: 16),
+            //           ),
+            //           SizedBox(
+            //             height: 20,
+            //           ),
+            //         ],
+            //       ),
+            //     ],
+            //   ),
+            // ),
             SizedBox(
               width: 280,
               height: 220,
@@ -519,17 +519,34 @@ class _FooterState extends State<Footer> {
             const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Flexible(
-                  child: Text(
-                    '© 2023 VelocityNet Telecom | Todos os direitos reservados',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    textAlign: TextAlign.center,
-                  ),
+                Flex(
+                  direction: Axis.vertical,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      '© 2024 Velocitynet | Todos os direitos reservados.',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Velocitynet Telecom LTDA - CNPJ: 24.513.378/0001-57 - velocitynet@velocitynet.com.br',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
                 ),
               ],
             ),

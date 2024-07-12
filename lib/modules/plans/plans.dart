@@ -43,7 +43,7 @@ class _PlansComponentState extends State<PlansComponent>
       jsonDate = json.decode(dados.body);
       lengtDate = jsonDate.length;
       _tabController =
-          TabController(length: lengtDate + 1, vsync: this, initialIndex: 0);
+          TabController(length: lengtDate, vsync: this, initialIndex: 0);
     });
   }
 
@@ -87,8 +87,8 @@ class _PlansComponentState extends State<PlansComponent>
               color: Colors.white,
               width: 1100,
               child: TabBar(
-                overlayColor:
-                    const MaterialStatePropertyAll(Colors.transparent),
+                dividerColor: Colors.transparent,
+                overlayColor: const WidgetStatePropertyAll(Colors.transparent),
                 tabAlignment: TabAlignment.start,
                 isScrollable: true,
                 controller: _tabController,
@@ -104,39 +104,39 @@ class _PlansComponentState extends State<PlansComponent>
                   color: Color(0xffF1F1F1),
                 ),
                 tabs: <Widget>[
-                  Tab(
-                    child: Container(
-                      padding: const EdgeInsets.only(
-                        left: 70,
-                        right: 70,
-                      ),
-                      alignment: Alignment.center,
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          top: BorderSide(color: Color(0xFFf1f1f1), width: 1),
-                          left: BorderSide(color: Color(0xFFf1f1f1), width: 1),
-                          right: BorderSide(color: Color(0xFFf1f1f1), width: 1),
-                        ),
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(5),
-                          topRight: Radius.circular(5),
-                        ),
-                      ),
-                      child: const Text(
-                        'Monte seu plano',
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: Color(0xff00244E),
-                            fontWeight: FontWeight.bold),
-                        // style: GoogleFonts.getFont('Poppins',
-                        //     color: isVisibleHoje == true
-                        //         ? ColorsDashboard().white
-                        //         : ColorsDashboard().grey,
-                        //     fontSize: 15,
-                        //     fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                  ),
+                  // Tab(
+                  //   child: Container(
+                  //     padding: const EdgeInsets.only(
+                  //       left: 70,
+                  //       right: 70,
+                  //     ),
+                  //     alignment: Alignment.center,
+                  //     decoration: const BoxDecoration(
+                  //       border: Border(
+                  //         top: BorderSide(color: Color(0xFFf1f1f1), width: 1),
+                  //         left: BorderSide(color: Color(0xFFf1f1f1), width: 1),
+                  //         right: BorderSide(color: Color(0xFFf1f1f1), width: 1),
+                  //       ),
+                  //       borderRadius: BorderRadius.only(
+                  //         topLeft: Radius.circular(5),
+                  //         topRight: Radius.circular(5),
+                  //       ),
+                  //     ),
+                  //     child: const Text(
+                  //       'Monte seu plano',
+                  //       style: TextStyle(
+                  //           fontSize: 15,
+                  //           color: Color(0xff00244E),
+                  //           fontWeight: FontWeight.bold),
+                  //       // style: GoogleFonts.getFont('Poppins',
+                  //       //     color: isVisibleHoje == true
+                  //       //         ? ColorsDashboard().white
+                  //       //         : ColorsDashboard().grey,
+                  //       //     fontSize: 15,
+                  //       //     fontWeight: FontWeight.w500),
+                  //     ),
+                  //   ),
+                  // ),
                   ...jsonDate.map((e) {
                     setState(() {});
 
@@ -180,7 +180,7 @@ class _PlansComponentState extends State<PlansComponent>
               child: TabBarView(
                 controller: _tabController,
                 children: <Widget>[
-                  const GroupMontedPlan(),
+                  // const GroupMontedPlan(),
                   ...jsonDate.map((e) {
                     List<dynamic> imagens = e['images'];
 
@@ -207,16 +207,15 @@ class _PlansComponentState extends State<PlansComponent>
                                   width: double.infinity,
                                   child: ElevatedButton(
                                     style: ButtonStyle(
-                                      shape: MaterialStateProperty.all<
+                                      shape: WidgetStateProperty.all<
                                           RoundedRectangleBorder>(
                                         RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(5),
                                         ),
                                       ),
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
-                                              const Color(0xffFFB000)),
+                                      backgroundColor: WidgetStateProperty.all(
+                                          const Color(0xffFFB000)),
                                     ),
                                     onPressed: () {
                                       Url().urlWhatsApp();

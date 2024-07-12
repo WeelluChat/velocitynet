@@ -174,25 +174,25 @@ class _EndDrawerState extends State<EndDrawer> {
             width: 20,
             height: 10,
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 15, right: 15),
-            child: TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: const Color(0XFF13294E),
-              ),
-              onPressed: () {
-                Url().urlWhatsApp();
-              },
-              child: const Text(
-                "ASSINE JÁ",
-                style: TextStyle(color: Colors.white, fontSize: 18),
-              ),
-            ),
-          ),
-          const SizedBox(
-            width: 20,
-            height: 10,
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.only(left: 15, right: 15),
+          //   child: TextButton(
+          //     style: TextButton.styleFrom(
+          //       backgroundColor: const Color(0XFF13294E),
+          //     ),
+          //     onPressed: () {
+          //       Url().urlWhatsApp();
+          //     },
+          //     child: const Text(
+          //       "ASSINE JÁ",
+          //       style: TextStyle(color: Colors.white, fontSize: 18),
+          //     ),
+          //   ),
+          // ),
+          // const SizedBox(
+          //   width: 20,
+          //   height: 10,
+          // ),
           Padding(
             padding: const EdgeInsets.only(left: 15, right: 15),
             child: TextButton(

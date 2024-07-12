@@ -126,25 +126,25 @@ class _SpecialOfferState extends State<SpecialOffer> {
                   const SizedBox(
                     height: 20,
                   ),
-                  ElevatedButton(
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(0)),
-                        ),
-                      ),
-                      backgroundColor:
-                          MaterialStateProperty.all(const Color(0xffFFB000)),
-                    ),
-                    onPressed: () {
-                      Url().urlWhatsApp();
-                    },
-                    child: const Text(
-                      "SABER MAIS",
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-                  ),
+                  // ElevatedButton(
+                  //   style: ButtonStyle(
+                  //     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  //       const RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.all(Radius.circular(0)),
+                  //       ),
+                  //     ),
+                  //     backgroundColor:
+                  //         MaterialStateProperty.all(const Color(0xffFFB000)),
+                  //   ),
+                  //   onPressed: () {
+                  //     Url().urlWhatsApp();
+                  //   },
+                  //   child: const Text(
+                  //     "SABER MAIS",
+                  //     style: TextStyle(
+                  //         color: Colors.white, fontWeight: FontWeight.bold),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

@@ -30,71 +30,71 @@ class _AppBarComponentState extends State<AppBarComponent> {
       ),
       child: Column(
         children: [
-          Container(
-            color: const Color(0XFF13294E),
-            padding: const EdgeInsets.only(top: 10, bottom: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextButton.icon(
-                  onPressed: () {
-                    Url().urlWhatsApp();
-                  },
-                  icon: PhosphorIcon(
-                    PhosphorIcons.fill.whatsappLogo,
-                    color: Colors.green,
-                    size: 25.0,
-                  ),
-                  label: const Text(
-                    "+55 (94) 99132-6169",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-                TextButton.icon(
-                  onPressed: () {
-                    Url().urlFacebook();
-                  },
-                  icon: PhosphorIcon(
-                    PhosphorIcons.fill.facebookLogo,
-                    color: Colors.blue,
-                    size: 25.0,
-                  ),
-                  label: const Text(
-                    "@velocitynettelecom",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-                TextButton.icon(
-                  onPressed: () {
-                    Url().urlInstagram();
-                  },
-                  icon: PhosphorIcon(
-                    PhosphorIcons.fill.instagramLogo,
-                    color: const Color(0xFFEA4335),
-                    size: 25.0,
-                  ),
-                  label: const Text(
-                    "@velocitynet_oficial",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-                TextButton.icon(
-                  onPressed: () {
-                    //
-                  },
-                  icon: PhosphorIcon(
-                    PhosphorIcons.fill.mapPin,
-                    color: Colors.orange,
-                    size: 25.0,
-                  ),
-                  label: const Text(
-                    "Parauapebas",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          // Container(
+          //   color: const Color(0XFF13294E),
+          //   padding: const EdgeInsets.only(top: 10, bottom: 10),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     children: [
+          //       TextButton.icon(
+          //         onPressed: () {
+          //           Url().urlWhatsApp();
+          //         },
+          //         icon: PhosphorIcon(
+          //           PhosphorIcons.fill.whatsappLogo,
+          //           color: Colors.green,
+          //           size: 25.0,
+          //         ),
+          //         label: const Text(
+          //           "+55 (94) 99132-6169",
+          //           style: TextStyle(color: Colors.white),
+          //         ),
+          //       ),
+          //       TextButton.icon(
+          //         onPressed: () {
+          //           Url().urlFacebook();
+          //         },
+          //         icon: PhosphorIcon(
+          //           PhosphorIcons.fill.facebookLogo,
+          //           color: Colors.blue,
+          //           size: 25.0,
+          //         ),
+          //         label: const Text(
+          //           "@velocitynettelecom",
+          //           style: TextStyle(color: Colors.white),
+          //         ),
+          //       ),
+          //       TextButton.icon(
+          //         onPressed: () {
+          //           Url().urlInstagram();
+          //         },
+          //         icon: PhosphorIcon(
+          //           PhosphorIcons.fill.instagramLogo,
+          //           color: const Color(0xFFEA4335),
+          //           size: 25.0,
+          //         ),
+          //         label: const Text(
+          //           "@velocitynet_oficial",
+          //           style: TextStyle(color: Colors.white),
+          //         ),
+          //       ),
+          //       TextButton.icon(
+          //         onPressed: () {
+          //           //
+          //         },
+          //         icon: PhosphorIcon(
+          //           PhosphorIcons.fill.mapPin,
+          //           color: Colors.orange,
+          //           size: 25.0,
+          //         ),
+          //         label: const Text(
+          //           "Parauapebas",
+          //           style: TextStyle(color: Colors.white),
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
           Container(
             margin: const EdgeInsets.only(top: 20),
             width: 1280,
@@ -213,39 +213,39 @@ class _AppBarComponentState extends State<AppBarComponent> {
                 const SizedBox(
                   width: 20,
                 ),
+                // ElevatedButton(
+                //   style: const ButtonStyle(
+                //     backgroundColor: WidgetStatePropertyAll(
+                //       Color(0XFF13294E),
+                //     ),
+                //   ),
+                //   onPressed: () {},
+                //   child: Directionality(
+                //     textDirection: TextDirection.rtl,
+                //     child: TextButton.icon(
+                //       onPressed: () {
+                //         Url().urlWhatsApp();
+                //       },
+                //       label: const Text(
+                //         "ASSINE JÁ",
+                //         style: TextStyle(color: Colors.white),
+                //       ),
+                //       icon: const Directionality(
+                //         textDirection: TextDirection.ltr,
+                //         child: Icon(
+                //           Icons.arrow_right_sharp,
+                //           color: Colors.white,
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                // const SizedBox(
+                //   width: 20,
+                // ),
                 ElevatedButton(
                   style: const ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(
-                      Color(0XFF13294E),
-                    ),
-                  ),
-                  onPressed: () {},
-                  child: Directionality(
-                    textDirection: TextDirection.rtl,
-                    child: TextButton.icon(
-                      onPressed: () {
-                        Url().urlWhatsApp();
-                      },
-                      label: const Text(
-                        "ASSINE JÁ",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      icon: const Directionality(
-                        textDirection: TextDirection.ltr,
-                        child: Icon(
-                          Icons.arrow_right_sharp,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                ElevatedButton(
-                  style: const ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(
+                    backgroundColor: WidgetStatePropertyAll(
                       Color(0XFF13294E),
                     ),
                   ),

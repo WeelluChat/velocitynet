@@ -24,7 +24,7 @@ class _HomeState extends State<Home> {
       appBar: PreferredSize(
         preferredSize: mobile == true
             ? const Size.fromHeight(80)
-            : const Size.fromHeight(140),
+            : const Size.fromHeight(90),
         child: Container(
           margin: mobile == true
               ? const EdgeInsets.only(top: 15)

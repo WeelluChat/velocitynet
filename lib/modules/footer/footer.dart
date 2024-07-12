@@ -100,7 +100,7 @@ class _FooterState extends State<Footer> {
             ),
             SizedBox(
               width: 280,
-              height: 260,
+              height: 300,
               //  color: Colors.red,
               child: Column(
                 children: [
@@ -165,7 +165,55 @@ class _FooterState extends State<Footer> {
                                         fontSize: 18),
                                   ),
                                 ],
-                              )
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          const Row(
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'WhatsApp',
+                                    style: TextStyle(
+                                        color: Color(0xffDED4D4), fontSize: 16),
+                                  ),
+                                  Text(
+                                    '+55 (94) 99260-0430',
+                                    style: TextStyle(
+                                        color: Color(0xFFFFFFFF),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          const Row(
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Ligação',
+                                    style: TextStyle(
+                                        color: Color(0xffDED4D4), fontSize: 16),
+                                  ),
+                                  Text(
+                                    '+55 (94) 99132-6169',
+                                    style: TextStyle(
+                                        color: Color(0xFFFFFFFF),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
                           const SizedBox(

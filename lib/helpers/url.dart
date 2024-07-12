@@ -4,7 +4,7 @@ class Url {
   Future<void> urlWhatsApp() async {
     await launchUrl(
       Uri.parse(
-          "https://api.whatsapp.com/send?phone=+559499132-6169&text=Óla tudo bem ?"),
+          "https://api.whatsapp.com/send?phone=+559499260-0430&text=Óla tudo bem ?"),
     );
   }
 
@@ -23,7 +23,7 @@ class Url {
 
   Future<void> urlInstagram() async {
     await launchUrl(
-      Uri.parse("https://www.instagram.com/velocitynet_oficial/"),
+      Uri.parse("https://www.instagram.com/velocitynet.oficial/"),
     );
   }
 
@@ -45,7 +45,7 @@ class Url {
     );
   }
 
-    Future<void> urlWeellu() async {
+  Future<void> urlWeellu() async {
     await launchUrl(
       Uri.parse("https://webchat.weellu.com/"),
     );
@@ -53,14 +53,14 @@ class Url {
 
   Future<void> urlPlayStore() async {
     await launchUrl(
-      Uri.parse("https://play.google.com/store/apps/details?id=br.tv.ole.oletv&hl=en_US"),
+      Uri.parse(
+          "https://play.google.com/store/apps/details?id=br.tv.ole.oletv&hl=en_US"),
     );
   }
 
-Future<void> urlAppStore() async {
+  Future<void> urlAppStore() async {
     await launchUrl(
       Uri.parse("https://apps.apple.com/br/app/ol%C3%A9-tv/id1301299065"),
     );
   }
-  
 }

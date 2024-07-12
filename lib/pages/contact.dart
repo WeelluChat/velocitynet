@@ -145,6 +145,23 @@ class _ContactState extends State<Contact> {
                       padding: const EdgeInsets.all(15),
                       child: TextButton.icon(
                         icon: PhosphorIcon(
+                          PhosphorIcons.fill.whatsappLogo,
+                          size: 40,
+                          color: const Color(0xff25d366),
+                        ),
+                        label: const Text(
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          "+55 (94) 99260-0430* WhatsApp",
+                          style: TextStyle(fontSize: 22),
+                        ),
+                        onPressed: () {},
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: TextButton.icon(
+                        icon: PhosphorIcon(
                           PhosphorIcons.fill.phone,
                           size: 40,
                           color: const Color(0xff343434),

@@ -115,14 +115,13 @@ class _TvState extends State<Tv> {
                   runSpacing: 20,
                   children: [
                     ElevatedButton(
-                      style: ButtonStyle(
-                        padding: MaterialStateProperty.all(
-                          const EdgeInsets.only(
+                      style: const ButtonStyle(
+                        padding: WidgetStatePropertyAll(
+                          EdgeInsets.only(
                               top: 20, bottom: 20, right: 40, left: 40),
                         ),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          const RoundedRectangleBorder(
+                        shape: WidgetStatePropertyAll<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(Radius.circular(10)),
                             side: BorderSide(
                               color: Colors.white,
@@ -131,7 +130,7 @@ class _TvState extends State<Tv> {
                           ),
                         ),
                         backgroundColor:
-                            MaterialStateProperty.all(Colors.transparent),
+                            WidgetStatePropertyAll(Colors.transparent),
                       ),
                       onPressed: () {},
                       child: Text(
@@ -144,19 +143,18 @@ class _TvState extends State<Tv> {
                       ),
                     ),
                     ElevatedButton(
-                      style: ButtonStyle(
-                        padding: MaterialStateProperty.all(
-                          const EdgeInsets.only(
+                      style: const ButtonStyle(
+                        padding: WidgetStatePropertyAll(
+                          EdgeInsets.only(
                               top: 20, bottom: 20, right: 40, left: 40),
                         ),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          const RoundedRectangleBorder(
+                        shape: WidgetStatePropertyAll<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(Radius.circular(10)),
                           ),
                         ),
                         backgroundColor:
-                            MaterialStateProperty.all(const Color(0XFFFFB000)),
+                            WidgetStatePropertyAll(Color(0XFFFFB000)),
                       ),
                       onPressed: () {
                         Navigator.pushNamed(context, '/tvplanos');

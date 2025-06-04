@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'package:velocity_net/constants/api_constants.dart';
-import 'package:velocity_net/helpers/url.dart';
 import 'package:velocity_net/modules/specialOffer/model/offer_model.dart';
 import 'package:velocity_net/service/api.dart';
 

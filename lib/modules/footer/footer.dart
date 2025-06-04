@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:velocity_net/helpers/url.dart';
 
@@ -506,9 +505,9 @@ class _FooterState extends State<Footer> {
                 ],
               ),
             ),
-            Column(
+            const Column(
               children: [
-                const Text(
+                Text(
                   '© 2024 Velocitynet | Todos os direitos reservados.',
                   style: TextStyle(
                     color: Colors.white,
@@ -517,20 +516,18 @@ class _FooterState extends State<Footer> {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(
+                SizedBox(
                   height: 10,
                 ),
-                Container(
-                  child: const Text(
-                    'Velocitynet Telecom LTDA - CNPJ: 24.513.378/0001-57 - velocitynet@velocitynet.com.br',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
+                Text(
+                  'Velocitynet Telecom LTDA - CNPJ: 24.513.378/0001-57 - velocitynet@velocitynet.com.br',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
                   ),
-                )
+                  textAlign: TextAlign.center,
+                ),
               ],
             )
           ],

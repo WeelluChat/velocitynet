@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:velocity_net/helpers/url.dart';
 
 class AppBarComponent extends AppBar {

@@ -26,11 +26,11 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           scrollbarTheme: const ScrollbarThemeData(
-            thumbColor: MaterialStatePropertyAll(
+            thumbColor: WidgetStatePropertyAll(
               Colors.black,
             ),
           ),
-          colorScheme: const ColorScheme.light(background: Colors.white),
+          colorScheme: const ColorScheme.light(surface: Colors.white),
           useMaterial3: true,
         ),
         home: const Home(),

@@ -84,25 +84,6 @@ class _ContactState extends State<Contact> {
                         },
                       ),
                     ),
-                    // Padding(
-                    //   padding: const EdgeInsets.all(15),
-                    //   child: TextButton.icon(
-                    //     icon: PhosphorIcon(
-                    //       PhosphorIcons.fill.whatsappLogo,
-                    //       size: 40,
-                    //       color: Colors.green,
-                    //     ),
-                    //     label: const Text(
-                    //       maxLines: 2,
-                    //       overflow: TextOverflow.ellipsis,
-                    //       "+55 (94) 99132-6169",
-                    //       style: TextStyle(fontSize: 22),
-                    //     ),
-                    //     onPressed: () {
-                    //       Url().urlWhatsApp();
-                    //     },
-                    //   ),
-                    // ),
                     Padding(
                       padding: const EdgeInsets.all(15),
                       child: TextButton.icon(

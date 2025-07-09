@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Questions extends StatefulWidget {
   const Questions({super.key});
@@ -7,317 +8,180 @@ class Questions extends StatefulWidget {
   State<Questions> createState() => _QuestionsState();
 }
 
-class _QuestionsState extends State<Questions> {
-  bool _isExpanded = false;
-  bool _isExpanded1 = false;
-  bool _isExpanded2 = false;
-  bool _isExpanded3 = false;
+class _QuestionsState extends State<Questions>
+    with SingleTickerProviderStateMixin {
+  int expandedIndex = -1;
+
+  final List<Map<String, String>> faqs = [
+    {
+      'question': 'Como funciona a Instalação?',
+      'answer':
+          'Após a escolha de um dos nossos planos, será feita uma análise de viabilidade para verificar se sua residência está dentro da nossa cobertura.',
+    },
+    {
+      'question': 'Como funciona o pagamento?',
+      'answer':
+          'Você pode realizar o pagamento com pix ou boleto, via cartão de crédito/débito e dinheiro.',
+    },
+    {
+      'question': 'Qual é a diferença entre os planos corporativo?',
+      'answer':
+          'Plano Corporativo sem fidelidade, 50% de upload e atendimento ágil. Conecte-se eficientemente e impulsione seu negócio conosco.',
+    },
+    {
+      'question': 'Benefícios',
+      'answer': 'Desfrute de Benefícios Exclusivos: HBO, Olé TV e Ubook Livros.',
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < 600;
+
     return Container(
-      padding:
-          const EdgeInsets.only(top: 100, bottom: 100, left: 20, right: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 80),
       width: double.infinity,
+      color: const Color(0xFF08203E),
       child: Flex(
         direction: Axis.horizontal,
-        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Flexible(
             child: SizedBox(
-              width: 600,
+              width: 700,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Flexible(
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 20),
-                          child: Text(
-                            'Perguntas e Dúvidas Frequentes',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: MediaQuery.of(context).size.width < 600
-                                  ? 30
-                                  : 40,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                          ),
-                        ),
-                      ),
-                    ],
+                  Text(
+                    'Perguntas e Dúvidas Frequentes',
+                    style: GoogleFonts.poppins(
+                      fontSize: isMobile ? 22 : 36,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
                   ),
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        _isExpanded = !_isExpanded;
-                        _isExpanded1 = false;
-                        _isExpanded2 = false;
-                        _isExpanded3 = false;
-                      });
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: const Color(0xffE1E6EE),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                  const SizedBox(height: 30),
+                  ...List.generate(faqs.length, (index) {
+                    final isExpanded = expandedIndex == index;
+                    return TweenAnimationBuilder<double>(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeOut,
+                      tween: Tween<double>(
+                          begin: 0, end: isExpanded ? 1.0 : 0.0),
+                      builder: (context, value, child) {
+                        return Column(
                           children: [
-                            Icon(
-                              _isExpanded ? Icons.remove : Icons.add,
-                              color: Colors.black,
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  expandedIndex = isExpanded ? -1 : index;
+                                });
+                              },
+                              child: AnimatedContainer(
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.easeOut,
+                                width: double.infinity,
+                                constraints:
+                                    const BoxConstraints(maxWidth: 600),
+                                margin:
+                                    const EdgeInsets.symmetric(vertical: 6),
+                                padding: const EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                      color: const Color(0xFFE1E6EE), width: 1),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.05),
+                                      blurRadius: 10,
+                                      offset: const Offset(0, 4),
+                                    ),
+                                  ],
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    AnimatedRotation(
+                                      duration:
+                                          const Duration(milliseconds: 300),
+                                      turns: isExpanded ? 0.5 : 0,
+                                      child: const Icon(
+                                        Icons.add_circle_outline,
+                                        color: Color(0xff13294E),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 12),
+                                    Expanded(
+                                      child: Text(
+                                        faqs[index]['question']!,
+                                        style: GoogleFonts.poppins(
+                                          fontSize: isMobile ? 16 : 18,
+                                          fontWeight: FontWeight.w600,
+                                          color: const Color(0xff13294E),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
-                            Flexible(
-                              child: Container(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Text(
-                                  'Como funciona a Instalação?',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize:
-                                        MediaQuery.of(context).size.width < 400
-                                            ? 18
-                                            : 22,
+                            ClipRect(
+                              child: AnimatedAlign(
+                                alignment: Alignment.topCenter,
+                                heightFactor: value,
+                                duration: const Duration(milliseconds: 300),
+                                child: Opacity(
+                                  opacity: value,
+                                  child: Container(
+                                    constraints:
+                                        const BoxConstraints(maxWidth: 600),
+                                    margin: const EdgeInsets.only(
+                                        top: 5, bottom: 15),
+                                    padding: const EdgeInsets.all(16),
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFFAFAFA),
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(
+                                          color: const Color(0xFFE1E6EE),
+                                          width: 1),
+                                    ),
+                                    child: Text(
+                                      faqs[index]['answer']!,
+                                      style: GoogleFonts.poppins(
+                                        fontSize: isMobile ? 14 : 16,
+                                        color: const Color(0xFF444444),
+                                        height: 1.6,
+                                      ),
+                                    ),
                                   ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
                                 ),
                               ),
                             ),
                           ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  if (_isExpanded)
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: const Color(0xffE1E6EE))),
-                        child: Text(
-                          'Após a escolha de um dos nossos plano, será feito uma analise de viabilidade, para verificar se sua residencia está dentro da nossa cobertura',
-                          style: TextStyle(
-                            color: const Color(0xff7A7A7A),
-                            fontSize: MediaQuery.of(context).size.width < 400
-                                ? 18
-                                : 20,
-                          ),
-                        ),
-                      ),
-                    ),
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        _isExpanded = false;
-                        _isExpanded1 = !_isExpanded1;
-                        _isExpanded2 = false;
-                        _isExpanded3 = false;
-                      });
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: const Color(0xffE1E6EE),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              _isExpanded1 ? Icons.remove : Icons.add,
-                              color: Colors.black,
-                            ),
-                            Flexible(
-                              child: Container(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Text(
-                                  'Como funciona o pagamento?',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize:
-                                        MediaQuery.of(context).size.width < 400
-                                            ? 18
-                                            : 22,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  if (_isExpanded1)
-                    Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(color: const Color(0xffE1E6EE))),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          'Você pode realizar o pagamento com pix ou boleto, via cartão de credito/débito e dinheiro',
-                          style: TextStyle(
-                            color: const Color(0xff7A7A7A),
-                            fontSize: MediaQuery.of(context).size.width < 400
-                                ? 18
-                                : 20,
-                          ),
-                        ),
-                      ),
-                    ),
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        _isExpanded = false;
-                        _isExpanded1 = false;
-                        _isExpanded2 = !_isExpanded2;
-                        _isExpanded3 = false;
-                      });
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: const Color(0xffE1E6EE)),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              _isExpanded2 ? Icons.remove : Icons.add,
-                              color: Colors.black,
-                            ),
-                            Flexible(
-                              child: Container(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Text(
-                                  'Qual é a diferença entre os planos corporativo?',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize:
-                                        MediaQuery.of(context).size.width < 400
-                                            ? 18
-                                            : 22,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  if (_isExpanded2)
-                    Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(color: const Color(0xffE1E6EE))),
-                      child: Padding(
-                        padding: const EdgeInsets.all(15),
-                        child: Text(
-                          'Plano Corporativo sem fidelidade, 50% de upload e atendimento ágil. Conecte-se eficientemente e impulsione seu negócio conosco.',
-                          style: TextStyle(
-                            color: const Color(0xff7A7A7A),
-                            fontSize: MediaQuery.of(context).size.width < 400
-                                ? 18
-                                : 20,
-                          ),
-                        ),
-                      ),
-                    ),
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        _isExpanded = false;
-                        _isExpanded1 = false;
-                        _isExpanded2 = false;
-                        _isExpanded3 = !_isExpanded3;
-                      });
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(color: const Color(0xffE1E6EE))),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              _isExpanded3 ? Icons.remove : Icons.add,
-                              color: Colors.black,
-                            ),
-                            Container(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text(
-                                'Benefícios',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize:
-                                      MediaQuery.of(context).size.width < 400
-                                          ? 18
-                                          : 22,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  if (_isExpanded3)
-                    Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(color: const Color(0xffE1E6EE))),
-                      child: Padding(
-                        padding: const EdgeInsets.all(15),
-                        child: Text(
-                          'Desfrute de Benefícios Exclusivos: HBO, Olé TV e Ubook Livros.',
-                          style: TextStyle(
-                            color: const Color(0xff7A7A7A),
-                            fontSize: MediaQuery.of(context).size.width < 400
-                                ? 18
-                                : 20,
-                          ),
-                        ),
-                      ),
-                    ),
-                ], // COLUMN
+                        );
+                      },
+                    );
+                  }),
+                ],
               ),
             ),
           ),
-          Visibility(
-            visible: MediaQuery.of(context).size.width > 1100,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 100),
-                  child: SizedBox(
-                    height: 400,
-                    width: 400,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(250),
-                      child: Image.asset(
-                        'velocitynet_image.jpg',
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                )
-              ],
+          if (!isMobile)
+            const SizedBox(width: 80),
+          if (MediaQuery.of(context).size.width > 1100)
+            Padding(
+              padding: const EdgeInsets.only(left: 50),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(250),
+                child: Image.asset(
+                  'assets/velocitynet_image.jpg',
+                  height: 400,
+                  width: 400,
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
-          ),
         ],
       ),
     );

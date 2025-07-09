@@ -36,8 +36,8 @@ class MyApp extends StatelessWidget {
         home: const Home(),
         initialRoute: '/',
         routes: {
-          '/contatos': (context) => const Contact(),
-          '/tvplanos': (context) => const TvPlans(),
+          '/contatos': (context) => const ContactPage(),
+          '/tvplanos': (context) => Oletv(),
           '/missao-visao': (context) => const CompanyValues(),
         },
         scrollBehavior: const MaterialScrollBehavior().copyWith(

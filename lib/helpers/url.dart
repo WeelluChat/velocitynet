@@ -63,4 +63,10 @@ class Url {
       Uri.parse("https://apps.apple.com/br/app/ol%C3%A9-tv/id1301299065"),
     );
   }
+
+  void launchPhoneCall(String s) {}
+
+  void launchEmail(String s) {}
+
+  void launchWhatsApp(String s) {}
 }

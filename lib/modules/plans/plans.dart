@@ -1,9 +1,16 @@
 import 'dart:convert';
-
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:velocity_net/constants/api_constants.dart';
-import 'package:velocity_net/helpers/url.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'package:velocity_net/modules/plans/repository/monteseucombo.dart';
+import 'package:velocity_net/modules/plans/repository/paraempresa.dart';
+
+const Color primaryDarkColor = Color(0xFFFFFFFF);
+const Color primaryLightColor = Color(0xff08203E);
+const Color accentColor = Color(0xFFE3F2FD);
+const Color borderColor = Color(0xFFE0E0E0);
+const Color textColor = Color(0xFF1A237E);
+const Color disabledColor = Color(0xFFBDBDBD);
 
 class PlansComponent extends StatefulWidget {
   const PlansComponent({super.key});
@@ -12,231 +19,248 @@ class PlansComponent extends StatefulWidget {
   State<PlansComponent> createState() => _PlansComponentState();
 }
 
-class _PlansComponentState extends State<PlansComponent>
-    with SingleTickerProviderStateMixin {
-  List<String> plansList = [];
+class _PlansComponentState extends State<PlansComponent> {
+  List<dynamic> telecinePlans = [];
+  List<dynamic> maxPlans = [];
+  List<dynamic> premierePlans = [];
+  List<dynamic> deezerPlans = [];
+  List<dynamic> globoplayPlans = [];
 
-  bool isVisibleConnect = true;
-  bool isVisibleStart = false;
-  bool isVisiblePrime = false;
-  bool isVisibleFamily = false;
-  bool isVisibleConnectPlus = false;
+  bool isLoadingTelecine = true;
+  bool isLoadingMax = true;
+  bool isLoadingPremiere = true;
+  bool isLoadingDeezer = true;
+  bool isLoadingGloboplay = true;
 
-  List<dynamic> jsonDate = [];
+  String getImageUrl(String path) {
+    const String baseUrl = 'https://api.velocitynet.com.br/api/v1/uploads/';
+    return '$baseUrl$path';
+  }
 
-  int lengtDate = 0;
-
-  late TabController _tabController;
-
-  getCategoryPlans() async {
-    final Uri uri = Uri.parse("${ApiConstants.baseApi}/category-plan");
-
-    var dados = await http.get(uri
-        // headers: {
-        //   "Content-Type": "application/json",
-        //   "Authorization":
-        //       "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZTYwZWRkY2ExZWI5MzM0NzYyZDdlOCIsImVtYWlsIjoidmVsb2NpdHluZXRmaW5hbmNlaXJvQGdtYWlsLmNvbSIsImlhdCI6MTcxNTg4NjQzOH0.2zY2kHTrf2KTWKgH0JyL24BNDcSqxiyXYRJ_fmuzBoA",
-        // },
-        );
-    setState(() {
-      jsonDate = json.decode(dados.body);
-      lengtDate = jsonDate.length;
-      _tabController =
-          TabController(length: lengtDate, vsync: this, initialIndex: 0);
-    });
+  Future<void> fetchPlans(String keyword, void Function(List<dynamic>) setter,
+      void Function() stopLoading) async {
+    final Uri uri =
+        Uri.parse("https://api.velocitynet.com.br/api/v1/category-plan");
+    try {
+      final response = await http.get(uri);
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+        final filtered = data.where((item) {
+          final nome = (item['nome'] ?? '').toString().toLowerCase();
+          return nome.contains(keyword);
+        }).toList();
+        setState(() {
+          setter(filtered);
+          stopLoading();
+        });
+      } else {
+        stopLoading();
+      }
+    } catch (e) {
+      stopLoading();
+    }
   }
 
   @override
   void initState() {
     super.initState();
-    getCategoryPlans();
+    fetchPlans('telecine', (list) => telecinePlans = list,
+        () => isLoadingTelecine = false);
+    fetchPlans('max', (list) => maxPlans = list, () => isLoadingMax = false);
+    fetchPlans('premiere', (list) => premierePlans = list,
+        () => isLoadingPremiere = false);
+    fetchPlans(
+        'deezer', (list) => deezerPlans = list, () => isLoadingDeezer = false);
+    fetchPlans('globoplay', (list) {
+      globoplayPlans = list
+          .where((e) =>
+              !(e['nome'] ?? '').toString().toLowerCase().contains('canais'))
+          .toList();
+    }, () => isLoadingGloboplay = false);
   }
 
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
+  Widget _buildPlansList(List<dynamic> plans, bool isMobile) {
+    return ListView.builder(
+      padding: const EdgeInsets.all(12),
+      itemCount: plans.length,
+      itemBuilder: (context, index) {
+        final plan = plans[index];
+        final List<dynamic> images = plan['images'] ?? [];
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(height: 10),
+            SizedBox(
+              height: isMobile ? 600 : 600,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: images.length,
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                itemBuilder: (context, i) {
+                  final imgUrl = getImageUrl(images[i]);
+                  return Container(
+                    width: isMobile ? 250 : 280,
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: borderColor,
+                        width: 1.5,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: primaryDarkColor.withOpacity(0.1),
+                          blurRadius: 6,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.network(
+                        imgUrl,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) => Container(
+                          color: accentColor,
+                          alignment: Alignment.center,
+                          child: Icon(Icons.broken_image,
+                              size: 40, color: primaryDarkColor),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            const SizedBox(height: 30),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildTab(
+      bool isLoading, List<dynamic> plans, String title, bool isMobile) {
+    if (isLoading) {
+      return const Center(
+        child: CircularProgressIndicator(color: primaryDarkColor),
+      );
+    }
+    if (plans.isEmpty) {
+      return Center(
+        child: Text(
+          'Nenhum plano $title encontrado.',
+          style: GoogleFonts.poppins(
+            color: textColor,
+            fontSize: isMobile ? 14 : 16,
+          ),
+        ),
+      );
+    }
+    return _buildPlansList(plans, isMobile);
   }
 
   @override
   Widget build(BuildContext context) {
-    if (jsonDate.isEmpty) {
-      return const CircularProgressIndicator();
-    }
+    final isMobile = MediaQuery.of(context).size.width < 700;
 
-    return SingleChildScrollView(
+    return Center(
       child: Container(
-        padding: const EdgeInsets.all(15),
+        decoration: const BoxDecoration(color: Colors.white),
+        padding: EdgeInsets.all(isMobile ? 15 : 30),
         width: double.infinity,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              margin: const EdgeInsets.only(bottom: 45),
+              margin: EdgeInsets.only(bottom: isMobile ? 30 : 45),
               child: Text(
                 'Escolha o melhor plano para você!',
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: MediaQuery.of(context).size.width < 600 ? 30 : 40,
+                style: GoogleFonts.poppins(
+                  color: const Color.fromARGB(255, 0, 0, 0),
+                  fontSize: isMobile ? 24 : 36,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            Container(
-              color: Colors.white,
-              width: 1100,
-              child: TabBar(
-                dividerColor: Colors.transparent,
-                overlayColor: const WidgetStatePropertyAll(Colors.transparent),
-                tabAlignment: TabAlignment.start,
-                isScrollable: true,
-                controller: _tabController,
-                indicatorColor: Colors.transparent,
-                unselectedLabelColor: Colors.grey,
-                labelStyle: const TextStyle(
-                  fontSize: 16,
-                ),
-                unselectedLabelStyle: const TextStyle(
-                  fontSize: 16,
-                ),
-                indicator: const BoxDecoration(
-                  color: Color(0xffF1F1F1),
-                ),
-                tabs: <Widget>[
-                  // Tab(
-                  //   child: Container(
-                  //     padding: const EdgeInsets.only(
-                  //       left: 70,
-                  //       right: 70,
-                  //     ),
-                  //     alignment: Alignment.center,
-                  //     decoration: const BoxDecoration(
-                  //       border: Border(
-                  //         top: BorderSide(color: Color(0xFFf1f1f1), width: 1),
-                  //         left: BorderSide(color: Color(0xFFf1f1f1), width: 1),
-                  //         right: BorderSide(color: Color(0xFFf1f1f1), width: 1),
-                  //       ),
-                  //       borderRadius: BorderRadius.only(
-                  //         topLeft: Radius.circular(5),
-                  //         topRight: Radius.circular(5),
-                  //       ),
-                  //     ),
-                  //     child: const Text(
-                  //       'Monte seu plano',
-                  //       style: TextStyle(
-                  //           fontSize: 15,
-                  //           color: Color(0xff00244E),
-                  //           fontWeight: FontWeight.bold),
-                  //       // style: GoogleFonts.getFont('Poppins',
-                  //       //     color: isVisibleHoje == true
-                  //       //         ? ColorsDashboard().white
-                  //       //         : ColorsDashboard().grey,
-                  //       //     fontSize: 15,
-                  //       //     fontWeight: FontWeight.w500),
-                  //     ),
-                  //   ),
-                  // ),
-                  ...jsonDate.map((e) {
-                    setState(() {});
-
-                    return Tab(
-                      child: Container(
-                        padding: const EdgeInsets.only(
-                          left: 70,
-                          right: 70,
+            DefaultTabController(
+              length: 7,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 400,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 10),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: const Color.fromARGB(255, 0, 89, 255),
                         ),
+                      ),
+                      child: Align(
                         alignment: Alignment.center,
-                        decoration: const BoxDecoration(
-                          border: Border(
-                            top: BorderSide(color: Color(0xFFf1f1f1), width: 1),
-                            left:
-                                BorderSide(color: Color(0xFFf1f1f1), width: 1),
-                            right:
-                                BorderSide(color: Color(0xFFf1f1f1), width: 1),
-                          ),
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(5),
-                            topRight: Radius.circular(5),
-                          ),
-                        ),
-                        child: Text(
-                          e['nome'],
-                          style: const TextStyle(
-                              fontSize: 15,
-                              color: Color(0xff00244E),
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    );
-                  })
-                ],
-              ),
-            ),
-            Container(
-              color: const Color(0xffF1F1F1),
-              width: 1070,
-              height: 700,
-              child: TabBarView(
-                controller: _tabController,
-                children: <Widget>[
-                  // const GroupMontedPlan(),
-                  ...jsonDate.map((e) {
-                    List<dynamic> imagens = e['images'];
-
-                    return SizedBox(
-                      height: 400,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: imagens.length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            padding: const EdgeInsets.only(left: 10, right: 10),
-                            width: 320,
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Image.network(
-                                    "${ApiConstants.baseUrlUploads}/${imagens[index]}", // Acesse imagens[index] em vez de e[index]["images"]
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 50,
-                                  width: double.infinity,
-                                  child: ElevatedButton(
-                                    style: ButtonStyle(
-                                      shape: WidgetStateProperty.all<
-                                          RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                      ),
-                                      backgroundColor: WidgetStateProperty.all(
-                                          const Color(0xffFFB000)),
-                                    ),
-                                    onPressed: () {
-                                      Url().urlWhatsApp();
-                                    },
-                                    child: const Text(
-                                      "Entre em contato",
-                                      style: TextStyle(
-                                          color: Color(0XFF13294E),
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                )
-                              ],
+                        child: TabBar(
+                          tabAlignment: TabAlignment.center,
+                          indicator: const UnderlineTabIndicator(
+                            borderSide: BorderSide(
+                              width: 3.0,
+                              color: Color.fromARGB(255, 0, 89, 255),
                             ),
-                          );
-                        },
+                          ),
+                          labelColor: Colors.black,
+                          unselectedLabelColor: Colors.black54,
+                          labelStyle: GoogleFonts.poppins(
+                            fontSize: isMobile ? 13 : 14,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          unselectedLabelStyle: GoogleFonts.poppins(
+                            fontSize: isMobile ? 13 : 15,
+                            fontWeight: FontWeight.normal,
+                          ),
+                          isScrollable: true,
+                          dividerColor: Colors.transparent,
+                          tabs: const [
+                            Tab(text: 'PARA VOCÊ'),
+                            Tab(text: 'PARA EMPRESA'),
+                            Tab(text: '+TELECINE'),
+                            Tab(text: '+MAX'),
+                            Tab(text: '+PREMIERE'),
+                            Tab(text: '+DEEZER'),
+                            Tab(text: '+GLOBOPLAY'),
+                          ],
+                        ),
                       ),
-                    );
-                  })
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    height: isMobile ? 1400 : 640,
+                    child: TabBarView(
+                      children: [
+                        Monteseucombo(onComboSelected: (SelectedCombo ) {  },),
+                        Paraempresa(),
+                        _buildTab(
+                            isLoadingTelecine, telecinePlans, '+TELECINE', isMobile),
+                        _buildTab(isLoadingMax, maxPlans, '+MAX', isMobile),
+                        _buildTab(
+                            isLoadingPremiere, premierePlans, '+PREMIERE', isMobile),
+                        _buildTab(isLoadingDeezer, deezerPlans, '+DEEZER', isMobile),
+                        _buildTab(
+                            isLoadingGloboplay, globoplayPlans, '+GLOBOPLAY', isMobile),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
+            SizedBox(height: isMobile ? 50 : 100),
           ],
         ),
       ),

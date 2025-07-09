@@ -1,7 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_net/modules/appbar/app_bar_component.dart';
 import 'package:velocity_net/modules/appbar/app_bar_component_resize.dart';
 import 'package:velocity_net/modules/endDrawer/end_drawer.dart';
+import 'package:velocity_net/pages/homepagemobile.dart';
 import 'package:velocity_net/pages/main.dart';
 
 class Home extends StatefulWidget {
@@ -39,9 +41,7 @@ class _HomeState extends State<Home> {
               scrollController: scrollController,
             )
           : null,
-      body: Main(
-        scrollController: scrollController,
-      ),
+      body: kIsWeb ? Homepagemobile() : Main(scrollController: scrollController),
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:velocity_net/modules/description/model/card_model.dart';
 import 'package:velocity_net/service/api.dart';
 
@@ -33,96 +33,98 @@ class _DescrptionState extends State<Descrption> {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < 600;
+
     return Container(
-      padding: const EdgeInsets.only(top: 50, bottom: 50),
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
       decoration: const BoxDecoration(
-          gradient: LinearGradient(colors: [
-        Color(0xff08203E),
-        Color(0xff06141C),
-      ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
+        gradient: LinearGradient(
+          colors: [Color(0xff08203E), Color(0xff06141C)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+      ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Text(
+            'A Velocitynet Telecom tem a\nsolução perfeita para o seu problema!',
+            textAlign: TextAlign.center,
+            style: GoogleFonts.poppins(
+              color: Colors.white,
+              fontSize: isMobile ? 16 : 30,
+              fontWeight: FontWeight.bold,
+              height: 1.4,
+            ),
+          ),
+          const SizedBox(height: 40),
           Wrap(
             alignment: WrapAlignment.center,
-            children: [
-              Text(
-                textAlign: TextAlign.center,
-                'Nós temos a solução perfeita para você.',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: MediaQuery.of(context).size.width < 600 ? 30 : 40,
-                    fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 50,
-          ),
-          Container(
-            alignment: Alignment.center,
-            height: 320,
-            child: ListView.builder(
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              itemCount: cardList.length,
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                final cardData = cardList[index];
-                return Container(
-                  padding: const EdgeInsets.only(left: 10, right: 10),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 270,
-                        height: 320,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                            color: const Color(0xFFD4D4D4),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 15, top: 15, right: 10, bottom: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Icon(
-                                cardData.icon,
-                                color: const Color(0xffFFB000),
-                                size: 70,
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              Text(
-                                cardData.title,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 25,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              Text(
-                                cardData.description,
-                                style: const TextStyle(
-                                  color: Color(0xFF9E9E9E),
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+            spacing: 20,
+            runSpacing: 20,
+            children: cardList.map((cardData) {
+              return SizedBox(
+                width: 250,
+                height: 290,
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFF0C2D5B), Color.fromARGB(255, 14, 57, 121)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.black26,
+                        blurRadius: 8,
+                        offset: Offset(2, 4),
+                      )
                     ],
                   ),
-                );
-              },
-            ),
-          )
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          cardData.icon,
+                          color: const Color(0xffFFB000),
+                          size: 50,
+                        ),
+                        const SizedBox(height: 20),
+                        Text(
+                          cardData.title,
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        Expanded(
+                          child: Text(
+                            cardData.description,
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.poppins(
+                              color: const Color(0xFFBDBDBD),
+                              fontSize: 15,
+                              height: 1.4,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 6,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
         ],
       ),
     );

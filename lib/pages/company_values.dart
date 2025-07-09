@@ -99,7 +99,7 @@ class _CompanyValuesState extends State<CompanyValues> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         PhosphorIcon(
-                          PhosphorIcons.regular.target,
+                          PhosphorIcons.target(),
                           color: Colors.white,
                           size: 60,
                         ),
@@ -150,7 +150,7 @@ class _CompanyValuesState extends State<CompanyValues> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         PhosphorIcon(
-                          PhosphorIcons.regular.eye,
+                          PhosphorIcons.eye(),
                           color: Colors.white,
                           size: 60,
                         ),
@@ -201,7 +201,7 @@ class _CompanyValuesState extends State<CompanyValues> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         PhosphorIcon(
-                          PhosphorIcons.regular.heart,
+                          PhosphorIcons.heart(),
                           color: Colors.white,
                           size: 60,
                         ),

@@ -3,6 +3,7 @@ import 'package:velocity_net/modules/benefits/tv.dart';
 import 'package:velocity_net/modules/description/description.dart';
 import 'package:velocity_net/modules/footer/footer.dart';
 import 'package:velocity_net/modules/plans/plans.dart';
+import 'package:velocity_net/modules/plans/repository/monteseucombo.dart';
 import 'package:velocity_net/modules/questions/questions.dart';
 import 'package:velocity_net/modules/slider/slider.dart';
 import 'package:velocity_net/modules/specialOffer/special_offer.dart';
@@ -32,13 +33,11 @@ class _MainState extends State<Main> {
       child: const Column(
         children: [
           SliderComponent(),
-          PlansComponent(),
+          PlansComponent(), 
           Descrption(),
-          SpecialOffer(),
           Tv(),
           Questions(),
           Footer(),
-          // Copyright()
         ],
       ),
     );

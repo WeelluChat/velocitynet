@@ -1,702 +1,286 @@
 import 'package:contained_tab_bar_view_with_custom_page_navigator/contained_tab_bar_view_with_custom_page_navigator.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:velocity_net/modules/footer/footer.dart';
 import 'package:velocity_net/modules/appbar/app_bar_component.dart';
 import 'package:velocity_net/modules/appbar/app_bar_component_resize.dart';
 import 'package:velocity_net/modules/endDrawer/end_drawer.dart';
-import 'package:velocity_net/modules/footer/footer.dart';
-import 'package:velocity_net/helpers/url.dart';
 
-class TvPlans extends StatefulWidget {
-  const TvPlans({super.key});
+class Oletv extends StatefulWidget {
+  const Oletv({super.key});
 
   @override
-  State<TvPlans> createState() => _TvPlansState();
+  State<Oletv> createState() => _OletvState();
 }
 
-class _TvPlansState extends State<TvPlans> {
-  bool mobile = false;
+class _OletvState extends State<Oletv> {
   final ScrollController scrollController = ScrollController();
+
   final List<String> lifeLinePlans = [
-    'tv_plans/agro_canal.png',
-    'tv_plans/aparecida_logo.png',
-    'tv_plans/band_logo.png',
-    'tv_plans/canal_do_boi_logo.png',
-    'tv_plans/cultura_logo.webp',
-    'tv_plans/globo_logo.png',
-    'tv_plans/mega_tv_logo.png',
-    'tv_plans/ngt_logo.png',
-    'tv_plans/polishop_logo.png',
-    'tv_plans/record_logo.png',
-    'tv_plans/redebrasil_logo.png',
-    'tv_plans/redetv_logo.png',
-    'tv_plans/redevida_logo.png',
-    'tv_plans/sbt_logo.webp',
-    'tv_plans/terra_viva_logo.png',
-    'tv_plans/TV_Escola_logo.png',
-    'tv_plans/tv_senado_logo.png',
-    'tv_plans/urban_movie_logo.png',
-    'tv_plans/urban_serie_logo.png',
-    'tv_plans/urbans_kids_logo.png',
+    'assets/tv_plans/agro_canal.png',
+    'assets/tv_plans/aparecida_logo.png',
+    'assets/tv_plans/band_logo.png',
+    'assets/tv_plans/canal_do_boi_logo.png',
+    'assets/tv_plans/cultura_logo.webp',
+    'assets/tv_plans/globo_logo.png',
+    'assets/tv_plans/mega_tv_logo.png',
+    'assets/tv_plans/ngt_logo.png',
+    'assets/tv_plans/polishop_logo.png',
+    'assets/tv_plans/record_logo.png',
+    'assets/tv_plans/redebrasil_logo.png',
+    'assets/tv_plans/redetv_logo.png',
+    'assets/tv_plans/redevida_logo.png',
+    'assets/tv_plans/sbt_logo.webp',
+    'assets/tv_plans/terra_viva_logo.png',
+    'assets/tv_plans/TV_Escola_logo.png',
+    'assets/tv_plans/tv_senado_logo.png',
+    'assets/tv_plans/urban_movie_logo.png',
+    'assets/tv_plans/urban_serie_logo.png',
+    'assets/tv_plans/urbans_kids_logo.png',
   ];
 
   final List<String> topHD = [
-    'topHD/animal_planet_logo.png',
-    'topHD/band_sports_logo.png',
-    'topHD/discovery_investigation_logo.png',
-    'topHD/dreamworks_logo.png',
-    'topHD/espn4_logo.png',
-    'topHD/food_network_logo.png',
-    'topHD/sony_movie_logo.png',
-    'topHD/cnn_internacional_logo.png',
-    'topHD/espn_logo.png',
-    'topHD/hgtv_logo.webp',
-    'topHD/lifetime_logo.png',
-    'topHD/tnt_series_logo.png',
-    'topHD/history2_logo.png',
-    'topHD/disney_channel.png',
-    'topHD/tlc_logo.png',
-    'topHD/FX_logo.png',
-    'topHD/space_channel_logo.png',
-    'topHD/amc_logo.png',
-    'topHD/cine_canal_logo.png',
-    'topHD/discovery_turbo_logo.png'
+    'assets/topHD/animal_planet_logo.png',
+    'assets/topHD/band_sports_logo.png',
+    'assets/topHD/discovery_investigation_logo.png',
+    'assets/topHD/dreamworks_logo.png',
+    'assets/topHD/espn4_logo.png',
+    'assets/topHD/food_network_logo.png',
+    'assets/topHD/sony_movie_logo.png',
+    'assets/topHD/cnn_internacional_logo.png',
+    'assets/topHD/espn_logo.png',
+    'assets/topHD/hgtv_logo.webp',
+    'assets/topHD/lifetime_logo.png',
+    'assets/topHD/tnt_series_logo.png',
+    'assets/topHD/history2_logo.png',
+    'assets/topHD/disney_channel.png',
+    'assets/topHD/tlc_logo.png',
+    'assets/topHD/FX_logo.png',
+    'assets/topHD/space_channel_logo.png',
+    'assets/topHD/amc_logo.png',
+    'assets/topHD/cine_canal_logo.png',
+    'assets/topHD/discovery_turbo_logo.png'
   ];
 
   final List<String> startHD = [
-    'startHD/bandNews_logo.png',
-    'startHD/discovery_channel_logo.png',
-    'startHD/hh_discovery_logo.png',
-    'startHD/warner_channel_logo.png',
-    'startHD/History_logo.png',
-    'startHD/cartoon_logo.png',
-    'startHD/cnn_brasil_logo.png',
-    'startHD/discovery_kids_logo.png',
-    'startHD/espn_2_logo.png',
-    'startHD/sonychannel_logo.jpg',
-    'startHD/star_channel.png',
-    'startHD/tnt_logo.webp',
-    'startHD/play_tv_logo.webp',
-    'startHD/national_logo.png',
-    'startHD/discovery_channel_logo.png',
+    'assets/startHD/bandNews_logo.png',
+    'assets/startHD/discovery_channel_logo.png',
+    'assets/startHD/hh_discovery_logo.png',
+    'assets/startHD/warner_channel_logo.png',
+    'assets/startHD/History_logo.png',
+    'assets/startHD/cartoon_logo.png',
+    'assets/startHD/cnn_brasil_logo.png',
+    'assets/startHD/discovery_kids_logo.png',
+    'assets/startHD/espn_2_logo.png',
+    'assets/startHD/sonychannel_logo.jpg',
+    'assets/startHD/star_channel.png',
+    'assets/startHD/tnt_logo.webp',
+    'assets/startHD/play_tv_logo.webp',
+    'assets/startHD/national_logo.png',
+    'assets/startHD/discovery_channel_logo.png',
   ];
 
   final List<String> premiumHD = [
-    'premiumHD/discovery_science_logo.png',
-    'premiumHD/discovery_world_logo.webp',
-    'premiumHD/filmArts_logo.png',
-    'premiumHD/oSat_logo.png',
-    'premiumHD/tcm_logo.png',
-    'premiumHD/teacher_discovery_logo.webp',
-    'premiumHD/ESPN3_Logo.png',
-    'premiumHD/espn_extra_logo.webp',
-    'premiumHD/tnt_novelas_logo.png',
+    'assets/premiumHD/discovery_science_logo.png',
+    'assets/premiumHD/discovery_world_logo.webp',
+    'assets/premiumHD/filmArts_logo.png',
+    'assets/premiumHD/oSat_logo.png',
+    'assets/premiumHD/tcm_logo.png',
+    'assets/premiumHD/teacher_discovery_logo.webp',
+    'assets/premiumHD/ESPN3_Logo.png',
+    'assets/premiumHD/espn_extra_logo.webp',
+    'assets/premiumHD/tnt_novelas_logo.png',
   ];
 
   @override
   Widget build(BuildContext context) {
-    List<String>.generate(10000, (i) => 'Item $i');
-    mobile = MediaQuery.of(context).size.width > 1200 ? false : true;
+    final bool isMobile = MediaQuery.of(context).size.width < 1200;
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: mobile == true
-            ? const Size.fromHeight(80)
-            : const Size.fromHeight(140),
-        child: Container(
-          margin: mobile == true
-              ? const EdgeInsets.only(top: 15)
-              : const EdgeInsets.only(top: 0),
-          child: (mobile == true)
-              ? const AppBarComponentResize()
-              : AppBarComponent(scrollController: scrollController),
-        ),
+        preferredSize: isMobile ? const Size.fromHeight(80) : const Size.fromHeight(100),
+        child: isMobile ? const AppBarComponentResize() : AppBarComponent(scrollController: scrollController),
       ),
-      endDrawer: mobile
-          ? EndDrawer(
-              scrollController: scrollController,
-            )
-          : null,
+      endDrawer: isMobile ? EndDrawer(scrollController: scrollController) : null,
       body: SingleChildScrollView(
+        controller: scrollController,
         child: Column(
           children: [
             Container(
+              height: isMobile ? 400 : 700,
               width: double.infinity,
-              height: 815,
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(
-                    'banner_tv_planos.png',
-                  ),
+                  image: AssetImage('assets/group.png'),
                   fit: BoxFit.cover,
                 ),
               ),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Image.asset('tv_plans/logo.png', width: 420),
-                  const SizedBox(
-                    height: 80,
-                  ),
-                  const Text(
-                    'ASSISTA PELO APLICATIVO',
-                    style: TextStyle(
-                        fontSize: 20,
+                  SizedBox(height: isMobile ? 80 : 10),
+                  Padding(
+                    padding: isMobile ? EdgeInsetsGeometry.only(top: 10) : EdgeInsetsGeometry.only(top: 30),
+                    child: Text(
+                      'ASSISTA PELO APLICATIVO',
+                      style: GoogleFonts.poppins(
+                        fontSize: isMobile ? 20 : 25,
                         color: Colors.white,
-                        fontWeight: FontWeight.bold),
+                        fontWeight: FontWeight.w700,
+                        shadows: [
+                          const Shadow(color: Colors.black54, offset: Offset(0, 1), blurRadius: 3),
+                        ],
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Wrap(
-                    alignment: WrapAlignment.center,
-                    runSpacing: 10,
-                    spacing: 20,
+                  const SizedBox(height: 0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       InkWell(
-                        child: Image.asset(
-                          'googleplay.png',
-                          width: 200,
-                          fit: BoxFit.cover,
-                        ),
-                        onTap: () {
-                          Url().urlPlayStore();
-                        },
+                        onTap: () => launchUrl(Uri.parse('https://play.google.com/store/apps/details?id=br.tv.ole.oletv&hl=en_US')),
+                        child: Image.asset('assets/googlestore.png', height: isMobile ? 70 : 100, width: isMobile ? 140 : 200),
                       ),
+                      const SizedBox(width: 10),
                       InkWell(
-                        onTap: () {
-                          Url().urlAppStore();
-                        },
-                        child: Image.asset(
-                          'apple_store.png',
-                          width: 200,
-                          fit: BoxFit.cover,
-                        ),
+                        onTap: () => launchUrl(Uri.parse('https://apps.apple.com/br/app/ol%C3%A9-tv/id1301299065')),
+                        child: Image.asset('assets/appstore.png', height: isMobile ? 70 : 100, width: isMobile ? 126 : 180),
                       ),
                     ],
                   ),
                 ],
               ),
             ),
-            const Padding(
-              padding:
-                  EdgeInsets.only(top: 50, bottom: 50, left: 20, right: 20),
-              child: Text(
-                textAlign: TextAlign.center,
-                'ESCOLHA O PLANO IDEAL PARA VOCÊ',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
-              ),
-            ),
             Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 50),
-              child: Container(
-                padding: const EdgeInsets.all(8.0),
-                color: const Color(0xff081E38),
-                width: 1000,
-                height: MediaQuery.of(context).size.width < 700 ? 590 : 950,
-                child: ContainedTabBarView(
-                  tabBarProperties: const TabBarProperties(
-                      indicatorWeight: 5,
-                      indicatorColor: Color(0xffFFB000),
-                      indicatorSize: TabBarIndicatorSize.tab),
-                  tabs: const [
-                    Text(
-                      'LIFE LINE',
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
+              padding: EdgeInsets.symmetric(horizontal: isMobile ? 16 : 0, vertical: 30),
+              child: Column(
+                children: [
+                  Text(
+                    'ESCOLHA O PLANO IDEAL PARA VOCÊ!',
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w800,
+                      color: const Color(0xFF13294E),
+                      fontSize: isMobile ? 24 : 40,
                     ),
-                    Text(
-                      'START HD',
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 30),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF13294E),
+                      borderRadius: BorderRadius.circular(15),
                     ),
-                    Text(
-                      'TOP HD',
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      textAlign: TextAlign.center,
-                      'PREMIUM HD',
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                  views: [
-                    Container(
-                      color: const Color(0xffF1F1F1),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 20, bottom: 20),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Column(
-                                  children: [
-                                    Text(
-                                      '+60 CANAIS DE TV',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: MediaQuery.of(context)
-                                                      .size
-                                                      .width <
-                                                  600
-                                              ? 20
-                                              : 25,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Text(
-                                      '+500h de VOD',
-                                      style: TextStyle(
-                                        color: Colors.blue,
-                                        fontSize:
-                                            MediaQuery.of(context).size.width <
-                                                    600
-                                                ? 20
-                                                : 25,
-                                      ),
-                                    ),
-                                    Text(
-                                      'GRATIS PARA CLIENTES',
-                                      style: TextStyle(
-                                          color: Colors.green,
-                                          fontSize: MediaQuery.of(context)
-                                                      .size
-                                                      .width <
-                                                  600
-                                              ? 15
-                                              : 20,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: GridView.builder(
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  padding:
-                                      MediaQuery.of(context).size.width < 600
-                                          ? const EdgeInsets.all(5)
-                                          : const EdgeInsets.all(20),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Image.asset(
-                                    lifeLinePlans[index],
-                                  ),
-                                );
-                              },
-                              itemCount: lifeLinePlans.length,
-                              padding: const EdgeInsets.only(
-                                  left: 20, right: 20, bottom: 20),
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 5,
-                                crossAxisSpacing: 16,
-                                mainAxisSpacing: 16,
-                              ),
-                            ),
-                          )
-                        ],
+                    padding: const EdgeInsets.all(8.0),
+                    width: isMobile ? 350 : 650,
+                    height: isMobile ? 900 : 800,
+                    child: ContainedTabBarView(
+                      tabBarProperties: TabBarProperties(
+                        labelColor: Colors.transparent,
+                        indicatorColor: Colors.blue,
+                        height: isMobile ? 60 : 48,
                       ),
+                      tabs: [
+                        _tabLabel('Life Line', isMobile),
+                        _tabLabel('Start HD', isMobile),
+                        _tabLabel('Top HD', isMobile),
+                        _tabLabel('Premium HD', isMobile),
+                      ],
+                      views: [
+                        _buildPlanTab(context, isMobile, '+60 CANAIS DE TV', '+500h de VOD', 'GRÁTIS PARA CLIENTES', lifeLinePlans, []),
+                        _buildPlanTab(context, isMobile, '+80 CANAIS DE TV', '+2000h de VOD', 'R\$ 79,90/mês', startHD, ['LIFE LINE']),
+                        _buildPlanTab(context, isMobile, '+120 CANAIS DE TV', '+3000h de VOD', 'R\$ 119,90/mês', topHD, ['LIFE LINE', 'START HD']),
+                        _buildPlanTab(context, isMobile, '+130 CANAIS DE TV', '+4000h de VOD', 'R\$ 149,90/mês', premiumHD, ['LIFE LINE', 'START HD', 'TOP HD']),
+                      ],
                     ),
-                    Container(
-                      color: const Color(0xffF1F1F1),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 20, bottom: 20),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Column(
-                                  children: [
-                                    Text(
-                                      '+80 CANAIS DE TV',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: MediaQuery.of(context)
-                                                      .size
-                                                      .width <
-                                                  600
-                                              ? 20
-                                              : 25,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Text(
-                                      '+2000h de VOD',
-                                      style: TextStyle(
-                                        color: Colors.blue,
-                                        fontSize:
-                                            MediaQuery.of(context).size.width <
-                                                    600
-                                                ? 20
-                                                : 25,
-                                      ),
-                                    ),
-                                    Text(
-                                      'R\$ 79,90 por mês',
-                                      style: TextStyle(
-                                          color: Colors.green,
-                                          fontSize: MediaQuery.of(context)
-                                                      .size
-                                                      .width <
-                                                  600
-                                              ? 15
-                                              : 20,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
-                                      children: [
-                                        const Icon(
-                                          Icons.add_circle,
-                                          color: Color(0xff081E38),
-                                        ),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        Text(
-                                          'LIFE LINE',
-                                          style: TextStyle(
-                                              color: const Color(0xff081E38),
-                                              fontSize: MediaQuery.of(context)
-                                                          .size
-                                                          .width <
-                                                      600
-                                                  ? 15
-                                                  : 18,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: GridView.builder(
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  padding:
-                                      MediaQuery.of(context).size.width < 600
-                                          ? const EdgeInsets.all(5)
-                                          : const EdgeInsets.all(20),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Image.asset(
-                                    startHD[index],
-                                  ),
-                                );
-                              },
-                              itemCount: startHD.length,
-                              padding: const EdgeInsets.only(
-                                  left: 20, right: 20, bottom: 20),
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 5,
-                                crossAxisSpacing: 16,
-                                mainAxisSpacing: 16,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      color: const Color(0xffF1F1F1),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 20, bottom: 20),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Column(
-                                  children: [
-                                    Text(
-                                      '+120 CANAIS DE TV',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: MediaQuery.of(context)
-                                                      .size
-                                                      .width <
-                                                  600
-                                              ? 20
-                                              : 25,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Text(
-                                      '+3000h de VOD',
-                                      style: TextStyle(
-                                        color: Colors.blue,
-                                        fontSize:
-                                            MediaQuery.of(context).size.width <
-                                                    600
-                                                ? 20
-                                                : 25,
-                                      ),
-                                    ),
-                                    Text(
-                                      'R\$ 119,90 por mês',
-                                      style: TextStyle(
-                                          color: Colors.green,
-                                          fontSize: MediaQuery.of(context)
-                                                      .size
-                                                      .width <
-                                                  600
-                                              ? 15
-                                              : 20,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
-                                      children: [
-                                        const Icon(
-                                          Icons.add_circle,
-                                          color: Color(0xff081E38),
-                                        ),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        Text(
-                                          'LIFE LINE',
-                                          style: TextStyle(
-                                              color: const Color(0xff081E38),
-                                              fontSize: MediaQuery.of(context)
-                                                          .size
-                                                          .width <
-                                                      600
-                                                  ? 15
-                                                  : 18,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        const SizedBox(
-                                          width: 20,
-                                        ),
-                                        const Icon(
-                                          Icons.add_circle,
-                                          color: Color(0xff081E38),
-                                        ),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        Text(
-                                          'START HD',
-                                          style: TextStyle(
-                                              color: const Color(0xff081E38),
-                                              fontSize: MediaQuery.of(context)
-                                                          .size
-                                                          .width <
-                                                      600
-                                                  ? 15
-                                                  : 18,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: GridView.builder(
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  padding:
-                                      MediaQuery.of(context).size.width < 600
-                                          ? const EdgeInsets.all(5)
-                                          : const EdgeInsets.all(20),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Image.asset(
-                                    topHD[index],
-                                  ),
-                                );
-                              },
-                              itemCount: topHD.length,
-                              padding: const EdgeInsets.only(
-                                  left: 20, right: 20, bottom: 20),
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 5,
-                                crossAxisSpacing: 16,
-                                mainAxisSpacing: 16,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      color: const Color(0xffF1F1F1),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 20, bottom: 20),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Column(
-                                  children: [
-                                    Text(
-                                      '+130 CANAIS DE TV',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: MediaQuery.of(context)
-                                                      .size
-                                                      .width <
-                                                  600
-                                              ? 20
-                                              : 25,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Text(
-                                      '+4000h de VOD',
-                                      style: TextStyle(
-                                        color: Colors.blue,
-                                        fontSize:
-                                            MediaQuery.of(context).size.width <
-                                                    600
-                                                ? 20
-                                                : 25,
-                                      ),
-                                    ),
-                                    Text(
-                                      'R\$ 149,90 por mês',
-                                      style: TextStyle(
-                                          color: Colors.green,
-                                          fontSize: MediaQuery.of(context)
-                                                      .size
-                                                      .width <
-                                                  600
-                                              ? 15
-                                              : 20,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
-                                      children: [
-                                        const Icon(
-                                          Icons.add_circle,
-                                          color: Color(0xff081E38),
-                                        ),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        Text(
-                                          'LIFE LINE',
-                                          style: TextStyle(
-                                              color: const Color(0xff081E38),
-                                              fontSize: MediaQuery.of(context)
-                                                          .size
-                                                          .width <
-                                                      600
-                                                  ? 15
-                                                  : 18,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        const SizedBox(
-                                          width: 20,
-                                        ),
-                                        const Icon(
-                                          Icons.add_circle,
-                                          color: Color(0xff081E38),
-                                        ),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        Text(
-                                          'START HD',
-                                          style: TextStyle(
-                                              color: const Color(0xff081E38),
-                                              fontSize: MediaQuery.of(context)
-                                                          .size
-                                                          .width <
-                                                      600
-                                                  ? 15
-                                                  : 18,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        const SizedBox(
-                                          width: 20,
-                                        ),
-                                        const Icon(
-                                          Icons.add_circle,
-                                          color: Color(0xff081E38),
-                                        ),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        Text(
-                                          'TOP HD',
-                                          style: TextStyle(
-                                              color: const Color(0xff081E38),
-                                              fontSize: MediaQuery.of(context)
-                                                          .size
-                                                          .width <
-                                                      600
-                                                  ? 15
-                                                  : 18,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: GridView.builder(
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  padding:
-                                      MediaQuery.of(context).size.width < 600
-                                          ? const EdgeInsets.all(5)
-                                          : const EdgeInsets.all(20),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Image.asset(
-                                    premiumHD[index],
-                                  ),
-                                );
-                              },
-                              itemCount: premiumHD.length,
-                              padding: const EdgeInsets.only(
-                                  left: 20, right: 20, bottom: 20),
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 5,
-                                crossAxisSpacing: 16,
-                                mainAxisSpacing: 16,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                  SizedBox(height: isMobile ? 40 : 100),
+                ],
               ),
             ),
             const Footer(),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _tabLabel(String title, bool isMobile) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: isMobile ? 8 : 0),
+      child: Text(
+        title,
+        style: GoogleFonts.poppins(
+          fontWeight: FontWeight.w600,
+          color: Colors.white,
+          fontSize: isMobile ? 14 : 20,
+          letterSpacing: 1,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPlanTab(BuildContext context, bool isMobile, String channelCount, String vodHours, String price, List<String> images, List<String> includedPlans) {
+    return Container(
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.vertical(bottom: Radius.circular(15)),
+        color: Colors.white,
+      ),
+      child: Column(
+        children: [
+          const SizedBox(height: 10),
+          Text(channelCount, style: GoogleFonts.poppins(fontSize: isMobile ? 16 : 20, fontWeight: FontWeight.w500)),
+          Text(vodHours, style: GoogleFonts.poppins(fontSize: isMobile ? 16 : 20, color: Colors.blue, fontWeight: FontWeight.w500)),
+          Text(price, style: GoogleFonts.poppins(fontSize: isMobile ? 16 : 20, color: Colors.green, fontWeight: FontWeight.w500)),
+          if (includedPlans.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: isMobile ? 4 : 8,
+                runSpacing: isMobile ? 4 : 0,
+                children: includedPlans.map((plan) {
+                  return Chip(
+                    avatar: const Icon(Icons.add_circle, size: 18, color: Colors.blue),
+                    label: Text(plan, style: GoogleFonts.poppins(fontSize: isMobile ? 14 : 18)),
+                    backgroundColor: Colors.blue[50],
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  );
+                }).toList(),
+              ),
+            ),
+          Expanded(
+            child: GridView.builder(
+              itemCount: images.length,
+              padding: const EdgeInsets.all(20),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: isMobile ? 3 : 5,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+                childAspectRatio: 1,
+              ),
+              itemBuilder: (context, index) {
+                return AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        blurRadius: 5,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: Image.asset(images[index]),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

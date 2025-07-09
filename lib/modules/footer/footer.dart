@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:velocity_net/helpers/url.dart';
 
 class Footer extends StatefulWidget {
@@ -10,529 +11,338 @@ class Footer extends StatefulWidget {
 }
 
 class _FooterState extends State<Footer> {
-  bool isHovered = false;
-  bool isHovered1 = false;
-  bool isHovered2 = false;
-  bool isHovered3 = false;
-  bool isHovered4 = false;
+  final Map<String, bool> _hoverStates = {
+    'facebook': false,
+    'email': false,
+    'instagram': false,
+    'whatsapp': false,
+  };
+
   @override
   Widget build(BuildContext context) {
     final currentRoute = ModalRoute.of(context)?.settings.name;
+    final isMobile = MediaQuery.of(context).size.width < 700;
 
     return Container(
       width: double.infinity,
-      // color: Colors.cyan,
-      decoration: const BoxDecoration(
-          gradient: LinearGradient(colors: [
-        Color(0xff08203E),
-        Color(0xff06141C),
-      ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
+      color: Colors.white,
       child: Padding(
-        padding:
-            const EdgeInsets.only(left: 20, top: 50, bottom: 10, right: 20),
-        child: Wrap(
-          alignment: MediaQuery.of(context).size.width < 700
-              ? WrapAlignment.start
-              : WrapAlignment.center,
-          runSpacing: 55,
-          spacing: 55,
+        padding: EdgeInsets.symmetric(
+          horizontal: isMobile ? 20 : 40,
+          vertical: 60,
+        ),
+        child: Column(
           children: [
-            SizedBox(
-              width: 280,
-              height: 220,
-              //  color: Colors.red,
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Row(
-                            children: [
-                              Text(
-                                'CATEGORIAS',
-                                style: TextStyle(
-                                  color: Color(0xffffffff),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          InkWell(
-                            onTap: () {
-                              // Url().urlWhatsApp();
-                            },
-                            child: const Text(
-                              'Link dedicado',
-                              style: TextStyle(
-                                  color: Color(0xffDED4D4),
-                                  fontSize: 16,
-                                  height: 2),
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              if (currentRoute == '/tvplanos') {
-                                return;
-                              }
-                              Navigator.pushNamed(context, '/tvplanos');
-                            },
-                            child: const Text(
-                              'Tv por assinatura',
-                              style: TextStyle(
-                                  color: Color(0xffDED4D4),
-                                  fontSize: 16,
-                                  height: 2),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  )
-                ],
+            isMobile ? _buildMobileLayout(currentRoute) : _buildDesktopLayout(currentRoute),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 40),
+              child: Divider(
+                color: Colors.black.withOpacity(0.1),
+                thickness: 1,
               ),
             ),
-            SizedBox(
-              width: 280,
-              height: 300,
-              //  color: Colors.red,
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Row(
-                            children: [
-                              Text(
-                                'CANAIS DE ATENDIMENTO',
-                                style: TextStyle(
-                                    color: Color(0xffffffff),
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          // const Row(
-                          //   children: [
-                          //     Column(
-                          //       crossAxisAlignment: CrossAxisAlignment.start,
-                          //       children: [
-                          //         Text(
-                          //           'Suporte / Outros',
-                          //           style: TextStyle(
-                          //               color: Color(0xffDED4D4), fontSize: 16),
-                          //         ),
-                          //         Text(
-                          //           '+55 (94) 99132-6169',
-                          //           style: TextStyle(
-                          //               color: Color(0xFFFFFFFF),
-                          //               fontWeight: FontWeight.bold,
-                          //               fontSize: 18),
-                          //         ),
-                          //       ],
-                          //     )
-                          //   ],
-                          // ),
-                          // const SizedBox(
-                          //   height: 10,
-                          // ),
-                          const Row(
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Financeiro',
-                                    style: TextStyle(
-                                        color: Color(0xffDED4D4), fontSize: 16),
-                                  ),
-                                  Text(
-                                    '+55 (94) 99104-5810',
-                                    style: TextStyle(
-                                        color: Color(0xFFFFFFFF),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          const Row(
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'WhatsApp',
-                                    style: TextStyle(
-                                        color: Color(0xffDED4D4), fontSize: 16),
-                                  ),
-                                  Text(
-                                    '+55 (94) 99260-0430',
-                                    style: TextStyle(
-                                        color: Color(0xFFFFFFFF),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          const Row(
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Ligação',
-                                    style: TextStyle(
-                                        color: Color(0xffDED4D4), fontSize: 16),
-                                  ),
-                                  Text(
-                                    '+55 (94) 99132-6169',
-                                    style: TextStyle(
-                                        color: Color(0xFFFFFFFF),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          const Text(
-                            'Redes Sociais',
-                            style: TextStyle(
-                                color: Color(0xffDED4D4), fontSize: 16),
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Row(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  Url().urlFacebook();
-                                },
-                                child: MouseRegion(
-                                  onEnter: (_) {
-                                    setState(() {
-                                      isHovered1 = true;
-                                    });
-                                  },
-                                  onExit: (_) {
-                                    setState(() {
-                                      isHovered1 = false;
-                                    });
-                                  },
-                                  child: Container(
-                                    width: 30,
-                                    height: 30,
-                                    decoration: BoxDecoration(
-                                        color: const Color(0xFF274972),
-                                        borderRadius:
-                                            BorderRadius.circular(50)),
-                                    child: Icon(
-                                      Icons.facebook,
-                                      color: isHovered1
-                                          ? Colors.blue
-                                          : Colors.white,
-                                      size: 25.0,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  Url().urlGmail();
-                                },
-                                child: MouseRegion(
-                                  onEnter: (_) {
-                                    setState(() {
-                                      isHovered2 = true;
-                                    });
-                                  },
-                                  onExit: (_) {
-                                    setState(() {
-                                      isHovered2 = false;
-                                    });
-                                  },
-                                  child: Container(
-                                    width: 30,
-                                    height: 30,
-                                    decoration: BoxDecoration(
-                                        color: const Color(0xFF274972),
-                                        borderRadius:
-                                            BorderRadius.circular(50)),
-                                    child: PhosphorIcon(
-                                      isHovered2
-                                          ? PhosphorIcons.fill.envelope
-                                          : PhosphorIcons.regular.envelope,
-                                      color: isHovered2
-                                          ? const Color(0xFFEA4335)
-                                          : Colors.white,
-                                      size: 25.0,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  Url().urlInstagram();
-                                },
-                                child: MouseRegion(
-                                  onEnter: (_) {
-                                    setState(() {
-                                      isHovered3 = true;
-                                    });
-                                  },
-                                  onExit: (_) {
-                                    setState(() {
-                                      isHovered3 = false;
-                                    });
-                                  },
-                                  child: Container(
-                                    width: 30,
-                                    height: 30,
-                                    decoration: BoxDecoration(
-                                        color: const Color(0xFF274972),
-                                        borderRadius:
-                                            BorderRadius.circular(50)),
-                                    child: PhosphorIcon(
-                                      isHovered3
-                                          ? PhosphorIcons.fill.instagramLogo
-                                          : PhosphorIcons.regular.instagramLogo,
-                                      color: isHovered3
-                                          ? const Color(0xffE1306C)
-                                          : const Color(0xffffffff),
-                                      size: 25.0,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  Url().urlWeellu();
-                                },
-                                child: MouseRegion(
-                                  onEnter: (_) {
-                                    setState(() {
-                                      isHovered4 = true;
-                                    });
-                                  },
-                                  onExit: (_) {
-                                    setState(() {
-                                      isHovered4 = false;
-                                    });
-                                  },
-                                  child: Container(
-                                    width: 30,
-                                    height: 30,
-                                    decoration: BoxDecoration(
-                                        color: const Color(0xFF274972),
-                                        borderRadius:
-                                            BorderRadius.circular(50)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(5),
-                                      child: Image.asset(
-                                        (isHovered4
-                                            ? 'vetor_velocitynet_brasil.png'
-                                            : 'vetor_velocitynet_brasil.png'),
-                                        color: isHovered4
-                                            ? Colors.green
-                                            : const Color(0xffffffff),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-
-                          // InkWell(
-                          //   onTap: () {
-                          //     if (currentRoute == '/contatos') {
-                          //       return;
-                          //     }
-                          //     Navigator.pushNamed(context, '/contatos');
-                          //   },
-                          //   child: const Text(
-                          //     'Contatos',
-                          //     style: TextStyle(
-                          //         color: Color(0xffDED4D4),
-                          //         fontSize: 16,
-                          //         height: 2),
-                          //   ),
-                          // ),
-                          // const Text(
-                          //   'Politica de Privacidade',
-                          //   style: TextStyle(
-                          //       color: Color(0xffDED4D4),
-                          //       fontSize: 16,
-                          //       height: 2),
-                          // ),
-                          // const Text(
-                          //   'Termos e Condições',
-                          //   style: TextStyle(
-                          //       color: Color(0xffDED4D4),
-                          //       fontSize: 16,
-                          //       height: 2),
-                          // ),
-                          // InkWell(
-                          //   onTap: () {
-                          //     if (currentRoute == '/missao-visao') {
-                          //       return;
-                          //     }
-
-                          //     Navigator.pushNamed(context, '/missao-visao');
-                          //   },
-                          //   child: const Text(
-                          //     'Missão & Visão',
-                          //     style: TextStyle(
-                          //         color: Color(0xffDED4D4),
-                          //         fontSize: 16,
-                          //         height: 2),
-                          //   ),
-                          // ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              width: 280,
-              height: 350,
-              //  color: Colors.red,
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                'HORARIO ATENDIMENTO',
-                                style: TextStyle(
-                                    color: Color(0xffffffff),
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            'Segunda - Sexta',
-                            style: TextStyle(
-                                fontSize: 16, color: Color(0xffDED4D4)),
-                          ),
-                          Text(
-                            '08:00h - 18:00h',
-                            style: TextStyle(
-                                color: Color(0xffffffff),
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                height: 2),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            'Sábados',
-                            style: TextStyle(
-                                fontSize: 16, color: Color(0xffDED4D4)),
-                          ),
-                          Text(
-                            '08:00h - 13:00h (Presencial)\n13:00h - 18:00h (Online)',
-                            style: TextStyle(
-                                color: Color(0xffffffff),
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                height: 2),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            'Domingo / Feriado',
-                            style: TextStyle(
-                                fontSize: 16, color: Color(0xffDED4D4)),
-                          ),
-                          Text(
-                            'Sem atendimento',
-                            style: TextStyle(
-                                color: Color(0xffffffff),
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                height: 2),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            const Column(
-              children: [
-                Text(
-                  '© 2024 Velocitynet | Todos os direitos reservados.',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  'Velocitynet Telecom LTDA - CNPJ: 24.513.378/0001-57 - velocitynet@velocitynet.com.br',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            )
+            _buildFooterBottom(),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildDesktopLayout(String? currentRoute) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // _buildCategorySection(currentRoute),
+        _buildContactSection(),
+        _buildScheduleSection(),
+      ],
+    );
+  }
+
+  Widget _buildMobileLayout(String? currentRoute) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // _buildCategorySection(currentRoute),
+        const SizedBox(height: 40),
+        _buildContactSection(),
+        const SizedBox(height: 40),
+        _buildScheduleSection(),
+      ],
+    );
+  }
+
+  // Widget _buildCategorySection(String? currentRoute) {
+  //   return SizedBox(
+  //     width: 280,
+  //     child: Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         Text(
+  //           'CATEGORIAS',
+  //           style: GoogleFonts.poppins(
+  //             color: Colors.black87,
+  //             fontWeight: FontWeight.w700,
+  //             fontSize: 18,
+  //             letterSpacing: 1.2,
+  //           ),
+  //         ),
+  //         const SizedBox(height: 25),
+  //         _buildFooterLink(text: 'Link dedicado', onTap: () {}),
+  //         _buildFooterLink(
+  //           text: 'Tv por assinatura',
+  //           onTap: () {
+  //             if (currentRoute != '/tvplanos') {
+  //               Navigator.pushNamed(context, '/tvplanos');
+  //             }
+  //           },
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
+
+  Widget _buildContactSection() {
+    return SizedBox(
+      width: 280,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'CANAIS DE ATENDIMENTO',
+            style: GoogleFonts.poppins(
+              color: Colors.black87,
+              fontWeight: FontWeight.w700,
+              fontSize: 18,
+              letterSpacing: 1.2,
+            ),
+          ),
+          const SizedBox(height: 25),
+          _buildContactInfo(label: 'Financeiro', number: '+55 (94) 99104-5810'),
+          const SizedBox(height: 15),
+          _buildContactInfo(label: 'WhatsApp', number: '+55 (94) 99260-0430'),
+          const SizedBox(height: 15),
+          _buildContactInfo(label: 'Ligação', number: '+55 (94) 99132-6169'),
+          const SizedBox(height: 25),
+          Text(
+            'REDES SOCIAIS',
+            style: GoogleFonts.poppins(
+              color: Colors.black54,
+              fontSize: 14,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              _buildSocialIcon(
+                icon: Icons.facebook,
+                hoverColor: const Color(0xFF1877F2),
+                key: 'facebook',
+                onTap: Url().urlFacebook,
+              ),
+              const SizedBox(width: 12),
+              _buildSocialIcon(
+                icon: PhosphorIcons.envelope(),
+                hoverColor: const Color(0xFFEA4335),
+                key: 'email',
+                onTap: Url().urlGmail,
+              ),
+              const SizedBox(width: 12),
+              _buildSocialIcon(
+                icon: PhosphorIcons.instagramLogo(),
+                hoverColor: const Color(0xFFE1306C),
+                key: 'instagram',
+                onTap: Url().urlInstagram,
+              ),
+              const SizedBox(width: 12),
+              _buildSocialIcon(
+                icon: PhosphorIcons.whatsappLogo(),
+                hoverColor: const Color(0xFF25D366),
+                key: 'whatsapp',
+                onTap: Url().urlWeellu,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildScheduleSection() {
+    return SizedBox(
+      width: 280,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'HORÁRIO DE ATENDIMENTO',
+            style: GoogleFonts.poppins(
+              color: Colors.black87,
+              fontWeight: FontWeight.w700,
+              fontSize: 18,
+              letterSpacing: 1.2,
+            ),
+          ),
+          const SizedBox(height: 25),
+          _buildScheduleItem(
+            days: 'Segunda - Sexta',
+            hours: '08:00h - 18:00h',
+          ),
+          const SizedBox(height: 20),
+          _buildScheduleItem(
+            days: 'Sábados',
+            hours: '08:00h - 13:00h (Presencial)\n13:00h - 18:00h (Online)',
+          ),
+          const SizedBox(height: 20),
+          _buildScheduleItem(
+            days: 'Domingo / Feriado',
+            hours: 'Sem atendimento',
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFooterBottom() {
+    return Column(
+      children: [
+        Text(
+          '© 2024 Velocitynet | Todos os direitos reservados.',
+          style: GoogleFonts.poppins(
+            color: Colors.black87,
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: 8),
+        Text(
+          'Velocitynet Telecom LTDA - CNPJ: 24.513.378/0001-57',
+          style: GoogleFonts.poppins(
+            color: Colors.black54,
+            fontSize: 13,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: 4),
+        Text(
+          'velocitynet@velocitynet.com.br',
+          style: GoogleFonts.poppins(
+            color: Colors.black54,
+            fontSize: 13,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFooterLink({required String text, required VoidCallback onTap}) {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          child: Text(
+            text,
+            style: GoogleFonts.poppins(
+              color: Colors.black87,
+              fontSize: 16,
+              height: 1.5,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildContactInfo({required String label, required String number}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: GoogleFonts.poppins(
+            color: Colors.black54,
+            fontSize: 15,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          number,
+          style: GoogleFonts.poppins(
+            color: Colors.black87,
+            fontWeight: FontWeight.w600,
+            fontSize: 16,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSocialIcon({
+    required dynamic icon,
+    required Color hoverColor,
+    required String key,
+    required VoidCallback onTap,
+  }) {
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hoverStates[key] = true),
+      onExit: (_) => setState(() => _hoverStates[key] = false),
+      child: GestureDetector(
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+            color: _hoverStates[key]! ? hoverColor : const Color(0xFFF5F5F5),
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: Colors.grey.shade300),
+            boxShadow: _hoverStates[key]!
+                ? [
+                    BoxShadow(
+                      color: hoverColor.withOpacity(0.4),
+                      blurRadius: 10,
+                      spreadRadius: 2,
+                    )
+                  ]
+                : [],
+          ),
+          child: Center(
+            child: icon is IconData
+                ? Icon(icon, color: Colors.black87, size: 20)
+                : PhosphorIcon(icon, color: Colors.black87, size: 20),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildScheduleItem({required String days, required String hours}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          days,
+          style: GoogleFonts.poppins(
+            color: Colors.black54,
+            fontSize: 15,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          hours,
+          style: GoogleFonts.poppins(
+            color: Colors.black87,
+            fontWeight: FontWeight.w600,
+            fontSize: 15,
+            height: 1.4,
+          ),
+        ),
+      ],
     );
   }
 }

@@ -54,6 +54,9 @@ class _QuestionsState extends State<Questions> {
                     onTap: () {
                       setState(() {
                         _isExpanded = !_isExpanded;
+                        _isExpanded1 = false;
+                        _isExpanded2 = false;
+                        _isExpanded3 = false;
                       });
                     },
                     child: Container(
@@ -95,20 +98,28 @@ class _QuestionsState extends State<Questions> {
                   ),
                   if (_isExpanded)
                     Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Text(
-                        'Após a escolha de um dos nossos plano, será feito uma analise de viabilidade, para verificar se sua residencia está dentro da nossa cobertura',
-                        style: TextStyle(
-                          color: const Color(0xff7A7A7A),
-                          fontSize:
-                              MediaQuery.of(context).size.width < 400 ? 18 : 20,
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(color: const Color(0xffE1E6EE))),
+                        child: Text(
+                          'Após a escolha de um dos nossos plano, será feito uma analise de viabilidade, para verificar se sua residencia está dentro da nossa cobertura',
+                          style: TextStyle(
+                            color: const Color(0xff7A7A7A),
+                            fontSize: MediaQuery.of(context).size.width < 400
+                                ? 18
+                                : 20,
+                          ),
                         ),
                       ),
                     ),
                   InkWell(
                     onTap: () {
                       setState(() {
+                        _isExpanded = false;
                         _isExpanded1 = !_isExpanded1;
+                        _isExpanded2 = false;
+                        _isExpanded3 = false;
                       });
                     },
                     child: Container(
@@ -149,21 +160,29 @@ class _QuestionsState extends State<Questions> {
                     ),
                   ),
                   if (_isExpanded1)
-                    Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Text(
-                        'Você pode realizar o pagamento com pix ou boleto, via cartão de credito/débito e dinheiro',
-                        style: TextStyle(
-                          color: const Color(0xff7A7A7A),
-                          fontSize:
-                              MediaQuery.of(context).size.width < 400 ? 18 : 20,
+                    Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(color: const Color(0xffE1E6EE))),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Você pode realizar o pagamento com pix ou boleto, via cartão de credito/débito e dinheiro',
+                          style: TextStyle(
+                            color: const Color(0xff7A7A7A),
+                            fontSize: MediaQuery.of(context).size.width < 400
+                                ? 18
+                                : 20,
+                          ),
                         ),
                       ),
                     ),
                   InkWell(
                     onTap: () {
                       setState(() {
+                        _isExpanded = false;
+                        _isExpanded1 = false;
                         _isExpanded2 = !_isExpanded2;
+                        _isExpanded3 = false;
                       });
                     },
                     child: Container(
@@ -202,20 +221,28 @@ class _QuestionsState extends State<Questions> {
                     ),
                   ),
                   if (_isExpanded2)
-                    Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Text(
-                        'Plano Corporativo sem fidelidade, 50% de upload e atendimento ágil. Conecte-se eficientemente e impulsione seu negócio conosco.',
-                        style: TextStyle(
-                          color: const Color(0xff7A7A7A),
-                          fontSize:
-                              MediaQuery.of(context).size.width < 400 ? 18 : 20,
+                    Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(color: const Color(0xffE1E6EE))),
+                      child: Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: Text(
+                          'Plano Corporativo sem fidelidade, 50% de upload e atendimento ágil. Conecte-se eficientemente e impulsione seu negócio conosco.',
+                          style: TextStyle(
+                            color: const Color(0xff7A7A7A),
+                            fontSize: MediaQuery.of(context).size.width < 400
+                                ? 18
+                                : 20,
+                          ),
                         ),
                       ),
                     ),
                   InkWell(
                     onTap: () {
                       setState(() {
+                        _isExpanded = false;
+                        _isExpanded1 = false;
+                        _isExpanded2 = false;
                         _isExpanded3 = !_isExpanded3;
                       });
                     },
@@ -250,14 +277,19 @@ class _QuestionsState extends State<Questions> {
                     ),
                   ),
                   if (_isExpanded3)
-                    Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Text(
-                        'Desfrute de Benefícios Exclusivos: HBO, Olé TV e Ubook Livros.',
-                        style: TextStyle(
-                          color: const Color(0xff7A7A7A),
-                          fontSize:
-                              MediaQuery.of(context).size.width < 400 ? 18 : 20,
+                    Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(color: const Color(0xffE1E6EE))),
+                      child: Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: Text(
+                          'Desfrute de Benefícios Exclusivos: HBO, Olé TV e Ubook Livros.',
+                          style: TextStyle(
+                            color: const Color(0xff7A7A7A),
+                            fontSize: MediaQuery.of(context).size.width < 400
+                                ? 18
+                                : 20,
+                          ),
                         ),
                       ),
                     ),

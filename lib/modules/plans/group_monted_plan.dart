@@ -189,11 +189,11 @@ class _GroupMontedPlanState extends State<GroupMontedPlan> {
                                   borderRadius: BorderRadius.circular(5),
                                   color: Colors.grey[200]),
                               offset: const Offset(-20, 0),
-                              scrollbarTheme: ScrollbarThemeData(
-                                radius: const Radius.circular(40),
-                                thickness: MaterialStateProperty.all<double>(6),
+                              scrollbarTheme: const ScrollbarThemeData(
+                                radius: Radius.circular(40),
+                                thickness: WidgetStatePropertyAll<double>(6),
                                 thumbVisibility:
-                                    MaterialStateProperty.all<bool>(true),
+                                    WidgetStatePropertyAll<bool>(true),
                               ),
                             ),
                             menuItemStyleData: const MenuItemStyleData(
@@ -325,11 +325,11 @@ class _GroupMontedPlanState extends State<GroupMontedPlan> {
                                 color: Colors.grey[200],
                               ),
                               offset: const Offset(-20, 0),
-                              scrollbarTheme: ScrollbarThemeData(
-                                radius: const Radius.circular(40),
-                                thickness: MaterialStateProperty.all<double>(6),
+                              scrollbarTheme: const ScrollbarThemeData(
+                                radius: Radius.circular(40),
+                                thickness: WidgetStatePropertyAll<double>(6),
                                 thumbVisibility:
-                                    MaterialStateProperty.all<bool>(true),
+                                    WidgetStatePropertyAll<bool>(true),
                               ),
                             ),
                             menuItemStyleData: const MenuItemStyleData(
@@ -579,14 +579,14 @@ class _GroupMontedPlanState extends State<GroupMontedPlan> {
                         height: 40,
                         child: ElevatedButton(
                           style: ButtonStyle(
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
+                            shape:
+                                WidgetStatePropertyAll<RoundedRectangleBorder>(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5),
                               ),
                             ),
-                            backgroundColor: MaterialStateProperty.all(
-                                const Color(0xffFFB000)),
+                            backgroundColor:
+                                const WidgetStatePropertyAll(Color(0xffFFB000)),
                           ),
                           onPressed: () {
                             setState(() {

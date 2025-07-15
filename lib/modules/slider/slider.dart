@@ -21,6 +21,7 @@ class _SliderComponentState extends State<SliderComponent> {
     final sliderData = await Api().getSlider();
     final List<dynamic> jsonData = json.decode(sliderData);
     for (final item in jsonData) {
+      print(item);
       if (item is Map<String, dynamic> && item.containsKey('name')) {
         sliderList.add("${ApiConstants.baseUrlUploads}/${item['name']}");
       }

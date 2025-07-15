@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:velocity_net/helpers/url.dart';
 import 'package:velocity_net/modules/plans/repository/curriculo.dart';
-import 'package:velocity_net/pages/tv_plans.dart';
 
 class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
   final ScrollController scrollController;
@@ -11,11 +10,31 @@ class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentRoute = ModalRoute.of(context)?.settings.name;
+    final currentRoute = ModalRoute.of(context)?.settings.name ?? '/';
+
+    void navigateAndScroll(double position) {
+      if (currentRoute != '/') {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          '/',
+          (route) => false,
+          arguments: position,
+        );
+      } else {
+        // Se já está na home, apenas faz o scroll
+        if (scrollController.hasClients) {
+          scrollController.animateTo(
+            position,
+            duration: const Duration(milliseconds: 1000),
+            curve: Curves.easeInOutCubic,
+          );
+        }
+      }
+    }
 
     return Material(
       elevation: 4,
-      color: Colors.white, // ✅ força o branco e impede roxo
+      color: Colors.white,
       child: Container(
         height: preferredSize.height,
         padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 30),
@@ -36,67 +55,30 @@ class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      _buildMenuItem("INÍCIO", () {
-                        if (currentRoute != "/") {
-                          Navigator.pushNamed(context, '/');
-                        }
-                        scrollController.animateTo(
-                          0,
-                          duration: const Duration(milliseconds: 1000),
-                          curve: Curves.easeInOutCubic,
-                        );
-                      }),
+                      _buildMenuItem("INÍCIO", () => navigateAndScroll(0)),
                       const SizedBox(width: 24),
-                      _buildMenuItem("PLANOS", () {
-                        if (currentRoute != "/") {
-                          Navigator.pushNamed(context, '/');
-                        }
-                        scrollController.animateTo(
-                          600,
-                          duration: const Duration(milliseconds: 1000),
-                          curve: Curves.easeInOutCubic,
-                        );
-                      }),
+                      _buildMenuItem("PLANOS", () => navigateAndScroll(800)),
                       const SizedBox(width: 24),
-                      _buildMenuItem("SOBRE NÓS", () {
-                        if (currentRoute != "/") {
-                          Navigator.pushNamed(context, '/');
-                        }
-                        scrollController.animateTo(
-                          1400,
-                          duration: const Duration(milliseconds: 1000),
-                          curve: Curves.easeInOutCubic,
-                        );
-                      }),
+                      _buildMenuItem("SOBRE NÓS", () => navigateAndScroll(1600)),
                       const SizedBox(width: 24),
-                      _buildMenuItem("OFERTA", () {
-                        if (currentRoute != "/") {
-                          Navigator.pushNamed(context, '/');
-                        }
-                        scrollController.animateTo(
-                          1910,
-                          duration: const Duration(milliseconds: 1000),
-                          curve: Curves.easeInOutCubic,
-                        );
-                      }),
+                      _buildMenuItem("OFERTA", () => navigateAndScroll(2120)),
                       const SizedBox(width: 24),
                       _buildMenuItem("TV", () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (_) => Oletv()),
-                        );
+                        if (currentRoute != '/tvplanos') {
+                          Navigator.pushNamed(context, '/tvplanos');
+                        }
                       }),
                       const SizedBox(width: 24),
                       _buildMenuItem("CONTATOS", () {
-                        if (currentRoute == '/contatos') return;
-                        Navigator.pushNamed(context, '/contatos');
+                        if (currentRoute != '/contatos') {
+                          Navigator.pushNamed(context, '/contatos');
+                        }
                       }),
                       const SizedBox(width: 24),
                       _buildMenuItem("TRABALHE CONOSCO", () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (_) => TrabalheConosco()),
-                        );
+                        if (currentRoute != '/trabalhe-conosco') {
+                          Navigator.pushNamed(context, '/trabalhe-conosco');
+                        }
                       }),
                     ],
                   ),

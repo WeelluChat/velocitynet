@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:velocity_net/modules/plans/provider/plan_provider.dart';
+import 'package:velocity_net/modules/plans/repository/curriculo.dart';
 import 'package:velocity_net/pages/company_values.dart';
 import 'package:velocity_net/pages/contact.dart';
 import 'package:velocity_net/pages/home.dart';
@@ -26,19 +27,20 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           scrollbarTheme: const ScrollbarThemeData(
-            thumbColor: WidgetStatePropertyAll(
+            thumbColor: MaterialStatePropertyAll(
               Colors.black,
             ),
           ),
           colorScheme: const ColorScheme.light(surface: Colors.white),
           useMaterial3: true,
         ),
-        home: const Home(),
         initialRoute: '/',
         routes: {
+          '/': (context) => const Home(),
           '/contatos': (context) => const ContactPage(),
-          '/tvplanos': (context) => Oletv(),
+          '/tvplanos': (context) => const Oletv(),
           '/missao-visao': (context) => const CompanyValues(),
+          '/trabalhe-conosco': (context) => const TrabalheConosco(), // rota nova
         },
         scrollBehavior: const MaterialScrollBehavior().copyWith(
           dragDevices: {

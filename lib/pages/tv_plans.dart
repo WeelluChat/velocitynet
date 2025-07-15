@@ -98,109 +98,97 @@ class _OletvState extends State<Oletv> {
     final bool isMobile = MediaQuery.of(context).size.width < 1200;
 
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 153, 189, 240),
       appBar: PreferredSize(
         preferredSize: isMobile ? const Size.fromHeight(80) : const Size.fromHeight(100),
         child: isMobile ? const AppBarComponentResize() : AppBarComponent(scrollController: scrollController),
       ),
       endDrawer: isMobile ? EndDrawer(scrollController: scrollController) : null,
-      body: SingleChildScrollView(
-        controller: scrollController,
-        child: Column(
-          children: [
-            Container(
-              height: isMobile ? 400 : 700,
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/group.png'),
-                  fit: BoxFit.cover,
+      body: Container(
+        color: const Color(0xFFEAF1FB),
+        child: SingleChildScrollView(
+          controller: scrollController,
+          child: Column(
+            children: [
+              Container(
+                height: isMobile ? 400 : 700,
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/group.png'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    SizedBox(height: isMobile ? 80 : 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: () => launchUrl(Uri.parse('https://play.google.com/store/apps/details?id=br.tv.ole.oletv&hl=en_US')),
+                          child: Image.asset('assets/googlestore.png', height: isMobile ? 70 : 100, width: isMobile ? 140 : 200),
+                        ),
+                        const SizedBox(width: 10),
+                        InkWell(
+                          onTap: () => launchUrl(Uri.parse('https://apps.apple.com/br/app/ol%C3%A9-tv/id1301299065')),
+                          child: Image.asset('assets/appstore.png', height: isMobile ? 70 : 100, width: isMobile ? 126 : 180),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  SizedBox(height: isMobile ? 80 : 10),
-                  Padding(
-                    padding: isMobile ? EdgeInsetsGeometry.only(top: 10) : EdgeInsetsGeometry.only(top: 30),
-                    child: Text(
-                      'ASSISTA PELO APLICATIVO',
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: isMobile ? 16 : 0, vertical: 30),
+                child: Column(
+                  children: [
+                    Text(
+                      'ESCOLHA O PLANO IDEAL PARA VOCÊ!',
                       style: GoogleFonts.poppins(
-                        fontSize: isMobile ? 20 : 25,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                        shadows: [
-                          const Shadow(color: Colors.black54, offset: Offset(0, 1), blurRadius: 3),
-                        ],
+                        fontWeight: FontWeight.w800,
+                        color: const Color(0xFF13294E),
+                        fontSize: isMobile ? 24 : 40,
                       ),
                       textAlign: TextAlign.center,
                     ),
-                  ),
-                  const SizedBox(height: 0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      InkWell(
-                        onTap: () => launchUrl(Uri.parse('https://play.google.com/store/apps/details?id=br.tv.ole.oletv&hl=en_US')),
-                        child: Image.asset('assets/googlestore.png', height: isMobile ? 70 : 100, width: isMobile ? 140 : 200),
+                    const SizedBox(height: 30),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF13294E),
+                        borderRadius: BorderRadius.circular(15),
                       ),
-                      const SizedBox(width: 10),
-                      InkWell(
-                        onTap: () => launchUrl(Uri.parse('https://apps.apple.com/br/app/ol%C3%A9-tv/id1301299065')),
-                        child: Image.asset('assets/appstore.png', height: isMobile ? 70 : 100, width: isMobile ? 126 : 180),
+                      padding: const EdgeInsets.all(8.0),
+                      width: isMobile ? 350 : 650,
+                      height: isMobile ? 900 : 800,
+                      child: ContainedTabBarView(
+                        tabBarProperties: TabBarProperties(
+                          labelColor: Colors.transparent,
+                          indicatorColor: Colors.blue,
+                          height: isMobile ? 60 : 48,
+                        ),
+                        tabs: [
+                          _tabLabel('Life Line', isMobile),
+                          _tabLabel('Start HD', isMobile),
+                          _tabLabel('Top HD', isMobile),
+                          _tabLabel('Premium HD', isMobile),
+                        ],
+                        views: [
+                          _buildPlanTab(context, isMobile, '+60 CANAIS DE TV', '+500h de VOD', 'GRÁTIS PARA CLIENTES', lifeLinePlans, []),
+                          _buildPlanTab(context, isMobile, '+80 CANAIS DE TV', '+2000h de VOD', 'R\$ 79,90/mês', startHD, ['LIFE LINE']),
+                          _buildPlanTab(context, isMobile, '+120 CANAIS DE TV', '+3000h de VOD', 'R\$ 119,90/mês', topHD, ['LIFE LINE', 'START HD']),
+                          _buildPlanTab(context, isMobile, '+130 CANAIS DE TV', '+4000h de VOD', 'R\$ 149,90/mês', premiumHD, ['LIFE LINE', 'START HD', 'TOP HD']),
+                        ],
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                    SizedBox(height: isMobile ? 40 : 100),
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: isMobile ? 16 : 0, vertical: 30),
-              child: Column(
-                children: [
-                  Text(
-                    'ESCOLHA O PLANO IDEAL PARA VOCÊ!',
-                    style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.w800,
-                      color: const Color(0xFF13294E),
-                      fontSize: isMobile ? 24 : 40,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 30),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF13294E),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    padding: const EdgeInsets.all(8.0),
-                    width: isMobile ? 350 : 650,
-                    height: isMobile ? 900 : 800,
-                    child: ContainedTabBarView(
-                      tabBarProperties: TabBarProperties(
-                        labelColor: Colors.transparent,
-                        indicatorColor: Colors.blue,
-                        height: isMobile ? 60 : 48,
-                      ),
-                      tabs: [
-                        _tabLabel('Life Line', isMobile),
-                        _tabLabel('Start HD', isMobile),
-                        _tabLabel('Top HD', isMobile),
-                        _tabLabel('Premium HD', isMobile),
-                      ],
-                      views: [
-                        _buildPlanTab(context, isMobile, '+60 CANAIS DE TV', '+500h de VOD', 'GRÁTIS PARA CLIENTES', lifeLinePlans, []),
-                        _buildPlanTab(context, isMobile, '+80 CANAIS DE TV', '+2000h de VOD', 'R\$ 79,90/mês', startHD, ['LIFE LINE']),
-                        _buildPlanTab(context, isMobile, '+120 CANAIS DE TV', '+3000h de VOD', 'R\$ 119,90/mês', topHD, ['LIFE LINE', 'START HD']),
-                        _buildPlanTab(context, isMobile, '+130 CANAIS DE TV', '+4000h de VOD', 'R\$ 149,90/mês', premiumHD, ['LIFE LINE', 'START HD', 'TOP HD']),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: isMobile ? 40 : 100),
-                ],
-              ),
-            ),
-            const Footer(),
-          ],
+              const Footer(),
+            ],
+          ),
         ),
       ),
     );
@@ -225,12 +213,12 @@ class _OletvState extends State<Oletv> {
     return Container(
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.vertical(bottom: Radius.circular(15)),
-        color: Colors.white,
+        color: Color(0xFFEAF1FB),
       ),
       child: Column(
         children: [
           const SizedBox(height: 10),
-          Text(channelCount, style: GoogleFonts.poppins(fontSize: isMobile ? 16 : 20, fontWeight: FontWeight.w500)),
+          Text(channelCount, style: GoogleFonts.poppins(fontSize: isMobile ? 16 : 20, fontWeight: FontWeight.w500, color: Colors.black)),
           Text(vodHours, style: GoogleFonts.poppins(fontSize: isMobile ? 16 : 20, color: Colors.blue, fontWeight: FontWeight.w500)),
           Text(price, style: GoogleFonts.poppins(fontSize: isMobile ? 16 : 20, color: Colors.green, fontWeight: FontWeight.w500)),
           if (includedPlans.isNotEmpty)

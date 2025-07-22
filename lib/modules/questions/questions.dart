@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Questions extends StatefulWidget {
   const Questions({super.key});
@@ -8,31 +10,44 @@ class Questions extends StatefulWidget {
   State<Questions> createState() => _QuestionsState();
 }
 
-class _QuestionsState extends State<Questions>
-    with SingleTickerProviderStateMixin {
+class _QuestionsState extends State<Questions> with SingleTickerProviderStateMixin {
   int expandedIndex = -1;
+  List<Map<String, dynamic>> faqs = [];
+  bool isLoading = true;
 
-  final List<Map<String, String>> faqs = [
-    {
-      'question': 'Como funciona a Instalação?',
-      'answer':
-          'Após a escolha de um dos nossos planos, será feita uma análise de viabilidade para verificar se sua residência está dentro da nossa cobertura.',
-    },
-    {
-      'question': 'Como funciona o pagamento?',
-      'answer':
-          'Você pode realizar o pagamento com pix ou boleto, via cartão de crédito/débito e dinheiro.',
-    },
-    {
-      'question': 'Qual é a diferença entre os planos corporativo?',
-      'answer':
-          'Plano Corporativo sem fidelidade, 50% de upload e atendimento ágil. Conecte-se eficientemente e impulsione seu negócio conosco.',
-    },
-    {
-      'question': 'Benefícios',
-      'answer': 'Desfrute de Benefícios Exclusivos: HBO, Olé TV e Ubook Livros.',
-    },
-  ];
+  @override
+  void initState() {
+    super.initState();
+    Perguntas();
+  }
+
+  Future<void> Perguntas() async {
+    try {
+      final response = await http.get(
+        Uri.parse('https://api.velocitynet.com.br/api/v1/perguntas'),
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+        setState(() {
+          faqs = data
+              .map((item) => {
+                    'question': item['title'],
+                    'answer': item['subtitle'],
+                  })
+              .toList();
+          isLoading = false;
+        });
+      } else {
+        throw Exception('Erro ao carregar perguntas');
+      }
+    } catch (e) {
+      print("Erro: $e");
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,114 +76,114 @@ class _QuestionsState extends State<Questions>
                     ),
                   ),
                   const SizedBox(height: 30),
-                  ...List.generate(faqs.length, (index) {
-                    final isExpanded = expandedIndex == index;
-                    return TweenAnimationBuilder<double>(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeOut,
-                      tween: Tween<double>(
-                          begin: 0, end: isExpanded ? 1.0 : 0.0),
-                      builder: (context, value, child) {
-                        return Column(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  expandedIndex = isExpanded ? -1 : index;
-                                });
-                              },
-                              child: AnimatedContainer(
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.easeOut,
-                                width: double.infinity,
-                                constraints:
-                                    const BoxConstraints(maxWidth: 600),
-                                margin:
-                                    const EdgeInsets.symmetric(vertical: 6),
-                                padding: const EdgeInsets.all(16),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(
-                                      color: const Color(0xFFE1E6EE), width: 1),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.05),
-                                      blurRadius: 10,
-                                      offset: const Offset(0, 4),
-                                    ),
-                                  ],
-                                ),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    AnimatedRotation(
-                                      duration:
-                                          const Duration(milliseconds: 300),
-                                      turns: isExpanded ? 0.5 : 0,
-                                      child: const Icon(
-                                        Icons.add_circle_outline,
-                                        color: Color(0xff13294E),
+                  if (isLoading)
+                    const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                    )
+                  else
+                    ...List.generate(faqs.length, (index) {
+                      final isExpanded = expandedIndex == index;
+                      return TweenAnimationBuilder<double>(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeOut,
+                        tween: Tween<double>(begin: 0, end: isExpanded ? 1.0 : 0.0),
+                        builder: (context, value, child) {
+                          return Column(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    expandedIndex = isExpanded ? -1 : index;
+                                  });
+                                },
+                                child: AnimatedContainer(
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeOut,
+                                  width: double.infinity,
+                                  constraints: const BoxConstraints(maxWidth: 600),
+                                  margin: const EdgeInsets.symmetric(vertical: 6),
+                                  padding: const EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(color: const Color(0xFFE1E6EE), width: 1),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.05),
+                                        blurRadius: 10,
+                                        offset: const Offset(0, 4),
                                       ),
-                                    ),
-                                    const SizedBox(width: 12),
-                                    Expanded(
-                                      child: Text(
-                                        faqs[index]['question']!,
-                                        style: GoogleFonts.poppins(
-                                          fontSize: isMobile ? 16 : 18,
-                                          fontWeight: FontWeight.w600,
-                                          color: const Color(0xff13294E),
+                                    ],
+                                  ),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      AnimatedRotation(
+                                        duration: const Duration(milliseconds: 300),
+                                        turns: isExpanded ? 0.5 : 0,
+                                        child: const Icon(
+                                          Icons.add_circle_outline,
+                                          color: Color(0xff13294E),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                      const SizedBox(width: 12),
+                                      Expanded(
+                                        child: Text(
+                                          faqs[index]['question']!,
+                                          style: GoogleFonts.poppins(
+                                            fontSize: isMobile ? 16 : 18,
+                                            fontWeight: FontWeight.w600,
+                                            color: const Color(0xff13294E),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                            ClipRect(
-                              child: AnimatedAlign(
-                                alignment: Alignment.topCenter,
-                                heightFactor: value,
-                                duration: const Duration(milliseconds: 300),
-                                child: Opacity(
-                                  opacity: value,
-                                  child: Container(
-                                    constraints:
-                                        const BoxConstraints(maxWidth: 600),
-                                    margin: const EdgeInsets.only(
-                                        top: 5, bottom: 15),
-                                    padding: const EdgeInsets.all(16),
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFFFAFAFA),
-                                      borderRadius: BorderRadius.circular(12),
-                                      border: Border.all(
+                              ClipRect(
+                                child: AnimatedAlign(
+                                  alignment: Alignment.topCenter,
+                                  heightFactor: value,
+                                  duration: const Duration(milliseconds: 300),
+                                  child: Opacity(
+                                    opacity: value,
+                                    child: Container(
+                                      constraints: const BoxConstraints(maxWidth: 600),
+                                      margin: const EdgeInsets.only(top: 5, bottom: 15),
+                                      padding: const EdgeInsets.all(16),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFFFAFAFA),
+                                        borderRadius: BorderRadius.circular(12),
+                                        border: Border.all(
                                           color: const Color(0xFFE1E6EE),
-                                          width: 1),
-                                    ),
-                                    child: Text(
-                                      faqs[index]['answer']!,
-                                      style: GoogleFonts.poppins(
-                                        fontSize: isMobile ? 14 : 16,
-                                        color: const Color(0xFF444444),
-                                        height: 1.6,
+                                          width: 1,
+                                        ),
+                                      ),
+                                      child: Text(
+                                        faqs[index]['answer']!,
+                                        style: GoogleFonts.poppins(
+                                          fontSize: isMobile ? 14 : 16,
+                                          color: const Color(0xFF444444),
+                                          height: 1.6,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  }),
+                            ],
+                          );
+                        },
+                      );
+                    }),
                 ],
               ),
             ),
           ),
-          if (!isMobile)
-            const SizedBox(width: 80),
+          if (!isMobile) const SizedBox(width: 80),
           if (MediaQuery.of(context).size.width > 1100)
             Padding(
               padding: const EdgeInsets.only(left: 50),

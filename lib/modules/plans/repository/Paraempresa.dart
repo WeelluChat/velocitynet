@@ -38,7 +38,7 @@ class _ParaempresaState extends State<Paraempresa> {
     'Deezer',
   ];
 
- final List<int> defaultAppValues = [0, 0, 0, 0, 0];
+  final List<int> defaultAppValues = [0, 0, 0, 0, 0];
 
   final Map<String, List<int>> streamingPricesByMega = {
     '500': [38, 0, 30, 50, 10],
@@ -250,7 +250,8 @@ class _ParaempresaState extends State<Paraempresa> {
                                   child: Text(
                                     'MEGA',
                                     style: GoogleFonts.poppins(
-                                      color: const Color.fromARGB(255, 22, 103, 179),
+                                      color: const Color.fromARGB(
+                                          255, 22, 103, 179),
                                       letterSpacing: 0.5.sp,
                                       fontSize: isMobile ? 40.sp : 15.sp,
                                       fontWeight: FontWeight.w700,
@@ -501,42 +502,42 @@ class _ParaempresaState extends State<Paraempresa> {
                         crossAxisAlignment: CrossAxisAlignment.baseline,
                         textBaseline: TextBaseline.alphabetic,
                         children: [
-                          Text(
-                            'R\$',
-                            style: GoogleFonts.poppins(
-                              color: isDisabled
-                                  ? const Color.fromARGB(255, 180, 180, 180)
-                                  : const Color.fromARGB(255, 0, 0, 0),
-                              fontSize: isMobile ? 10.sp : 13.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          Text(
-                            '$appPrice',
-                            style: GoogleFonts.poppins(
-                              color: isDisabled
-                                  ? const Color.fromARGB(255, 180, 180, 180)
-                                  : const Color.fromARGB(255, 0, 0, 0),
-                              letterSpacing: isMobile ? -0.6.sp : -1.0.sp,
-                              fontSize: isMobile ? 30.sp : 25.sp,
-                              fontWeight: FontWeight.w700,
-                              height: 1.0,
-                            ),
-                          ),
-                          SizedBox(width: 1.sp),
-                          Transform.translate(
-                            offset: Offset(0, isMobile ? -12.sp : -9.sp),
-                            child: Text(
-                              ',00',
-                              style: GoogleFonts.poppins(
-                                color: isDisabled
-                                    ? const Color.fromARGB(255, 180, 180, 180)
-                                    : const Color.fromARGB(255, 0, 0, 0),
-                                fontSize: isMobile ? 10.sp : 13.sp,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
+                          // Text(
+                          //   'R\$',
+                          //   style: GoogleFonts.poppins(
+                          //     color: isDisabled
+                          //         ? const Color.fromARGB(255, 180, 180, 180)
+                          //         : const Color.fromARGB(255, 0, 0, 0),
+                          //     fontSize: isMobile ? 10.sp : 13.sp,
+                          //     fontWeight: FontWeight.w500,
+                          //   ),
+                          // ),
+                          // Text(
+                          //   '$appPrice',
+                          //   style: GoogleFonts.poppins(
+                          //     color: isDisabled
+                          //         ? const Color.fromARGB(255, 180, 180, 180)
+                          //         : const Color.fromARGB(255, 0, 0, 0),
+                          //     letterSpacing: isMobile ? -0.6.sp : -1.0.sp,
+                          //     fontSize: isMobile ? 30.sp : 25.sp,
+                          //     fontWeight: FontWeight.w700,
+                          //     height: 1.0,
+                          //   ),
+                          // ),
+                          // SizedBox(width: 1.sp),
+                          // Transform.translate(
+                          //   offset: Offset(0, isMobile ? -12.sp : -9.sp),
+                          //   child: Text(
+                          //     ',00',
+                          //     style: GoogleFonts.poppins(
+                          //       color: isDisabled
+                          //           ? const Color.fromARGB(255, 180, 180, 180)
+                          //           : const Color.fromARGB(255, 0, 0, 0),
+                          //       fontSize: isMobile ? 10.sp : 13.sp,
+                          //       fontWeight: FontWeight.w600,
+                          //     ),
+                          //   ),
+                          // ),
                           SizedBox(width: isMobile ? 3.sp : 8.sp),
                           InkWell(
                             onTap: () {
@@ -613,7 +614,9 @@ class _ParaempresaState extends State<Paraempresa> {
           color: const Color.fromARGB(255, 255, 255, 255),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.sp),
-            side: const BorderSide(color: Color.fromARGB(255, 179, 179, 179),),
+            side: const BorderSide(
+              color: Color.fromARGB(255, 179, 179, 179),
+            ),
           ),
           shadows: [BoxShadow(blurRadius: 1)]),
       child: Column(
@@ -670,7 +673,8 @@ class _ParaempresaState extends State<Paraempresa> {
               color: const Color.fromARGB(255, 255, 255, 255),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8.sp),
-                side: const BorderSide(color: Color.fromARGB(255, 175, 175, 175)),
+                side:
+                    const BorderSide(color: Color.fromARGB(255, 175, 175, 175)),
               ),
             ),
             child: Center(
@@ -695,7 +699,8 @@ class _ParaempresaState extends State<Paraempresa> {
                 color: const Color.fromARGB(255, 255, 255, 255),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.sp),
-                  side: const BorderSide(color: Color.fromARGB(255, 158, 158, 158)),
+                  side: const BorderSide(
+                      color: Color.fromARGB(255, 158, 158, 158)),
                 ),
                 shadows: [BoxShadow()]),
             child: Center(
@@ -821,39 +826,39 @@ class _ParaempresaState extends State<Paraempresa> {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Transform.translate(
-                                offset: const Offset(0, 1),
-                                child: Text(
-                                  'R\$',
-                                  style: GoogleFonts.poppins(
-                                    color: const Color.fromARGB(255, 0, 0, 0),
-                                    fontSize: isMobile ? 7.sp : 8.sp,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                              Transform.translate(
-                                offset: const Offset(0, 0),
-                                child: Text(
-                                  '$appPrice',
-                                  style: GoogleFonts.poppins(
-                                    color: const Color.fromARGB(255, 0, 0, 0),
-                                    fontSize: isMobile ? 9.sp : 10.sp,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                              Transform.translate(
-                                offset: Offset(0, -1),
-                                child: Text(
-                                  ',00',
-                                  style: GoogleFonts.poppins(
-                                    color: const Color.fromARGB(255, 0, 0, 0),
-                                    fontSize: isMobile ? 7.sp : 9.sp,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
+                              // Transform.translate(
+                              //   offset: const Offset(0, 1),
+                              //   child: Text(
+                              //     'R\$',
+                              //     style: GoogleFonts.poppins(
+                              //       color: const Color.fromARGB(255, 0, 0, 0),
+                              //       fontSize: isMobile ? 7.sp : 8.sp,
+                              //       fontWeight: FontWeight.w600,
+                              //     ),
+                              //   ),
+                              // ),
+                              // Transform.translate(
+                              //   offset: const Offset(0, 0),
+                              //   child: Text(
+                              //     '$appPrice',
+                              //     style: GoogleFonts.poppins(
+                              //       color: const Color.fromARGB(255, 0, 0, 0),
+                              //       fontSize: isMobile ? 9.sp : 10.sp,
+                              //       fontWeight: FontWeight.w500,
+                              //     ),
+                              //   ),
+                              // ),
+                              // Transform.translate(
+                              //   offset: Offset(0, -1),
+                              //   child: Text(
+                              //     ',00',
+                              //     style: GoogleFonts.poppins(
+                              //       color: const Color.fromARGB(255, 0, 0, 0),
+                              //       fontSize: isMobile ? 7.sp : 9.sp,
+                              //       fontWeight: FontWeight.w500,
+                              //     ),
+                              //   ),
+                              // ),
                             ],
                           )
                         ],
@@ -949,7 +954,7 @@ class _ParaempresaState extends State<Paraempresa> {
       child: Icon(
         selected ? Icons.check_circle : Icons.radio_button_unchecked,
         color: selected
-            ? const Color.fromARGB(255, 5, 134, 5)
+            ? const Color.fromARGB(255, 0, 34, 126)
             : const Color.fromARGB(255, 146, 146, 146),
         size: 18.sp,
       ),
@@ -957,149 +962,148 @@ class _ParaempresaState extends State<Paraempresa> {
   }
 
   void _showSpeedDetails(BuildContext context, String mega, int price) {
-  final isMobile = MediaQuery.of(context).size.width < 600;
+    final isMobile = MediaQuery.of(context).size.width < 600;
 
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return Dialog(
-        backgroundColor: Colors.transparent,
-        insetPadding: EdgeInsets.symmetric(
-          horizontal: isMobile ? 16 : 32,
-          vertical: isMobile ? 16 : 24,
-        ),
-        child: Center(
-          child: Container(
-            width: isMobile ? double.infinity : 380,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(24),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.2),
-                  blurRadius: 20,
-                  offset: const Offset(0, 8),
-                ),
-              ],
-            ),
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Título e botão fechar
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Detalhes da Velocidade',
-                      style: GoogleFonts.poppins(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: const Color(0xFF2D2D2D),
-                      ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.close, color: Colors.black54),
-                      onPressed: () => Navigator.of(context).pop(),
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 12),
-
-                // Subtítulo azul
-                Text(
-                  'Internet Fibra Óptica - ${mega}MEGA',
-                  style: GoogleFonts.poppins(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                    color: const Color(0xFF003366), // azul escuro
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          insetPadding: EdgeInsets.symmetric(
+            horizontal: isMobile ? 16 : 32,
+            vertical: isMobile ? 16 : 24,
+          ),
+          child: Center(
+            child: Container(
+              width: isMobile ? double.infinity : 380,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(24),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    blurRadius: 20,
+                    offset: const Offset(0, 8),
                   ),
-                ),
-
-                const SizedBox(height: 12),
-
-                // Descrição
-                Text(
-                  '• Conexão estável e simétrica\n'
-                  '• Download e Upload na mesma velocidade\n'
-                  '• Sem limite de franquia\n'
-                  '• Suporte técnico 24/7',
-                  style: GoogleFonts.poppins(
-                    fontSize: 13,
-                    color: const Color(0xFF6B7A90), // cinza azulado
-                  ),
-                ),
-
-                const SizedBox(height: 20),
-
-                // Caixa de preço
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 14,
-                  ),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: const Color.fromARGB(255, 170, 170, 170)),
-                    borderRadius: BorderRadius.circular(16),
-                    color: Colors.white,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                ],
+              ),
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Título e botão fechar
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Valor:',
+                        'Detalhes da Velocidade',
                         style: GoogleFonts.poppins(
-                          fontSize: 13,
+                          fontSize: 18,
                           fontWeight: FontWeight.w600,
-                          color: Colors.black87,
+                          color: const Color(0xFF2D2D2D),
                         ),
                       ),
-                      const SizedBox(height: 4),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            'R\$ ',
-                            style: GoogleFonts.poppins(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              color: const Color(0xFF003366),
-                            ),
-                          ),
-                          Text(
-                            '$price',
-                            style: GoogleFonts.poppins(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700,
-                              color: const Color(0xFF003366),
-                            ),
-                          ),
-                          Text(
-                            ',99/mês',
-                            style: GoogleFonts.poppins(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w500,
-                              color: const Color(0xFF003366),
-                            ),
-                          ),
-                        ],
+                      IconButton(
+                        icon: const Icon(Icons.close, color: Colors.black54),
+                        onPressed: () => Navigator.of(context).pop(),
                       ),
                     ],
                   ),
-                ),
-              ],
+
+                  const SizedBox(height: 12),
+
+                  // Subtítulo azul
+                  Text(
+                    'Internet Fibra Óptica - ${mega}MEGA',
+                    style: GoogleFonts.poppins(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: const Color(0xFF003366), // azul escuro
+                    ),
+                  ),
+
+                  const SizedBox(height: 12),
+
+                  // Descrição
+                  Text(
+                    '• Conexão estável e simétrica\n'
+                    '• Download e Upload na mesma velocidade\n'
+                    '• Sem limite de franquia\n'
+                    '• Suporte técnico 24/7',
+                    style: GoogleFonts.poppins(
+                      fontSize: 13,
+                      color: const Color(0xFF6B7A90), // cinza azulado
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  // Caixa de preço
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 14,
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                          color: const Color.fromARGB(255, 170, 170, 170)),
+                      borderRadius: BorderRadius.circular(16),
+                      color: Colors.white,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Valor:',
+                          style: GoogleFonts.poppins(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black87,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              'R\$ ',
+                              style: GoogleFonts.poppins(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xFF003366),
+                              ),
+                            ),
+                            Text(
+                              '$price',
+                              style: GoogleFonts.poppins(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                                color: const Color(0xFF003366),
+                              ),
+                            ),
+                            Text(
+                              ',99/mês',
+                              style: GoogleFonts.poppins(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xFF003366),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      );
-    },
-  );
-}
-
-
+        );
+      },
+    );
+  }
 
   void _showPlanDetails(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 600;

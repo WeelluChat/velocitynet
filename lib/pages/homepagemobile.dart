@@ -128,7 +128,7 @@ class _HomepagemobileState extends State<Homepagemobile> {
                       ),
                     ),
                     DefaultTabController(
-                      length: 7,
+                      length: 2,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -169,11 +169,11 @@ class _HomepagemobileState extends State<Homepagemobile> {
                                   tabs: const [
                                     Tab(text: 'PARA VOCÊ'),
                                     Tab(text: 'PARA EMPRESA'),
-                                    Tab(text: '+TELECINE'),
-                                    Tab(text: '+MAX'),
-                                    Tab(text: '+PREMIERE'),
-                                    Tab(text: '+DEEZER'),
-                                    Tab(text: '+GLOBOPLAY'),
+                                    // Tab(text: '+TELECINE'),
+                                    // Tab(text: '+MAX'),
+                                    // Tab(text: '+PREMIERE'),
+                                    // Tab(text: '+DEEZER'),
+                                    // Tab(text: '+GLOBOPLAY'),
                                   ],
                                 ),
                               ),
@@ -189,16 +189,16 @@ class _HomepagemobileState extends State<Homepagemobile> {
                                   initialCombo: selectedCombo,
                                 ),
                                 const Paraempresa(),
-                                _buildTab(isLoadingTelecine, telecinePlans,
-                                    '+TELECINE', isMobile),
-                                _buildTab(
-                                    isLoadingMax, maxPlans, '+MAX', isMobile),
-                                _buildTab(isLoadingPremiere, premierePlans,
-                                    '+PREMIERE', isMobile),
-                                _buildTab(isLoadingDeezer, deezerPlans,
-                                    '+DEEZER', isMobile),
-                                _buildTab(isLoadingGloboplay, globoplayPlans,
-                                    '+GLOBOPLAY', isMobile),
+                                // _buildTab(isLoadingTelecine, telecinePlans,
+                                //     '+TELECINE', isMobile),
+                                // _buildTab(
+                                //     isLoadingMax, maxPlans, '+MAX', isMobile),
+                                // _buildTab(isLoadingPremiere, premierePlans,
+                                //     '+PREMIERE', isMobile),
+                                // _buildTab(isLoadingDeezer, deezerPlans,
+                                //     '+DEEZER', isMobile),
+                                // _buildTab(isLoadingGloboplay, globoplayPlans,
+                                //     '+GLOBOPLAY', isMobile),
                               ],
                             ),
                           ),
@@ -229,7 +229,7 @@ class _HomepagemobileState extends State<Homepagemobile> {
         duration: const Duration(milliseconds: 400),
         opacity: showSummary ? 1 : 0,
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 13),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
@@ -326,15 +326,15 @@ class _HomepagemobileState extends State<Homepagemobile> {
                                     ),
                                   ),
                                 ),
-                                Text(
-                                  'R\$ ${app.price},00',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: isMobile ? 13 : 15,
-                                    fontWeight: FontWeight.w600,
-                                    height: 1.1,
-                                    color: const Color(0xFF0A84FF),
-                                  ),
-                                ),
+                                // Text(
+                                //   'R\$ ${app.price},00',
+                                //   style: GoogleFonts.poppins(
+                                //     fontSize: isMobile ? 13 : 15,
+                                //     fontWeight: FontWeight.w600,
+                                //     height: 1.1,
+                                //     color: const Color(0xFF0A84FF),
+                                //   ),
+                                // ),
                                 GestureDetector(
                                   onTap: () {
                                     final monteseucomboState =
@@ -403,44 +403,47 @@ class _HomepagemobileState extends State<Homepagemobile> {
               // Botão contratar
               SizedBox(
                 width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF25D366),
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 5),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF25D366),
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      elevation: 4,
                     ),
-                    elevation: 4,
-                  ),
-                  onPressed: selectedCombo != null
-                      ? () {
-                          final message = selectedCombo!.apps.isEmpty
-                              ? 'Olá, gostaria de contratar o plano de ${selectedCombo!.mega} Mega'
-                              : 'Olá, gostaria de contratar o plano de ${selectedCombo!.mega} Mega com '
-                                  '${selectedCombo!.apps.map((app) => app.name).join(', ')}';
-                          launchUrl(Uri.parse(
-                            "https://api.whatsapp.com/send?phone=+5594992600430&text=${Uri.encodeComponent(message)}",
-                          ));
-                        }
-                      : null,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      PhosphorIcon(
-                        PhosphorIcons.whatsappLogo(),
-                        color: Colors.white,
-                        size: 20,
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        'Contratar agora',
-                        style: GoogleFonts.poppins(
-                          fontSize: isMobile ? 16 : 18,
-                          fontWeight: FontWeight.w600,
+                    onPressed: selectedCombo != null
+                        ? () {
+                            final message = selectedCombo!.apps.isEmpty
+                                ? 'Olá, gostaria de contratar o plano de ${selectedCombo!.mega} Mega'
+                                : 'Olá, gostaria de contratar o plano de ${selectedCombo!.mega} Mega com '
+                                    '${selectedCombo!.apps.map((app) => app.name).join(', ')}';
+                            launchUrl(Uri.parse(
+                              "https://api.whatsapp.com/send?phone=+5594992600430&text=${Uri.encodeComponent(message)}",
+                            ));
+                          }
+                        : null,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        PhosphorIcon(
+                          PhosphorIcons.whatsappLogo(),
                           color: Colors.white,
+                          size: 20,
                         ),
-                      ),
-                    ],
+                        const SizedBox(width: 8),
+                        Text(
+                          'Contratar agora',
+                          style: GoogleFonts.poppins(
+                            fontSize: isMobile ? 16 : 18,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

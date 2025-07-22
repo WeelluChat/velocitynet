@@ -11,32 +11,45 @@ class SliderComponent extends StatefulWidget {
 }
 
 class _SliderComponentState extends State<SliderComponent> {
-  List<String> sliderList = [];
+  List<String> sliderDesktopList = [];
+  List<String> sliderMobileList = [];
+
   final PageController _pageController = PageController();
   int _currentPage = 0;
-  bool _isHoveringLeft = false;
-  bool _isHoveringRight = false;
 
-  slider() async {
+  Future<void> loadSliders() async {
     final sliderData = await Api().getSlider();
     final List<dynamic> jsonData = json.decode(sliderData);
+
+    sliderDesktopList.clear();
+    sliderMobileList.clear();
+
     for (final item in jsonData) {
-      print(item);
-      if (item is Map<String, dynamic> && item.containsKey('name')) {
-        sliderList.add("${ApiConstants.baseUrlUploads}/${item['name']}");
+      if (item is Map<String, dynamic>) {
+        final desktop = item['desktop'];
+        final mobile = item['mobile'];
+
+        if (desktop != null && desktop['name'] != null) {
+          sliderDesktopList.add("${ApiConstants.baseUrlUploads}/${desktop['name']}");
+        }
+
+        if (mobile != null && mobile['name'] != null) {
+          sliderMobileList.add("${ApiConstants.baseUrlUploads}/${mobile['name']}");
+        }
       }
     }
+
     setState(() {});
   }
 
   @override
   void initState() {
     super.initState();
-    slider();
+    loadSliders();
   }
 
   void _nextPage() {
-    if (_currentPage < sliderList.length - 1) {
+    if (_currentPage < _currentSliderList.length - 1) {
       _currentPage++;
       _pageController.animateToPage(
         _currentPage,
@@ -57,97 +70,60 @@ class _SliderComponentState extends State<SliderComponent> {
     }
   }
 
-  Widget _buildArrowButton({
-    required bool isHovering,
-    required VoidCallback onTap,
-    required bool isLeft,
-  }) {
-    return MouseRegion(
-      onEnter: (_) => setState(() {
-        if (isLeft) _isHoveringLeft = true;
-        else _isHoveringRight = true;
-      }),
-      onExit: (_) => setState(() {
-        if (isLeft) _isHoveringLeft = false;
-        else _isHoveringRight = false;
-      }),
-      child: GestureDetector(
-        onTap: onTap,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            gradient: LinearGradient(
-              colors: isHovering
-                  ? [Colors.blue.shade600, Colors.blueAccent.shade200]
-                  : [Colors.black.withOpacity(0.4), Colors.black.withOpacity(0.2)],
-            ),
-            boxShadow: [
-              if (isHovering)
-                BoxShadow(
-                  color: Colors.blue.withOpacity(0.5),
-                  blurRadius: 12,
-                  spreadRadius: 2,
-                ),
-            ],
-          ),
-          padding: const EdgeInsets.all(12),
-          child: Icon(
-            isLeft ? Icons.arrow_back_ios_new : Icons.arrow_forward_ios,
-            color: Colors.white,
-            size: 28,
-          ),
-        ),
-      ),
-    );
+  List<String> get _currentSliderList {
+    final screenWidth = MediaQuery.of(context).size.width;
+    return screenWidth < 768 ? sliderMobileList : sliderDesktopList;
   }
 
   @override
   Widget build(BuildContext context) {
-    if (sliderList.isEmpty) {
-      return const Center(child: CircularProgressIndicator());
-    }
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final sliderList = _currentSliderList;
 
-    final double height =
-        MediaQuery.of(context).size.width < 1280 ? 500 : 600;
+        if (sliderList.isEmpty) {
+          return const Center(child: CircularProgressIndicator());
+        }
 
-    return SizedBox(
-      height: height,
-      width: double.infinity,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          PageView.builder(
-            controller: _pageController,
-            itemCount: sliderList.length,
-            onPageChanged: (index) {
-              setState(() => _currentPage = index);
-            },
-            itemBuilder: (context, index) {
-              return Image.network(
-                sliderList[index],
-                fit: BoxFit.fill,
-              );
-            },
+        final double height = constraints.maxWidth < 1500 ? 450 : 540;
+
+        return SizedBox(
+          height: height,
+          width: double.infinity,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              PageView.builder(
+                controller: _pageController,
+                itemCount: sliderList.length,
+                onPageChanged: (index) {
+                  setState(() => _currentPage = index);
+                },
+                itemBuilder: (context, index) {
+                  return Image.network(
+                    sliderList[index],
+                    fit: BoxFit.cover,
+                  );
+                },
+              ),
+              Positioned(
+                left: 16,
+                child: IconButton(
+                  onPressed: _previousPage,
+                  icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
+                ),
+              ),
+              Positioned(
+                right: 16,
+                child: IconButton(
+                  onPressed: _nextPage,
+                  icon: const Icon(Icons.arrow_forward_ios, color: Colors.white),
+                ),
+              ),
+            ],
           ),
-          Positioned(
-            left: 16,
-            child: _buildArrowButton(
-              isHovering: _isHoveringLeft,
-              onTap: _previousPage,
-              isLeft: true,
-            ),
-          ),
-          Positioned(
-            right: 16,
-            child: _buildArrowButton(
-              isHovering: _isHoveringRight,
-              onTap: _nextPage,
-              isLeft: false,
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

@@ -642,42 +642,42 @@ class _MonteseucomboState extends State<Monteseucombo> {
                         crossAxisAlignment: CrossAxisAlignment.baseline,
                         textBaseline: TextBaseline.alphabetic,
                         children: [
-                          Text(
-                            'R\$',
-                            style: GoogleFonts.poppins(
-                              color: isDisabled
-                                  ? const Color.fromARGB(255, 180, 180, 180)
-                                  : const Color.fromARGB(255, 0, 0, 0),
-                              fontSize: isMobile ? 10.sp : 13.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          Text(
-                            '${app.price}',
-                            style: GoogleFonts.poppins(
-                              color: isDisabled
-                                  ? const Color.fromARGB(255, 180, 180, 180)
-                                  : const Color.fromARGB(255, 0, 0, 0),
-                              letterSpacing: isMobile ? -0.6.sp : -1.0.sp,
-                              fontSize: isMobile ? 30.sp : 25.sp,
-                              fontWeight: FontWeight.w700,
-                              height: 1.0,
-                            ),
-                          ),
-                          SizedBox(width: 1.sp),
-                          Transform.translate(
-                            offset: Offset(0, isMobile ? -12.sp : -9.sp),
-                            child: Text(
-                              ',00',
-                              style: GoogleFonts.poppins(
-                                color: isDisabled
-                                    ? const Color.fromARGB(255, 180, 180, 180)
-                                    : const Color.fromARGB(255, 0, 0, 0),
-                                fontSize: isMobile ? 10.sp : 13.sp,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
+                          // Text(
+                          //   'R\$',
+                          //   style: GoogleFonts.poppins(
+                          //     color: isDisabled
+                          //         ? const Color.fromARGB(255, 180, 180, 180)
+                          //         : const Color.fromARGB(255, 0, 0, 0),
+                          //     fontSize: isMobile ? 10.sp : 13.sp,
+                          //     fontWeight: FontWeight.w500,
+                          //   ),
+                          // ),
+                          // Text(
+                          //   '${app.price}',
+                          //   style: GoogleFonts.poppins(
+                          //     color: isDisabled
+                          //         ? const Color.fromARGB(255, 180, 180, 180)
+                          //         : const Color.fromARGB(255, 0, 0, 0),
+                          //     letterSpacing: isMobile ? -0.6.sp : -1.0.sp,
+                          //     fontSize: isMobile ? 30.sp : 25.sp,
+                          //     fontWeight: FontWeight.w700,
+                          //     height: 1.0,
+                          //   ),
+                          // ),
+                          // SizedBox(width: 1.sp),
+                          // Transform.translate(
+                          //   offset: Offset(0, isMobile ? -12.sp : -9.sp),
+                          //   child: Text(
+                          //     ',00',
+                          //     style: GoogleFonts.poppins(
+                          //       color: isDisabled
+                          //           ? const Color.fromARGB(255, 180, 180, 180)
+                          //           : const Color.fromARGB(255, 0, 0, 0),
+                          //       fontSize: isMobile ? 10.sp : 13.sp,
+                          //       fontWeight: FontWeight.w600,
+                          //     ),
+                          //   ),
+                          // ),
                           SizedBox(width: isMobile ? 3.sp : 8.sp),
                           InkWell(
                             onTap: () {
@@ -769,20 +769,20 @@ class _MonteseucomboState extends State<Monteseucombo> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                GestureDetector(
-                  onTap: () {
-                    _showPlanDetails(context);
-                  },
-                  child: Text(
-                    'Ver detalhes',
-                    style: GoogleFonts.poppins(
-                      color: const Color.fromARGB(255, 0, 0, 0),
-                      fontSize: isMobile ? 9.sp : 8.sp,
-                      fontWeight: FontWeight.w500,
-                      decoration: TextDecoration.underline,
-                    ),
-                  ),
-                ),
+                // GestureDetector(
+                //   onTap: () {
+                //     _showPlanDetails(context);
+                //   },
+                //   child: Text(
+                //     'Ver detalhes',
+                //     style: GoogleFonts.poppins(
+                //       color: const Color.fromARGB(255, 0, 0, 0),
+                //       fontSize: isMobile ? 9.sp : 8.sp,
+                //       fontWeight: FontWeight.w500,
+                //       decoration: TextDecoration.underline,
+                //     ),
+                //   ),
+                // ),
                 Row(
                   children: [
                     Text(
@@ -805,7 +805,7 @@ class _MonteseucomboState extends State<Monteseucombo> {
             ),
           ),
           Container(
-            width: isMobile ? 260.sp : 133.sp,
+            width: isMobile ? 260.sp : 150.sp,
             height: isMobile ? 28.sp : 28.sp,
             margin: EdgeInsets.symmetric(horizontal: isMobile ? 8.sp : 0),
             decoration: ShapeDecoration(
@@ -831,7 +831,7 @@ class _MonteseucomboState extends State<Monteseucombo> {
           ),
           SizedBox(height: isMobile ? 4.sp : 8.sp),
           Container(
-            width: isMobile ? 260.sp : 133.sp,
+            width: isMobile ? 260.sp : 150.sp,
             height: isMobile ? 46.sp : 40.sp,
             margin: EdgeInsets.symmetric(horizontal: isMobile ? 8.sp : 0),
             decoration: ShapeDecoration(
@@ -963,39 +963,39 @@ class _MonteseucomboState extends State<Monteseucombo> {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Transform.translate(
-                                offset: const Offset(0, 1),
-                                child: Text(
-                                  'R\$',
-                                  style: GoogleFonts.poppins(
-                                    color: const Color.fromARGB(255, 0, 0, 0),
-                                    fontSize: isMobile ? 7.sp : 8.sp,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                              Transform.translate(
-                                offset: const Offset(0, 0),
-                                child: Text(
-                                  '${app.price}',
-                                  style: GoogleFonts.poppins(
-                                    color: const Color.fromARGB(255, 0, 0, 0),
-                                    fontSize: isMobile ? 9.sp : 10.sp,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                              Transform.translate(
-                                offset: Offset(0, -1),
-                                child: Text(
-                                  ',00',
-                                  style: GoogleFonts.poppins(
-                                    color: const Color.fromARGB(255, 0, 0, 0),
-                                    fontSize: isMobile ? 7.sp : 9.sp,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
+                              // Transform.translate(
+                              //   offset: const Offset(0, 1),
+                              //   child: Text(
+                              //     'R\$',
+                              //     style: GoogleFonts.poppins(
+                              //       color: const Color.fromARGB(255, 0, 0, 0),
+                              //       fontSize: isMobile ? 7.sp : 8.sp,
+                              //       fontWeight: FontWeight.w600,
+                              //     ),
+                              //   ),
+                              // ),
+                              // Transform.translate(
+                              //   offset: const Offset(0, 0),
+                              //   child: Text(
+                              //     '${app.price}',
+                              //     style: GoogleFonts.poppins(
+                              //       color: const Color.fromARGB(255, 0, 0, 0),
+                              //       fontSize: isMobile ? 9.sp : 10.sp,
+                              //       fontWeight: FontWeight.w500,
+                              //     ),
+                              //   ),
+                              // ),
+                              // Transform.translate(
+                              //   offset: Offset(0, -1),
+                              //   child: Text(
+                              //     ',00',
+                              //     style: GoogleFonts.poppins(
+                              //       color: const Color.fromARGB(255, 0, 0, 0),
+                              //       fontSize: isMobile ? 7.sp : 9.sp,
+                              //       fontWeight: FontWeight.w500,
+                              //     ),
+                              //   ),
+                              // ),
                               SizedBox(width: 4),
                               GestureDetector(
                                 onTap: () {

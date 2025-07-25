@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:convert';
 import 'dart:typed_data';
@@ -23,11 +23,13 @@ class SelectedApp {
   final String name;
   final int price;
   final String image;
+  final bool isVisible;
 
   SelectedApp({
     required this.name,
     required this.price,
     required this.image,
+    required this.isVisible,
   });
 }
 
@@ -36,12 +38,24 @@ class SelectedCombo {
   final int megaPrice;
   final List<SelectedApp> apps;
   final int total;
+  final bool isVisible;
 
   SelectedCombo({
     required this.mega,
     required this.megaPrice,
     required this.apps,
     required this.total,
+    required this.isVisible,
+  });
+}
+
+class AppDetail {
+  final String text;
+  final int icon;
+
+  AppDetail({
+    required this.text,
+    required this.icon,
   });
 }
 
@@ -51,7 +65,7 @@ class ApiService {
     try {
       final url = Uri.parse('https://api.velocitynet.com.br/api/v1/planos');
       final response = await http.get(url);
-      
+
       if (response.statusCode == 200) {
         final decodedResponse = jsonDecode(response.body);
         if (decodedResponse is List) return decodedResponse;
@@ -72,7 +86,8 @@ class Paraempresa extends StatefulWidget {
   State<Paraempresa> createState() => _ParaempresaState();
 }
 
-class _ParaempresaState extends State<Paraempresa> with TickerProviderStateMixin {
+class _ParaempresaState extends State<Paraempresa>
+    with TickerProviderStateMixin {
   int _selectedMegaIndex = -1;
   List<int> _selectedAppIndices = [];
   bool _isLoading = true;
@@ -126,10 +141,14 @@ class _ParaempresaState extends State<Paraempresa> with TickerProviderStateMixin
   }
 
   void _loadFirstCombo() {
-    if (_combos.isNotEmpty) {
-      final firstCombo = _combos.first;
-      final planos = firstCombo['planos'] as List;
-      final beneficios = planos.isNotEmpty 
+    final visibleCombos =
+        _combos.where((combo) => combo['isVisible'] ?? true).toList();
+    if (visibleCombos.isNotEmpty) {
+      final firstCombo = visibleCombos.first;
+      final planos = (firstCombo['planos'] as List)
+          .where((plano) => plano['isVisible'] ?? true)
+          .toList();
+      final beneficios = planos.isNotEmpty
           ? _processBenefits(planos.first['beneficios'] as List? ?? [])
           : [];
 
@@ -141,10 +160,14 @@ class _ParaempresaState extends State<Paraempresa> with TickerProviderStateMixin
   }
 
   void _onTabChanged(int index) {
-    if (_combos.isNotEmpty && index < _combos.length) {
-      final combo = _combos[index];
-      final planos = combo['planos'] as List;
-      final beneficios = planos.isNotEmpty 
+    final visibleCombos =
+        _combos.where((combo) => combo['isVisible'] ?? true).toList();
+    if (visibleCombos.isNotEmpty && index < visibleCombos.length) {
+      final combo = visibleCombos[index];
+      final planos = (combo['planos'] as List)
+          .where((plano) => plano['isVisible'] ?? true)
+          .toList();
+      final beneficios = planos.isNotEmpty
           ? _processBenefits(planos.first['beneficios'] as List? ?? [])
           : [];
 
@@ -164,6 +187,7 @@ class _ParaempresaState extends State<Paraempresa> with TickerProviderStateMixin
         name: b['nome'] ?? 'App sem nome',
         price: (b['valor'] as num?)?.toInt() ?? 0,
         image: b['image'] ?? 'assets/default_app.png',
+        isVisible: b['isVisible'] ?? true,
       );
     }).toList();
   }
@@ -172,12 +196,12 @@ class _ParaempresaState extends State<Paraempresa> with TickerProviderStateMixin
     if (_selectedMegaIndex == -1 || _planos.isEmpty) {
       return List.filled(_beneficios.length, 0);
     }
-    
+
     final selectedPlano = _planos[_selectedMegaIndex];
     if (selectedPlano['beneficios'] is! List) {
       return List.filled(_beneficios.length, 0);
     }
-    
+
     return (selectedPlano['beneficios'] as List).map<int>((b) {
       return (b['valor'] as num?)?.toInt() ?? 0;
     }).toList();
@@ -189,7 +213,8 @@ class _ParaempresaState extends State<Paraempresa> with TickerProviderStateMixin
   }
 
   int get _selectedAppValue {
-    return _selectedAppIndices.fold(0, (sum, index) => sum + currentAppValues[index]);
+    return _selectedAppIndices.fold(
+        0, (sum, index) => sum + currentAppValues[index]);
   }
 
   int get totalValue => _selectedMegaValue + _selectedAppValue;
@@ -198,7 +223,8 @@ class _ParaempresaState extends State<Paraempresa> with TickerProviderStateMixin
     if (_selectedMegaIndex == -1) return;
 
     final selectedPlan = _planos[_selectedMegaIndex];
-    final selectedBenefits = _selectedAppIndices.map((i) => _beneficios[i]).toList();
+    final selectedBenefits =
+        _selectedAppIndices.map((i) => _beneficios[i]).toList();
 
     setState(() {
       _selectedCombo = SelectedCombo(
@@ -206,6 +232,7 @@ class _ParaempresaState extends State<Paraempresa> with TickerProviderStateMixin
         megaPrice: (selectedPlan['valor'] as num).toInt(),
         apps: selectedBenefits,
         total: totalValue,
+        isVisible: selectedPlan['isVisible'] ?? true,
       );
     });
   }
@@ -239,7 +266,8 @@ class _ParaempresaState extends State<Paraempresa> with TickerProviderStateMixin
   Widget build(BuildContext context) {
     if (_isLoading) return _buildLoadingState();
     if (_errorMessage.isNotEmpty) return _buildErrorState();
-    if (_tabController == null) return const Center(child: CircularProgressIndicator());
+    if (_tabController == null)
+      return const Center(child: CircularProgressIndicator());
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -257,7 +285,9 @@ class _ParaempresaState extends State<Paraempresa> with TickerProviderStateMixin
         ),
         child: TabBarView(
           controller: _tabController,
-          children: _combos.map<Widget>((combo) {
+          children: _combos
+              .where((combo) => combo['isVisible'] ?? true)
+              .map<Widget>((combo) {
             return _buildComboContent();
           }).toList(),
         ),
@@ -316,18 +346,23 @@ class _ParaempresaState extends State<Paraempresa> with TickerProviderStateMixin
                     fontWeight: FontWeight.w500,
                     fontSize: 14,
                   ),
-                  tabs: _combos.map<Widget>((combo) {
-                    return Tab(
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Text(
-                          combo['title'],
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                  tabs: [
+                    ..._combos
+                        .where((combo) => combo['isVisible'] ?? true)
+                        .map<Widget>((combo) {
+                      return Tab(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Text(
+                            combo['title'],
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
-                      ),
-                    );
-                  }).toList(),
+                      );
+                    }),
+                    // ...[Tab(child: Text('data'),),]
+                  ],
                   isScrollable: true,
                 ),
               ),
@@ -396,11 +431,8 @@ class _ParaempresaState extends State<Paraempresa> with TickerProviderStateMixin
           const CircularProgressIndicator(color: Colors.blue),
           const SizedBox(height: 16),
           Text(
-            'Carregando planos...', 
-            style: GoogleFonts.poppins(
-              color: Colors.black, 
-              fontSize: 16
-            ),
+            'Carregando planos...',
+            style: GoogleFonts.poppins(color: Colors.black, fontSize: 16),
           ),
         ],
       ),
@@ -417,11 +449,8 @@ class _ParaempresaState extends State<Paraempresa> with TickerProviderStateMixin
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32),
             child: Text(
-              _errorMessage, 
-              style: GoogleFonts.poppins(
-                fontSize: 16, 
-                color: Colors.black
-              ), 
+              _errorMessage,
+              style: GoogleFonts.poppins(fontSize: 16, color: Colors.black),
               textAlign: TextAlign.center,
             ),
           ),
@@ -429,17 +458,14 @@ class _ParaempresaState extends State<Paraempresa> with TickerProviderStateMixin
           ElevatedButton(
             onPressed: _loadPlanos,
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue, 
+              backgroundColor: Colors.blue,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8)
-              ),
+                  borderRadius: BorderRadius.circular(8)),
             ),
             child: Text(
-              'Tentar novamente', 
+              'Tentar novamente',
               style: GoogleFonts.poppins(
-                color: Colors.white, 
-                fontWeight: FontWeight.w500
-              ),
+                  color: Colors.white, fontWeight: FontWeight.w500),
             ),
           ),
         ],
@@ -531,9 +557,7 @@ class _ParaempresaState extends State<Paraempresa> with TickerProviderStateMixin
             width: isMobile ? double.infinity : 300.sp,
             height: isMobile ? 70.sp : 50.sp,
             decoration: BoxDecoration(
-              color: isSelected
-                  ? const Color(0xFFE7F5FF)
-                  : Colors.white,
+              color: isSelected ? const Color(0xFFE7F5FF) : Colors.white,
               borderRadius: BorderRadius.circular(8),
               border: Border.all(
                 color: isSelected
@@ -579,7 +603,7 @@ class _ParaempresaState extends State<Paraempresa> with TickerProviderStateMixin
                                   padding: EdgeInsets.only(
                                       bottom: isMobile ? 2.sp : 3.sp),
                                   child: Text(
-                                    'MEGA',
+                                    'MEGAS',
                                     style: GoogleFonts.poppins(
                                       color: const Color(0xFF228BE6),
                                       letterSpacing: 0.5.sp,
@@ -664,7 +688,7 @@ class _ParaempresaState extends State<Paraempresa> with TickerProviderStateMixin
                       _showSpeedDetails(context, mega, price);
                     },
                     child: Icon(
-                      PhosphorIcons.info(),
+                      PhosphorIcons.info,
                       color: const Color(0xFF495057),
                       size: isMobile ? 20.sp : 20.sp,
                     ),
@@ -746,6 +770,7 @@ class _ParaempresaState extends State<Paraempresa> with TickerProviderStateMixin
     final isMobile = MediaQuery.of(context).size.width < 600;
     final bool isSelected = _selectedAppIndices.contains(index);
     final app = _beneficios[index];
+    if (!app.isVisible) return const SizedBox.shrink();
     final bool isSvg = app.image.toLowerCase().startsWith('data:image/svg');
     final int appPrice = currentAppValues[index];
 
@@ -758,9 +783,7 @@ class _ParaempresaState extends State<Paraempresa> with TickerProviderStateMixin
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(8),
-          onTap: isSpeedSelected
-              ? () => _toggleAppSelection(index)
-              : null,
+          onTap: isSpeedSelected ? () => _toggleAppSelection(index) : null,
           child: Container(
             width: isMobile ? double.infinity : 300.sp,
             height: isMobile ? 70.sp : 50.sp,
@@ -787,8 +810,8 @@ class _ParaempresaState extends State<Paraempresa> with TickerProviderStateMixin
                     children: [
                       _buildSelectionIndicator(isSelected && isSpeedSelected),
                       SizedBox(
-                        width: isMobile ? 110.sp : 90.sp,
-                        height: isMobile ? 25.sp : 30.sp,
+                        width: isMobile ? 110.sp : null,
+                        height: isMobile ? 25.sp : null,
                         child: isSvg
                             ? SvgPicture.network(
                                 app.image,
@@ -811,7 +834,7 @@ class _ParaempresaState extends State<Paraempresa> with TickerProviderStateMixin
                                   ? EdgeInsets.only(right: 10, left: 10)
                                   : EdgeInsets.only(right: 14),
                               child: Icon(
-                                PhosphorIcons.info(),
+                                PhosphorIcons.info,
                                 color: const Color(0xFF495057),
                                 size: isMobile ? 20.sp : 20.sp,
                               ),
@@ -832,7 +855,9 @@ class _ParaempresaState extends State<Paraempresa> with TickerProviderStateMixin
 
   Widget _buildAppImage(String imageData) {
     try {
-      return Image.memory(base64Decode(imageData));
+      return Image.memory(
+        base64Decode(imageData),
+      );
     } catch (e) {
       return const Icon(Icons.broken_image, color: Colors.grey);
     }
@@ -884,7 +909,7 @@ class _ParaempresaState extends State<Paraempresa> with TickerProviderStateMixin
                     ),
                     SizedBox(width: 2.sp),
                     Icon(
-                      PhosphorIcons.shoppingCart(),
+                      PhosphorIconsData(3333),
                       color: const Color(0xFF495057),
                       size: isMobile ? 9.sp : 12.sp,
                     ),
@@ -1069,7 +1094,7 @@ class _ParaempresaState extends State<Paraempresa> with TickerProviderStateMixin
                 onTap: isSpeedSelected
                     ? () {
                         if (_selectedCombo == null) return;
-                        
+
                         final selectedApps = _selectedCombo!.apps
                             .map((app) => app.name)
                             .join(', ');
@@ -1111,7 +1136,7 @@ class _ParaempresaState extends State<Paraempresa> with TickerProviderStateMixin
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
-                          PhosphorIcons.whatsappLogo(),
+                          PhosphorIcons.whatsapp_logo,
                           color: Colors.white,
                           size: isMobile ? 16.sp : 17.sp,
                         ),
@@ -1146,9 +1171,7 @@ class _ParaempresaState extends State<Paraempresa> with TickerProviderStateMixin
           : EdgeInsetsGeometry.only(left: 7, bottom: 5),
       child: Icon(
         selected ? Icons.check_circle : Icons.radio_button_unchecked,
-        color: selected
-            ? const Color(0xFF228BE6)
-            : const Color(0xFFADB5BD),
+        color: selected ? const Color(0xFF228BE6) : const Color(0xFFADB5BD),
         size: 18.sp,
       ),
     );
@@ -1156,6 +1179,27 @@ class _ParaempresaState extends State<Paraempresa> with TickerProviderStateMixin
 
   void _showSpeedDetails(BuildContext context, String mega, int price) {
     final isMobile = MediaQuery.of(context).size.width < 600;
+    final plano = _planos.firstWhere(
+      (plano) =>
+          (plano['nome'] as String).replaceAll('MEGA', '').trim() == mega,
+      orElse: () => null,
+    );
+
+    // Se não encontrar o plano, mostra um diálogo básico
+    if (plano == null) {
+      return _showBasicSpeedDetails(context, mega, price);
+    }
+
+    // Converte os detalhes do plano
+    List<Map<String, dynamic>> speedDetails = [];
+    if (plano['detalhes'] is List) {
+      speedDetails = (plano['detalhes'] as List).map((detalhe) {
+        return {
+          'text': detalhe['text'] ?? 'Descrição não disponível',
+          'icon': detalhe['icon'] ?? 0, // Usa 0 como fallback
+        };
+      }).toList();
+    }
 
     showDialog(
       context: context,
@@ -1202,9 +1246,7 @@ class _ParaempresaState extends State<Paraempresa> with TickerProviderStateMixin
                       ),
                     ],
                   ),
-
                   const SizedBox(height: 12),
-
                   Text(
                     'Internet Fibra Óptica - ${mega}MEGA',
                     style: GoogleFonts.poppins(
@@ -1213,22 +1255,48 @@ class _ParaempresaState extends State<Paraempresa> with TickerProviderStateMixin
                       color: const Color(0xFF003366),
                     ),
                   ),
-
                   const SizedBox(height: 12),
-
-                  Text(
-                    '• Conexão estável e simétrica\n'
-                    '• Download e Upload na mesma velocidade\n'
-                    '• Sem limite de franquia\n'
-                    '• Suporte técnico 24/7',
-                    style: GoogleFonts.poppins(
-                      fontSize: 13,
-                      color: const Color(0xFF6B7A90),
+                  if (speedDetails.isNotEmpty)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: speedDetails.map((detalhe) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(
+                                PhosphorIconsData(detalhe['icon']),
+                                color: const Color(0xFF003366),
+                                size: 20,
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Text(
+                                  detalhe['text'],
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 13,
+                                    color: const Color(0xFF6B7A90),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }).toList(),
+                    )
+                  else
+                    Text(
+                      '• Conexão estável e simétrica\n'
+                      '• Download e Upload na mesma velocidade\n'
+                      '• Sem limite de franquia\n'
+                      '• Suporte técnico 24/7',
+                      style: GoogleFonts.poppins(
+                        fontSize: 13,
+                        color: const Color(0xFF6B7A90),
+                      ),
                     ),
-                  ),
-
                   const SizedBox(height: 20),
-
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.symmetric(
@@ -1236,8 +1304,7 @@ class _ParaempresaState extends State<Paraempresa> with TickerProviderStateMixin
                       vertical: 14,
                     ),
                     decoration: BoxDecoration(
-                      border: Border.all(
-                          color: const Color(0xFFE9ECEF)),
+                      border: Border.all(color: const Color(0xFFE9ECEF)),
                       borderRadius: BorderRadius.circular(16),
                       color: Colors.white,
                     ),
@@ -1294,6 +1361,49 @@ class _ParaempresaState extends State<Paraempresa> with TickerProviderStateMixin
     );
   }
 
+  void _showBasicSpeedDetails(BuildContext context, String mega, int price) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Internet ${mega}MEGA'),
+          content: Text('Velocidade de ${mega}Mbps\nValor: R\$$price,99/mês'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Fechar'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  IconData _getIconFromNumber(int iconNumber) {
+    switch (iconNumber) {
+      case 1:
+        return PhosphorIcons.check_circle;
+      case 2:
+        return PhosphorIcons.star;
+      case 3:
+        return PhosphorIcons.device_tablet;
+      case 4:
+        return PhosphorIcons.download;
+      case 5:
+        return PhosphorIcons.users;
+      case 6:
+        return PhosphorIcons.hard_drive;
+      case 7:
+        return PhosphorIcons.film_strip;
+      case 8:
+        return PhosphorIcons.music_note;
+      case 9:
+        return PhosphorIcons.game_controller;
+      default:
+        return PhosphorIcons.info;
+    }
+  }
+
   void _showAppDetails(BuildContext context, SelectedApp app) {
     final isMobile = MediaQuery.of(context).size.width < 600;
 
@@ -1302,88 +1412,99 @@ class _ParaempresaState extends State<Paraempresa> with TickerProviderStateMixin
       builder: (BuildContext context) {
         return Dialog(
           backgroundColor: Colors.transparent,
-          insetPadding: EdgeInsets.all(isMobile ? 8.sp : 16.sp),
+          insetPadding: EdgeInsets.all(isMobile ? 8.sp : 12.sp),
           child: Container(
-            width: isMobile ? double.infinity : 400.sp,
+            width: isMobile ? double.infinity : 320.sp,
+            padding: EdgeInsets.all(isMobile ? 12.sp : 16.sp),
             decoration: BoxDecoration(
-              color: const Color(0xFF1A2D45),
-              borderRadius: BorderRadius.circular(10.sp),
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16.sp),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.2),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 16,
+                  offset: const Offset(0, 6),
                 ),
               ],
             ),
-            padding: EdgeInsets.all(isMobile ? 12.sp : 16.sp),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      app.name,
-                      style: GoogleFonts.poppins(
-                        fontSize: isMobile ? 14.sp : 16.sp,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
+                    Expanded(
+                      child: Text(
+                        app.name,
+                        style: GoogleFonts.poppins(
+                          fontSize: isMobile ? 12.sp : 13.sp,
+                          fontWeight: FontWeight.w600,
+                          color: const Color(0xFF1A2D45),
+                        ),
                       ),
                     ),
                     IconButton(
                       icon: Icon(Icons.close,
-                          size: isMobile ? 16.sp : 20.sp, color: Colors.white),
+                          size: isMobile ? 16.sp : 18.sp,
+                          color: const Color(0xFF1A2D45)),
                       onPressed: () => Navigator.of(context).pop(),
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
                     ),
                   ],
                 ),
-                SizedBox(height: isMobile ? 8.sp : 12.sp),
-                Center(
-                  child: Container(
-                    width: 100.sp,
-                    height: 100.sp,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      color: Colors.white,
-                    ),
+                SizedBox(height: isMobile ? 8.sp : 10.sp),
+                Container(
+                  width: 70.sp,
+                  height: 70.sp,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF0F4FA),
+                    borderRadius: BorderRadius.circular(12.sp),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(6.sp),
                     child: _buildAppImage(app.image),
                   ),
                 ),
-                SizedBox(height: isMobile ? 8.sp : 12.sp),
-                Text(
-                  'Benefícios:',
-                  style: GoogleFonts.poppins(
-                    fontSize: isMobile ? 12.sp : 14.sp,
-                    fontWeight: FontWeight.w600,
-                    color: const Color(0xFF4A90E2),
-                  ),
-                ),
-                SizedBox(height: isMobile ? 4.sp : 6.sp),
-                Text(
-                  '• Acesso ilimitado\n'
-                  '• Qualidade HD/4K\n'
-                  '• Perfis personalizados\n'
-                  '• Download para assistir offline',
-                  style: GoogleFonts.poppins(
-                    fontSize: isMobile ? 11.sp : 13.sp,
-                    color: const Color(0xFFA0B3D6),
-                  ),
-                ),
-                SizedBox(height: isMobile ? 8.sp : 12.sp),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      'Valor: R\$ ${app.price},99/mês',
-                      style: GoogleFonts.poppins(
-                        fontSize: isMobile ? 12.sp : 14.sp,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                      ),
+                SizedBox(height: isMobile ? 10.sp : 12.sp),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Benefícios:',
+                    style: GoogleFonts.poppins(
+                      fontSize: isMobile ? 11.sp : 12.sp,
+                      fontWeight: FontWeight.w600,
+                      color: const Color(0xFF1A2D45),
                     ),
-                  ],
+                  ),
+                ),
+                SizedBox(height: 4.sp),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    '• Acesso ilimitado\n'
+                    '• Qualidade HD/4K\n'
+                    '• Perfis personalizados\n'
+                    '• Download offline',
+                    style: GoogleFonts.poppins(
+                      fontSize: isMobile ? 10.sp : 11.sp,
+                      color: const Color(0xFF5A6C88),
+                      height: 1.4,
+                    ),
+                  ),
+                ),
+                SizedBox(height: isMobile ? 10.sp : 12.sp),
+                Container(
+                  width: double.infinity,
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    'R\$ ${app.price},99/mês',
+                    style: GoogleFonts.poppins(
+                      fontSize: isMobile ? 11.sp : 12.sp,
+                      fontWeight: FontWeight.w600,
+                      color: const Color(0xFF007BFF),
+                    ),
+                  ),
                 ),
               ],
             ),

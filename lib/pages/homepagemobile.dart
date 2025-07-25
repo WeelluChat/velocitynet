@@ -241,6 +241,7 @@ class _HomepagemobileState extends State<Homepagemobile> {
                                         megaPrice: selectedCombo!.megaPrice,
                                         apps: apps,
                                         total: newTotal,
+                                        isVisible: selectedCombo!.isVisible,
                                       );
                                       showSummary = selectedCombo!.apps.isNotEmpty ||
                                           selectedCombo!.mega.isNotEmpty;

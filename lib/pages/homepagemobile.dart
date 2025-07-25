@@ -9,7 +9,7 @@ import 'package:velocity_net/modules/benefits/tv.dart';
 import 'package:velocity_net/modules/description/description.dart';
 import 'package:velocity_net/modules/footer/footer.dart';
 import 'package:velocity_net/modules/plans/repository/Paraempresa.dart';
-import 'package:velocity_net/modules/plans/repository/monteseucombo.dart';
+import 'package:velocity_net/modules/plans/repository/monteseucombo.dart' hide SelectedApp, SelectedCombo;
 import 'package:velocity_net/modules/questions/questions.dart';
 import 'package:velocity_net/modules/slider/slider.dart';
 
@@ -32,66 +32,12 @@ class Homepagemobile extends StatefulWidget {
 class _HomepagemobileState extends State<Homepagemobile> {
   SelectedCombo? selectedCombo;
   bool showSummary = false;
-  List<dynamic> telecinePlans = [];
-  List<dynamic> maxPlans = [];
-  List<dynamic> premierePlans = [];
-  List<dynamic> deezerPlans = [];
-  List<dynamic> globoplayPlans = [];
-  bool isLoadingTelecine = true;
-  bool isLoadingMax = true;
-  bool isLoadingPremiere = true;
-  bool isLoadingDeezer = true;
-  bool isLoadingGloboplay = true;
 
   void updateSelectedCombo(SelectedCombo combo) {
     setState(() {
       selectedCombo = combo;
       showSummary = combo.mega.isNotEmpty;
     });
-  }
-
-  Future<void> fetchPlans(String keyword, void Function(List<dynamic>) setter,
-      void Function() stopLoading) async {
-    final Uri uri =
-        Uri.parse("https://api.velocitynet.com.br/api/v1/category-plan");
-    try {
-      final response = await http.get(uri);
-      if (response.statusCode == 200) {
-        final List<dynamic> data = json.decode(response.body);
-        final filtered = data.where((item) {
-          final nome = (item['nome'] ?? '').toString().toLowerCase();
-          return nome.contains(keyword);
-        }).toList();
-        setState(() {
-          setter(filtered);
-          stopLoading();
-        });
-      } else {
-        stopLoading();
-      }
-    } catch (e) {
-      stopLoading();
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    fetchPlans('telecine', (list) => telecinePlans = list,
-        () => setState(() => isLoadingTelecine = false));
-    fetchPlans('max', (list) => maxPlans = list,
-        () => setState(() => isLoadingMax = false));
-    fetchPlans('premiere', (list) => premierePlans = list,
-        () => setState(() => isLoadingPremiere = false));
-    fetchPlans('deezer', (list) => deezerPlans = list,
-        () => setState(() => isLoadingDeezer = false));
-    fetchPlans('globoplay', (list) {
-      globoplayPlans = list
-          .where((e) =>
-              !(e['nome'] ?? '').toString().toLowerCase().contains('canais'))
-          .toList();
-      setState(() => isLoadingGloboplay = false);
-    }, () {});
   }
 
   @override
@@ -118,7 +64,7 @@ class _HomepagemobileState extends State<Homepagemobile> {
                     Container(
                       margin: EdgeInsets.only(bottom: isMobile ? 30 : 45),
                       child: Text(
-                        'Escolha o melhor plano para você!',
+                        'Planos para Empresas',
                         textAlign: TextAlign.center,
                         style: GoogleFonts.poppins(
                           color: const Color.fromARGB(255, 0, 0, 0),
@@ -128,77 +74,30 @@ class _HomepagemobileState extends State<Homepagemobile> {
                       ),
                     ),
                     DefaultTabController(
-                      length: 2,
+                      length: 1, // Apenas 1 aba
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          SizedBox(
-                            width: 400,
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 8, vertical: 10),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: const Color.fromARGB(255, 0, 89, 255),
-                                ),
-                              ),
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: TabBar(
-                                  tabAlignment: TabAlignment.center,
-                                  indicator: const UnderlineTabIndicator(
-                                    borderSide: BorderSide(
-                                      width: 3.0,
-                                      color: Color.fromARGB(255, 0, 89, 255),
-                                    ),
-                                  ),
-                                  labelColor: Colors.black,
-                                  unselectedLabelColor: Colors.black54,
-                                  labelStyle: GoogleFonts.poppins(
-                                    fontSize: isMobile ? 13 : 14,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                  unselectedLabelStyle: GoogleFonts.poppins(
-                                    fontSize: isMobile ? 13 : 15,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                  isScrollable: true,
-                                  dividerColor: Colors.transparent,
-                                  tabs: const [
-                                    Tab(text: 'PARA VOCÊ'),
-                                    Tab(text: 'PARA EMPRESA'),
-                                    // Tab(text: '+TELECINE'),
-                                    // Tab(text: '+MAX'),
-                                    // Tab(text: '+PREMIERE'),
-                                    // Tab(text: '+DEEZER'),
-                                    // Tab(text: '+GLOBOPLAY'),
-                                  ],
-                                ),
+                          // TabBar invisível mas necessária
+                          Visibility(
+                            visible: false,
+                            maintainSize: false,
+                            maintainAnimation: false,
+                            maintainState: false,
+                            child: SizedBox(
+                              height: 0,
+                              child: TabBar(
+                                tabs: [
+                                  Tab(text: 'PARA EMPRESA'),
+                                ],
                               ),
                             ),
                           ),
-                          const SizedBox(height: 20),
+                          // Conteúdo da aba
                           SizedBox(
-                            height: isMobile ? 1100 : 791,
+                            height: isMobile ? 1490 : 850,
                             child: TabBarView(
                               children: [
-                                Monteseucombo(
-                                  onComboSelected: updateSelectedCombo,
-                                  initialCombo: selectedCombo,
-                                ),
                                 const Paraempresa(),
-                                // _buildTab(isLoadingTelecine, telecinePlans,
-                                //     '+TELECINE', isMobile),
-                                // _buildTab(
-                                //     isLoadingMax, maxPlans, '+MAX', isMobile),
-                                // _buildTab(isLoadingPremiere, premierePlans,
-                                //     '+PREMIERE', isMobile),
-                                // _buildTab(isLoadingDeezer, deezerPlans,
-                                //     '+DEEZER', isMobile),
-                                // _buildTab(isLoadingGloboplay, globoplayPlans,
-                                //     '+GLOBOPLAY', isMobile),
                               ],
                             ),
                           ),
@@ -250,7 +149,6 @@ class _HomepagemobileState extends State<Homepagemobile> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Cabeçalho
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -275,7 +173,6 @@ class _HomepagemobileState extends State<Homepagemobile> {
               ),
               const SizedBox(height: 10),
               if (selectedCombo != null) ...[
-                // Internet
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -299,7 +196,6 @@ class _HomepagemobileState extends State<Homepagemobile> {
                 ),
                 if (selectedCombo!.apps.isNotEmpty) ...[
                   const SizedBox(height: 3),
-                  // Scroll das streamings
                   ConstrainedBox(
                     constraints: BoxConstraints(
                       maxHeight: isMobile ? 70 : 220,
@@ -326,15 +222,6 @@ class _HomepagemobileState extends State<Homepagemobile> {
                                     ),
                                   ),
                                 ),
-                                // Text(
-                                //   'R\$ ${app.price},00',
-                                //   style: GoogleFonts.poppins(
-                                //     fontSize: isMobile ? 13 : 15,
-                                //     fontWeight: FontWeight.w600,
-                                //     height: 1.1,
-                                //     color: const Color(0xFF0A84FF),
-                                //   ),
-                                // ),
                                 GestureDetector(
                                   onTap: () {
                                     final monteseucomboState =
@@ -376,7 +263,6 @@ class _HomepagemobileState extends State<Homepagemobile> {
                 const SizedBox(height: 12),
                 const Divider(thickness: 1, color: Color(0xFFE0E0E0)),
                 const SizedBox(height: 10),
-                // Total
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -400,7 +286,6 @@ class _HomepagemobileState extends State<Homepagemobile> {
                 ),
               ],
               const SizedBox(height: 12),
-              // Botão contratar
               SizedBox(
                 width: double.infinity,
                 child: Padding(
@@ -452,93 +337,5 @@ class _HomepagemobileState extends State<Homepagemobile> {
         ),
       ),
     );
-  }
-
-  Widget _buildTab(
-      bool isLoading, List<dynamic> plans, String title, bool isMobile) {
-    if (isLoading) {
-      return const Center(
-        child: CircularProgressIndicator(color: primaryDarkColor),
-      );
-    }
-    if (plans.isEmpty) {
-      return Center(
-        child: Text(
-          'Nenhum plano $title encontrado.',
-          style: GoogleFonts.poppins(
-            color: textColor,
-            fontSize: isMobile ? 14 : 16,
-          ),
-        ),
-      );
-    }
-    return _buildPlansList(plans, isMobile);
-  }
-
-  Widget _buildPlansList(List<dynamic> plans, bool isMobile) {
-    return ListView.builder(
-      padding: const EdgeInsets.all(12),
-      itemCount: plans.length,
-      itemBuilder: (context, index) {
-        final plan = plans[index];
-        final List<dynamic> images = plan['images'] ?? [];
-
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(height: 10),
-            SizedBox(
-              height: isMobile ? 600 : 600,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: images.length,
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                itemBuilder: (context, i) {
-                  final imgUrl = getImageUrl(images[i]);
-                  return Container(
-                    width: isMobile ? 250 : 280,
-                    margin: const EdgeInsets.symmetric(horizontal: 20),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: borderColor,
-                        width: 1.5,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: primaryDarkColor.withOpacity(0.1),
-                          blurRadius: 6,
-                          offset: const Offset(0, 3),
-                        ),
-                      ],
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: Image.network(
-                        imgUrl,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) => Container(
-                          color: accentColor,
-                          alignment: Alignment.center,
-                          child: Icon(Icons.broken_image,
-                              size: 40, color: primaryDarkColor),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            const SizedBox(height: 30),
-          ],
-        );
-      },
-    );
-  }
-
-  String getImageUrl(String path) {
-    const String baseUrl = 'https://api.velocitynet.com.br/api/v1/uploads/';
-    return '$baseUrl$path';
   }
 }

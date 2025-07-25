@@ -241,7 +241,7 @@ class _PlansComponentState extends State<PlansComponent> {
                   ),
                   const SizedBox(height: 20),
                   SizedBox(
-                    height: isMobile ? 1400 : 640,
+                    height: isMobile ? 1400 : 900,
                     child: TabBarView(
                       children: [
                         Monteseucombo(onComboSelected: (SelectedCombo ) {  },),

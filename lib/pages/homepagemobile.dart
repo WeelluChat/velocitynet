@@ -98,7 +98,8 @@ class _HomepagemobileState extends State<Homepagemobile> {
             const SliderComponent(),
             Center(
               child: Container(
-                decoration: const BoxDecoration(color: Color.fromARGB(255, 246, 250, 253)),
+                decoration: const BoxDecoration(
+                    color: Color.fromARGB(255, 246, 250, 253)),
                 padding: EdgeInsets.all(isMobile ? 15 : 30),
                 width: double.infinity,
                 child: Column(
@@ -136,7 +137,7 @@ class _HomepagemobileState extends State<Homepagemobile> {
                             ),
                           ),
                           SizedBox(
-                            height: isMobile ? 1072 : 850,
+                            height: isMobile ? 1132 : 850,
                             child: TabBarView(
                               children: [
                                 Paraempresa(
@@ -169,196 +170,205 @@ class _HomepagemobileState extends State<Homepagemobile> {
     );
   }
 
+  // Coloque esse controller na sua classe (como variável de estado)
+  final ScrollController _appsScrollController = ScrollController();
+
   Widget _buildSummaryBottomBar(bool isMobile) {
-  return AnimatedSlide(
-    duration: const Duration(milliseconds: 500),
-    curve: Curves.easeOut,
-    offset: showSummary ? Offset.zero : const Offset(0, 1),
-    child: AnimatedOpacity(
-      duration: const Duration(milliseconds: 400),
-      opacity: showSummary ? 1 : 0,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(18)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.06),
-              blurRadius: 10,
-              offset: const Offset(0, -3),
-            ),
-          ],
-          border: Border(top: BorderSide(color: Colors.grey.shade300)),
-        ),
-        constraints: BoxConstraints(
-          maxHeight: isMobile
-              ? MediaQuery.of(context).size.height * 0.80
-              : MediaQuery.of(context).size.height * 0.40,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Resumo do Plano',
-                  style: GoogleFonts.poppins(
-                    fontSize: isMobile ? 16 : 18,
-                    fontWeight: FontWeight.w600,
-                    color: const Color(0xFF052D53),
-                  ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.close, color: Colors.grey),
-                  tooltip: 'Fechar',
-                  iconSize: 20,
-                  padding: EdgeInsets.zero,
-                  onPressed: () {
-                    setState(() {
-                      showSummary = false;
-                    });
-                  },
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
+    // Se **não** for mobile, não exibe nada
+    if (!isMobile) return const SizedBox.shrink();
 
-            if (selectedCombo != null) ...[
-              // INTERNET
-              if (selectedCombo!.mega.isNotEmpty)
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: _buildSummaryItem(
-                        isMobile,
-                        'INTERNET ${selectedCombo!.mega} Megas',
-                        'R\$ ${selectedCombo!.megaPrice},99',
-                        const Color(0xFF0A84FF),
-                      ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.close,
-                          color: Colors.redAccent, size: 18),
-                      onPressed: _removeInternet,
-                      padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(),
-                    ),
-                  ],
-                ),
+    final screenHeight = MediaQuery.of(context).size.height;
 
-              // APPS
-              if (selectedCombo!.apps.isNotEmpty) ...[
-                const SizedBox(height: 6),
-                ConstrainedBox(
-                  constraints: BoxConstraints(
-                    maxHeight: isMobile ? 90 : 150,
-                  ),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: selectedCombo!.apps.asMap().entries.map((entry) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 2),
-                          child: Row(
+    return AnimatedSlide(
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeOut,
+      offset: showSummary ? Offset.zero : const Offset(0, 1),
+      child: AnimatedOpacity(
+        duration: const Duration(milliseconds: 400),
+        opacity: showSummary ? 1 : 0,
+        child: Container(
+          height: 295,
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(18)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.06),
+                blurRadius: 10,
+                offset: const Offset(0, -3),
+              ),
+            ],
+            border: Border(top: BorderSide(color: Colors.grey.shade300)),
+          ),
+          child: Column(
+            children: [
+              // CONTEÚDO ROLÁVEL
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 5),
+                      if (selectedCombo != null) ...[
+                        // INTERNET
+                        if (selectedCombo!.mega.isNotEmpty)
+                          Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Expanded(
-                                child: Text(
-                                  entry.value.name,
-                                  style: GoogleFonts.poppins(
-                                    fontSize: isMobile ? 13 : 14,
-                                    height: 1.2,
-                                    color: const Color(0xFF555555),
-                                  ),
+                                child: _buildSummaryItem(
+                                  isMobile,
+                                  'INTERNET ${selectedCombo!.mega} Megas',
+                                  'R\$ ${selectedCombo!.megaPrice},99',
+                                  const Color(0xFF0A84FF),
                                 ),
                               ),
                               IconButton(
                                 icon: const Icon(Icons.close,
                                     color: Colors.redAccent, size: 18),
-                                onPressed: () => _removeApp(entry.key),
+                                onPressed: _removeInternet,
                                 padding: EdgeInsets.zero,
                                 constraints: const BoxConstraints(),
                               ),
                             ],
                           ),
-                        );
-                      }).toList(),
-                    ),
+
+                        const SizedBox(height: 10),
+
+                        // APPS COM SCROLLBAR
+                        if (selectedCombo!.apps.isNotEmpty) ...[
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "Apps selecionados:",
+                              style: GoogleFonts.poppins(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xFF444444),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 6),
+                          ConstrainedBox(
+                            constraints: const BoxConstraints(maxHeight: 125),
+                            child: Scrollbar(
+                              controller: _appsScrollController,
+                              thumbVisibility: true,
+                              radius: const Radius.circular(8),
+                              child: SingleChildScrollView(
+                                controller: _appsScrollController,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: selectedCombo!.apps
+                                      .asMap()
+                                      .entries
+                                      .map((entry) {
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 3),
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              entry.value.name,
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 13,
+                                                color: const Color(0xFF555555),
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          IconButton(
+                                            icon: const Icon(Icons.close,
+                                                color: Colors.redAccent,
+                                                size: 18),
+                                            onPressed: () =>
+                                                _removeApp(entry.key),
+                                            padding: EdgeInsets.zero,
+                                            constraints: const BoxConstraints(),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 10),
+                          child:
+                              Divider(thickness: 1, color: Color(0xFFE0E0E0)),
+                        ),
+
+                        _buildSummaryItem(
+                          isMobile,
+                          'Total mensal:',
+                          'R\$ ${selectedCombo!.total},99',
+                          const Color(0xFF00C853),
+                          isTotal: true,
+                        ),
+                      ],
+                    ],
                   ),
                 ),
-              ],
-
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 6),
-                child: Divider(thickness: 1, color: Color(0xFFE0E0E0)),
               ),
 
-              _buildSummaryItem(
-                isMobile,
-                'Total mensal:',
-                'R\$ ${selectedCombo!.total},99',
-                const Color(0xFF00C853),
-                isTotal: true,
+              const SizedBox(height: 12),
+
+              // BOTÃO CONTRATAR FIXO
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF25D366),
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    elevation: 3,
+                  ),
+                  onPressed:
+                      selectedCombo != null && selectedCombo!.mega.isNotEmpty
+                          ? () {
+                              final message = selectedCombo!.apps.isEmpty
+                                  ? 'Olá, gostaria de contratar o plano de ${selectedCombo!.mega} Mega'
+                                  : 'Olá, gostaria de contratar o plano de ${selectedCombo!.mega} Mega com '
+                                      '${selectedCombo!.apps.map((app) => app.name).join(', ')}';
+                              launchUrl(Uri.parse(
+                                "https://api.whatsapp.com/send?phone=+5594992600430&text=${Uri.encodeComponent(message)}",
+                              ));
+                            }
+                          : null,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      PhosphorIcon(
+                        PhosphorIcons.whatsappLogo(),
+                        color: Colors.white,
+                        size: 18,
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        'Contratar agora',
+                        style: GoogleFonts.poppins(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
-
-            const SizedBox(height: 10),
-
-            // BOTÃO CONTRATAR
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF25D366),
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  elevation: 3,
-                ),
-                onPressed: selectedCombo != null &&
-                        selectedCombo!.mega.isNotEmpty
-                    ? () {
-                        final message = selectedCombo!.apps.isEmpty
-                            ? 'Olá, gostaria de contratar o plano de ${selectedCombo!.mega} Mega'
-                            : 'Olá, gostaria de contratar o plano de ${selectedCombo!.mega} Mega com '
-                                '${selectedCombo!.apps.map((app) => app.name).join(', ')}';
-                        launchUrl(Uri.parse(
-                          "https://api.whatsapp.com/send?phone=+5594992600430&text=${Uri.encodeComponent(message)}",
-                        ));
-                      }
-                    : null,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    PhosphorIcon(
-                      PhosphorIcons.whatsappLogo(),
-                      color: Colors.white,
-                      size: 18,
-                    ),
-                    const SizedBox(width: 6),
-                    Text(
-                      'Contratar agora',
-                      style: GoogleFonts.poppins(
-                        fontSize: isMobile ? 14 : 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
-    ),
-  );
-}
-
+    );
+  }
 
   Widget _buildSummaryItem(
       bool isMobile, String title, String value, Color valueColor,

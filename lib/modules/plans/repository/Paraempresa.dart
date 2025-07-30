@@ -461,6 +461,7 @@ class _ParaempresaState extends State<Paraempresa>
     }
 
     return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
       padding: const EdgeInsets.all(12),
       itemCount: plans.length,
       itemBuilder: (context, index) {
@@ -493,7 +494,7 @@ class _ParaempresaState extends State<Paraempresa>
             Center(
               child: Container(
                 width: isMobile ? 400 : 1250,
-                height: isMobile ? 731 : 560,
+                height: isMobile ? 735 : 607,
                 child: Center(
                   child: Stack(
                     children: [
@@ -564,22 +565,30 @@ class _ParaempresaState extends State<Paraempresa>
                                       const SizedBox(height: 10),
                                     ],
                                   ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    gradient: const LinearGradient(colors: [
-                                      Color.fromARGB(255, 214, 176, 7),
-                                      Color.fromARGB(255, 155, 132, 32),
-                                    ]),
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      "FAÇA SEU CONTRATO",
-                                      style: GoogleFonts.poppins(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w800,
-                                      ),
+                                Center(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      gradient: const LinearGradient(colors: [
+                                        Color.fromARGB(255, 43, 208, 219),
+                                        Color.fromARGB(255, 9, 52, 117),
+                                      ]),
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(PhosphorIcons.whatsapp_logo),
+                                        TextButton(
+                                          onPressed: () {},
+                                          child: Text(
+                                            "FAÇA SEU CONTRATO",
+                                            style: GoogleFonts.poppins(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w800,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),

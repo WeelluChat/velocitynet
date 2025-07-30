@@ -45,12 +45,30 @@ class _PlansComponentState extends State<PlansComponent> {
       final response = await http.get(uri);
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
+        
+        // Filtra os planos visíveis que contêm a keyword no nome
         final filtered = data.where((item) {
           final nome = (item['nome'] ?? '').toString().toLowerCase();
-          return nome.contains(keyword);
+          final isVisible = item['isVisible'] ?? true;
+          return nome.contains(keyword) && isVisible == true;
         }).toList();
+        
+        // Filtra as imagens visíveis de cada plano
+        final filteredWithVisibleImages = filtered.map((plan) {
+          final images = (plan['images'] as List?) ?? [];
+          final visibleImages = images.where((img) {
+            return (img['isVisible'] ?? true) == true;
+          }).map((img) => img['filename']).toList();
+          
+          return {
+            ...plan,
+            'images': visibleImages,
+            'logo': plan['logo'] != null ? getImageUrl(plan['logo']) : null,
+          };
+        }).toList();
+
         setState(() {
-          setter(filtered);
+          setter(filteredWithVisibleImages);
           stopLoading();
         });
       } else {
@@ -86,10 +104,25 @@ class _PlansComponentState extends State<PlansComponent> {
       itemBuilder: (context, index) {
         final plan = plans[index];
         final List<dynamic> images = plan['images'] ?? [];
+        final String? logoUrl = plan['logo'];
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            if (logoUrl != null)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: Image.network(
+                  logoUrl,
+                  height: 50,
+                  errorBuilder: (context, error, stackTrace) => Container(
+                    height: 50,
+                    alignment: Alignment.center,
+                    child: Icon(Icons.broken_image,
+                        size: 40, color: primaryDarkColor),
+                  ),
+                ),
+              ),
             const SizedBox(height: 10),
             SizedBox(
               height: isMobile ? 600 : 600,
@@ -188,12 +221,12 @@ class _PlansComponentState extends State<PlansComponent> {
               ),
             ),
             DefaultTabController(
-              length: 7,
+              length: 5, // Atualizado para 6 abas
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
-                    width: 400,
+                    width: isMobile ? MediaQuery.of(context).size.width * 0.9 : 800,
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 10),
@@ -227,12 +260,11 @@ class _PlansComponentState extends State<PlansComponent> {
                           isScrollable: true,
                           dividerColor: Colors.transparent,
                           tabs: const [
-                            Tab(text: 'PARA VOCÊ'),
-                            Tab(text: 'PARA EMPRESA'),
+                            // Tab(text: 'PARA VOCÊ'),
+                            Tab(text: 'MONTAR COMBO'),
                             Tab(text: '+TELECINE'),
                             Tab(text: '+MAX'),
                             Tab(text: '+PREMIERE'),
-                            Tab(text: '+DEEZER'),
                             Tab(text: '+GLOBOPLAY'),
                           ],
                         ),
@@ -244,14 +276,13 @@ class _PlansComponentState extends State<PlansComponent> {
                     height: isMobile ? 1400 : 900,
                     child: TabBarView(
                       children: [
-                        Monteseucombo(onComboSelected: (SelectedCombo ) {  },),
-                        Paraempresa(),
+                        // Monteseucombo(onComboSelected: (combo) {}),
+                        Paraempresa(onComboUpdated: (combo) {}),
                         _buildTab(
                             isLoadingTelecine, telecinePlans, '+TELECINE', isMobile),
                         _buildTab(isLoadingMax, maxPlans, '+MAX', isMobile),
                         _buildTab(
                             isLoadingPremiere, premierePlans, '+PREMIERE', isMobile),
-                        _buildTab(isLoadingDeezer, deezerPlans, '+DEEZER', isMobile),
                         _buildTab(
                             isLoadingGloboplay, globoplayPlans, '+GLOBOPLAY', isMobile),
                       ],

@@ -1,14 +1,22 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:universal_html/html.dart' as html;
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
+import 'package:velocity_net/modules/plans/repository/Paraempresa.dart';
+import 'package:velocity_net/modules/plans/repository/apiservice.dart';
+import 'package:velocity_net/modules/plans/repository/app_details.dart';
+import 'package:velocity_net/modules/plans/repository/monteseucombo.dart';
+import 'package:velocity_net/modules/plans/repository/selectedapp.dart';
+import 'package:velocity_net/pages/pdf.dart';
+import 'package:velocity_net/pages/previewpdf.dart';
 
-// ==================== CONSTANTES ====================
 const Color textColor = Colors.black;
 const Color megaColor = Color.fromARGB(255, 5, 45, 83);
 const Color cardMega = Colors.white;
@@ -20,119 +28,6 @@ const Color backgroundColor = Color(0xFFF8F9FA);
 const Color borderColor = Color(0xFFE0E0E0);
 const Color accentColor = Color(0xFFE3F2FD);
 
-// ==================== MODELOS ====================
-class SelectedApp {
-  final String name;
-  final int price;
-  final String image;
-  final bool isVisible;
-
-  SelectedApp({
-    required this.name,
-    required this.price,
-    required this.image,
-    required this.isVisible,
-  });
-
-  SelectedApp copyWith({
-    String? name,
-    int? price,
-    String? image,
-    bool? isVisible,
-  }) {
-    return SelectedApp(
-      name: name ?? this.name,
-      price: price ?? this.price,
-      image: image ?? this.image,
-      isVisible: isVisible ?? this.isVisible,
-    );
-  }
-}
-
-class SelectedCombo {
-  final String mega;
-  final int megaPrice;
-  final List<SelectedApp> apps;
-  final int total;
-  final bool isVisible;
-
-  SelectedCombo({
-    required this.mega,
-    required this.megaPrice,
-    required this.apps,
-    required this.total,
-    required this.isVisible,
-  });
-
-  SelectedCombo copyWith({
-    String? mega,
-    int? megaPrice,
-    List<SelectedApp>? apps,
-    int? total,
-    bool? isVisible,
-  }) {
-    return SelectedCombo(
-      mega: mega ?? this.mega,
-      megaPrice: megaPrice ?? this.megaPrice,
-      apps: apps ?? this.apps,
-      total: total ?? this.total,
-      isVisible: isVisible ?? this.isVisible,
-    );
-  }
-}
-
-// ==================== SERVIÇO API ====================
-class ApiService {
-  static const String baseUrl = 'https://api.velocitynet.com.br/api/v1';
-  // static const String baseImageUrl = "https://api.velocitynet.com.br/";
-  static const String uploadsUrl =
-      'https://api.velocitynet.com.br/uploads/category/';
-
-  Future<List<dynamic>> getPlanos() async {
-    try {
-      final url = Uri.parse('$baseUrl/planos');
-      final response = await http.get(url);
-
-      if (response.statusCode == 200) {
-        final decodedResponse = jsonDecode(response.body);
-        if (decodedResponse is List) return decodedResponse;
-        throw Exception('Formato de resposta inválido');
-      }
-      throw Exception('Falha ao carregar dados: ${response.statusCode}');
-    } catch (e) {
-      throw Exception('Erro na requisição: $e');
-    }
-  }
-
-  Future<List<dynamic>> getCategoryPlans() async {
-    try {
-      final url = Uri.parse('$baseUrl/category-plan');
-      final response = await http.get(url);
-
-      if (response.statusCode == 200) {
-        return json.decode(response.body);
-      }
-      throw Exception('Falha ao carregar dados: ${response.statusCode}');
-    } catch (e) {
-      throw Exception('Erro na requisição: $e');
-    }
-  }
-
-  List<dynamic> filterPlans(List<dynamic> plans, String keyword) {
-    return plans.where((item) {
-      final nome = (item['nome'] ?? '').toString().toLowerCase();
-      final isVisible = item['isVisible'] ?? true;
-      return nome.contains(keyword.toLowerCase()) && isVisible;
-    }).toList();
-  }
-
-  String getImageUrl(String? path) {
-    if (path == null || path.isEmpty) return '';
-    return '$uploadsUrl$path';
-  }
-}
-
-// ==================== WIDGET PRINCIPAL ====================
 class Paraempresa extends StatefulWidget {
   final Function(SelectedCombo)? onComboUpdated;
   final SelectedCombo? selectedCombo;
@@ -153,7 +48,6 @@ class Paraempresa extends StatefulWidget {
 
 class _ParaempresaState extends State<Paraempresa>
     with TickerProviderStateMixin {
-  // Estados para planos de internet
   int _selectedMegaIndex = -1;
   List<int> _selectedAppIndices = [];
   bool _isLoading = true;
@@ -163,20 +57,20 @@ class _ParaempresaState extends State<Paraempresa>
   List<SelectedApp> _beneficios = [];
   TabController? _tabController;
 
-  // Estados para planos de streaming
   List<dynamic> telecinePlans = [];
   List<dynamic> maxPlans = [];
   List<dynamic> premierePlans = [];
   List<dynamic> deezerPlans = [];
   List<dynamic> globoplayPlans = [];
+  List<dynamic> canaisPlans = [];
 
   bool isLoadingTelecine = true;
   bool isLoadingMax = true;
   bool isLoadingPremiere = true;
   bool isLoadingDeezer = true;
   bool isLoadingGloboplay = true;
+  bool isLoadingCanais = true;
 
-  // Controladores para abas
   TabController? _streamingTabController;
   int _currentStreamingTabIndex = 0;
   int _currentMainTabIndex = 0;
@@ -202,25 +96,52 @@ class _ParaempresaState extends State<Paraempresa>
       final categoryPlans = await _apiService.getCategoryPlans();
 
       setState(() {
-        telecinePlans = _apiService.filterPlans(categoryPlans, 'telecine');
-        maxPlans = _apiService.filterPlans(categoryPlans, 'max');
-        premierePlans = _apiService.filterPlans(categoryPlans, 'premiere');
-        deezerPlans = _apiService.filterPlans(categoryPlans, 'deezeer');
-        globoplayPlans = _apiService.filterPlans(categoryPlans, 'Globoplay');
-        // globoplayPlans = _apiService
-        //     .filterPlans(categoryPlans, 'Globoplay')
-        //     .where((e) =>
-        //         !(e['nome'] ?? '').toString().toLowerCase().contains('canais'))
-        //     .toList();
+        // Filtrar planos e verificar visibilidade
+        telecinePlans = _apiService
+            .filterPlans(categoryPlans, 'telecine')
+            .where((plan) => plan['isVisible'] ?? true)
+            .toList();
+        maxPlans = _apiService
+            .filterPlans(categoryPlans, 'max')
+            .where((plan) => plan['isVisible'] ?? true)
+            .toList();
+        premierePlans = _apiService
+            .filterPlans(categoryPlans, 'premiere')
+            .where((plan) => plan['isVisible'] ?? true)
+            .toList();
+        deezerPlans = _apiService
+            .filterPlans(categoryPlans, 'deezer')
+            .where((plan) => plan['isVisible'] ?? true)
+            .toList();
+        globoplayPlans = _apiService
+            .filterPlans(categoryPlans, 'globoplay')
+            .where((plan) => plan['isVisible'] ?? true)
+            .toList();
+        canaisPlans = _apiService
+            .filterPlans(categoryPlans, "globoplay + canais")
+            .where((plan) => plan['isVisible'] ?? true)
+            .toList();
 
         isLoadingTelecine = false;
         isLoadingMax = false;
         isLoadingPremiere = false;
         isLoadingDeezer = false;
         isLoadingGloboplay = false;
+        isLoadingCanais = false;
 
+        // Determinar quais tabs devem ser exibidas
+        final tabsToShow = [
+          telecinePlans.isNotEmpty,
+          maxPlans.isNotEmpty,
+          premierePlans.isNotEmpty,
+          deezerPlans.isNotEmpty,
+          globoplayPlans.isNotEmpty,
+          canaisPlans.isNotEmpty,
+        ];
+
+        // Criar o TabController apenas com as tabs visíveis
         _streamingTabController = TabController(
-          length: 5,
+          length: tabsToShow.where((visible) => visible).length,
           vsync: this,
           initialIndex: _currentStreamingTabIndex,
         );
@@ -232,6 +153,7 @@ class _ParaempresaState extends State<Paraempresa>
         isLoadingPremiere = false;
         isLoadingDeezer = false;
         isLoadingGloboplay = false;
+        isLoadingCanais = false;
       });
     }
   }
@@ -290,7 +212,7 @@ class _ParaempresaState extends State<Paraempresa>
         setState(() {
           _combos = data;
           _tabController =
-              TabController(length: _combos.length + 4, vsync: this);
+              TabController(length: _combos.length + 6, vsync: this);
           _loadFirstCombo();
           _isLoading = false;
         });
@@ -363,6 +285,12 @@ class _ParaempresaState extends State<Paraempresa>
         price: (b['valor'] as num?)?.toInt() ?? 0,
         image: b['image'] ?? 'assets/default_app.png',
         isVisible: b['isVisible'] ?? true,
+        id: b['_id']?.toString() ?? '',
+        color: b['color'] ?? '', // Novo campo
+        benefitDetails: (b['beneficioDetalhes'] as List?) // Novo campo
+                ?.map<String>((detail) => detail['text']?.toString() ?? '')
+                .toList() ??
+            [],
       );
     }).toList();
   }
@@ -409,6 +337,7 @@ class _ParaempresaState extends State<Paraempresa>
     final selectedPlan = _planos[_selectedMegaIndex];
     final selectedBenefits =
         _selectedAppIndices.map((i) => _beneficios[i]).toList();
+
     final newCombo = SelectedCombo(
       mega: selectedPlan['nome'].replaceAll('MEGA', '').trim(),
       megaPrice: (selectedPlan['valor'] as num).toInt(),
@@ -444,8 +373,6 @@ class _ParaempresaState extends State<Paraempresa>
       _updateSelectedCombo();
     });
   }
-
-  // ==================== WIDGETS PARA STREAMING ====================
 
   Widget _buildStreamingPlansList(List<dynamic> plans, bool isMobile) {
     if (plans.isEmpty) {
@@ -493,8 +420,8 @@ class _ParaempresaState extends State<Paraempresa>
             const SizedBox(height: 10),
             Center(
               child: Container(
-                width: isMobile ? 400 : 1250,
-                height: isMobile ? 735 : 607,
+                width: isMobile ? 407 : 1250,
+                height: isMobile ? 795 : 630,
                 child: Center(
                   child: Stack(
                     children: [
@@ -502,29 +429,30 @@ class _ParaempresaState extends State<Paraempresa>
                         controller: scrollController,
                         scrollDirection: Axis.horizontal,
                         itemCount: images.length,
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 60), // Aumento significativo do padding
                         itemBuilder: (context, i) {
                           final imgUrl =
                               _apiService.getImageUrl(images[i]['filename']);
-                              SizedBox(height: 30,);
                           return Container(
-                            width: isMobile ? 290 : 260,
-                            margin: const EdgeInsets.symmetric(horizontal: 10),
+                            width: isMobile ? 295 : 260,
+                            margin: const EdgeInsets.symmetric(
+                                horizontal:
+                                    30), // Espaçamento dobrado entre cards
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12),
-                             
-                              
                             ),
                             child: Column(
                               children: [
                                 if (isMobile)
                                   Column(
                                     children: [
-                                      SizedBox(height: 50,),
+                                      const SizedBox(height: 70),
                                       Padding(
                                         padding: const EdgeInsets.only(top: 10),
                                         child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(12),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
                                           child: Image.network(
                                             imgUrl,
                                             fit: BoxFit.contain,
@@ -541,7 +469,7 @@ class _ParaempresaState extends State<Paraempresa>
                                           ),
                                         ),
                                       ),
-                                      const SizedBox(height: 10),
+                                      const SizedBox(height: 15),
                                     ],
                                   )
                                 else
@@ -557,38 +485,74 @@ class _ParaempresaState extends State<Paraempresa>
                                                   Container(
                                             color: accentColor,
                                             alignment: Alignment.center,
-                                            child: const Icon(Icons.broken_image,
-                                                size: 40, color: Colors.grey),
+                                            child: const Icon(
+                                                Icons.broken_image,
+                                                size: 40,
+                                                color: Colors.grey),
                                           ),
                                         ),
                                       ),
-                                      const SizedBox(height: 10),
+                                      const SizedBox(height: 15),
                                     ],
                                   ),
+                                // Botão de contrato
                                 Center(
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      gradient: const LinearGradient(colors: [
-                                        Color.fromARGB(255, 43, 208, 219),
-                                        Color.fromARGB(255, 9, 52, 117),
-                                      ]),
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Icon(PhosphorIcons.whatsapp_logo),
-                                        TextButton(
-                                          onPressed: () {},
-                                          child: Text(
-                                            "FAÇA SEU CONTRATO",
-                                            style: GoogleFonts.poppins(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w800,
-                                            ),
+                                  child: Material(
+                                    borderRadius: BorderRadius.circular(12),
+                                    elevation: 4,
+                                    child: Container(
+                                      height: 48,
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        gradient: const LinearGradient(
+                                          colors: [
+                                            Color(0xFF25D366),
+                                            Color(0xFF128C7E),
+                                          ],
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.green.withOpacity(0.3),
+                                            blurRadius: 8,
+                                            offset: const Offset(0, 4),
+                                          ),
+                                        ],
+                                      ),
+                                      child: InkWell(
+                                        borderRadius: BorderRadius.circular(12),
+                                        onTap: () {
+                                          launchUrl(Uri.parse(
+                                              "https://api.whatsapp.com/send?phone=+5594992600430&text=Olá, quero fazer parte da Velocity!"));
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 16),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              const Icon(
+                                                  PhosphorIcons.whatsapp_logo,
+                                                  color: Colors.white,
+                                                  size: 24),
+                                              const SizedBox(width: 10),
+                                              Text(
+                                                "FAÇA SEU CONTRATO",
+                                                style: GoogleFonts.poppins(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 14,
+                                                  letterSpacing: 0.5,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                      ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -597,43 +561,72 @@ class _ParaempresaState extends State<Paraempresa>
                           );
                         },
                       ),
-                  
-                      /// Botão esquerdo
+
+                      /// Botões de navegação (mantidos os mesmos)
                       Positioned(
                         left: 0,
                         top: 0,
                         bottom: 0,
                         child: Center(
-                          child: IconButton(
-                            icon: const Icon(Icons.arrow_back_ios),
-                            color: const Color.fromARGB(255, 109, 109, 109),
-                            onPressed: () {
-                              scrollController.animateTo(
-                                scrollController.offset - 315,
-                                duration: const Duration(milliseconds: 350),
-                                curve: Curves.ease,
-                              );
-                            },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.8),
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.1),
+                                  blurRadius: 6,
+                                  spreadRadius: 1,
+                                ),
+                              ],
+                            ),
+                            child: IconButton(
+                              icon: const Icon(Icons.arrow_back_ios),
+                              color: const Color(0xFF555555),
+                              iconSize: 24,
+                              onPressed: () {
+                                scrollController.animateTo(
+                                  scrollController.offset -
+                                      375, // Ajuste para o novo espaçamento
+                                  duration: const Duration(milliseconds: 350),
+                                  curve: Curves.easeOut,
+                                );
+                              },
+                            ),
                           ),
                         ),
                       ),
-                  
-                      /// Botão direito
+
                       Positioned(
                         right: 0,
                         top: 0,
                         bottom: 0,
                         child: Center(
-                          child: IconButton(
-                            icon: const Icon(Icons.arrow_forward_ios),
-                            color: const Color.fromARGB(255, 109, 109, 109),
-                            onPressed: () {
-                              scrollController.animateTo(
-                                scrollController.offset + 315,
-                                duration: const Duration(milliseconds: 400),
-                                curve: Curves.ease,
-                              );
-                            },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.8),
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.1),
+                                  blurRadius: 6,
+                                  spreadRadius: 1,
+                                ),
+                              ],
+                            ),
+                            child: IconButton(
+                              icon: const Icon(Icons.arrow_forward_ios),
+                              color: const Color(0xFF555555),
+                              iconSize: 24,
+                              onPressed: () {
+                                scrollController.animateTo(
+                                  scrollController.offset +
+                                      375, // Ajuste para o novo espaçamento
+                                  duration: const Duration(milliseconds: 400),
+                                  curve: Curves.easeOut,
+                                );
+                              },
+                            ),
                           ),
                         ),
                       ),
@@ -649,76 +642,6 @@ class _ParaempresaState extends State<Paraempresa>
     );
   }
 
-  // Widget _buildStreamingTabContent() {
-  //   final isMobile = MediaQuery.of(context).size.width < 600;
-
-  //   return Column(
-  //     children: [
-  //       Container(
-  //         margin: EdgeInsets.only(bottom: isMobile ? 15 : 20),
-  //         child: Text(
-  //           'Escolha seu plano de streaming',
-  //           style: GoogleFonts.poppins(
-  //             color: Colors.black,
-  //             fontSize: isMobile ? 20 : 24,
-  //             fontWeight: FontWeight.bold,
-  //           ),
-  //         ),
-  //       ),
-  //       Container(
-  //         decoration: BoxDecoration(
-  //           color: Colors.white,
-  //           borderRadius: BorderRadius.circular(12),
-  //           border: Border.all(color: borderColor),
-  //         ),
-  //         child: TabBar(
-  //           controller: _streamingTabController,
-  //           indicator: BoxDecoration(
-  //             borderRadius: BorderRadius.circular(10),
-  //             color: tabSelectedColor,
-  //           ),
-  //           labelColor: Colors.white,
-  //           unselectedLabelColor: Colors.black54,
-  //           labelStyle: GoogleFonts.poppins(
-  //             fontSize: isMobile ? 12 : 14,
-  //             fontWeight: FontWeight.w600,
-  //           ),
-  //           unselectedLabelStyle: GoogleFonts.poppins(
-  //             fontSize: isMobile ? 12 : 14,
-  //             fontWeight: FontWeight.normal,
-  //           ),
-  //           isScrollable: true,
-  //           tabs: const [
-  //             Tab(text: '+TELECINE'),
-  //             Tab(text: '+MAX'),
-  //             Tab(text: '+PREMIERE'),
-  //             Tab(text: '+DEEZER'),
-  //             Tab(text: '+GLOBOPLAY'),
-  //           ],
-  //           onTap: (index) {
-  //             setState(() {
-  //               _currentStreamingTabIndex = index;
-  //             });
-  //           },
-  //         ),
-  //       ),
-  //       const SizedBox(height: 20),
-  //       Expanded(
-  //         child: TabBarView(
-  //           controller: _streamingTabController,
-  //           children: [
-  //             _buildStreamingTab(isLoadingTelecine, telecinePlans, isMobile),
-  //             _buildStreamingTab(isLoadingMax, maxPlans, isMobile),
-  //             _buildStreamingTab(isLoadingPremiere, premierePlans, isMobile),
-  //             _buildStreamingTab(isLoadingDeezer, deezerPlans, isMobile),
-  //             _buildStreamingTab(isLoadingGloboplay, globoplayPlans, isMobile),
-  //           ],
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
-
   Widget _buildStreamingTab(
       bool isLoading, List<dynamic> plans, bool isMobile) {
     if (isLoading) {
@@ -729,9 +652,6 @@ class _ParaempresaState extends State<Paraempresa>
     return _buildStreamingPlansList(plans, isMobile);
   }
 
-  // ==================== WIDGETS PRINCIPAIS ====================
-
-  @override
   @override
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 600;
@@ -750,9 +670,7 @@ class _ParaempresaState extends State<Paraempresa>
     }
 
     return Container(
-      decoration: const BoxDecoration(
-       
-      ),
+      decoration: const BoxDecoration(),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -765,11 +683,19 @@ class _ParaempresaState extends State<Paraempresa>
                   .map<Widget>((combo) {
                 return _buildComboContent();
               }).toList(),
-              _buildStreamingTab(isLoadingTelecine, telecinePlans, isMobile),
-              _buildStreamingTab(isLoadingMax, maxPlans, isMobile),
-              _buildStreamingTab(isLoadingPremiere, premierePlans, isMobile),
-              _buildStreamingTab(isLoadingDeezer, deezerPlans, isMobile),
-              _buildStreamingTab(isLoadingGloboplay, globoplayPlans, isMobile),
+              if (telecinePlans.isNotEmpty)
+                _buildStreamingTab(isLoadingTelecine, telecinePlans, isMobile),
+              if (maxPlans.isNotEmpty)
+                _buildStreamingTab(isLoadingMax, maxPlans, isMobile),
+              if (premierePlans.isNotEmpty)
+                _buildStreamingTab(isLoadingPremiere, premierePlans, isMobile),
+              if (deezerPlans.isNotEmpty)
+                _buildStreamingTab(isLoadingDeezer, deezerPlans, isMobile),
+              if (globoplayPlans.isNotEmpty)
+                _buildStreamingTab(
+                    isLoadingGloboplay, globoplayPlans, isMobile),
+              if (canaisPlans.isNotEmpty)
+                _buildStreamingTab(isLoadingCanais, canaisPlans, isMobile),
             ]),
           ),
         ],
@@ -778,51 +704,45 @@ class _ParaempresaState extends State<Paraempresa>
   }
 
   PreferredSizeWidget _buildAppBar() {
-  return PreferredSize(
-    preferredSize: const Size.fromHeight(90),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
-        ),
-        Container(
-          constraints: BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width * 0.9,
-          ),
-          decoration: BoxDecoration(
-            color: tabUnselectedColor.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 15),
+    final hasTelecine = telecinePlans.isNotEmpty;
+    final hasMax = maxPlans.isNotEmpty;
+    final hasPremiere = premierePlans.isNotEmpty;
+    final hasDeezer = deezerPlans.isNotEmpty;
+    final hasGloboplay = globoplayPlans.isNotEmpty;
+    final hasCanais = canaisPlans.isNotEmpty;
+
+    return PreferredSize(
+      preferredSize: const Size.fromHeight(90),
+      child: Column(
+        children: [
+          const SizedBox(height: 12),
+          Center(
+            child: Container(
+              width: 1000,
+              padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                  color: const Color(0xFF0066CC), // Borda azul clara
+                  width: 1.2,
+                ),
+              ),
               child: TabBar(
                 controller: _tabController,
                 onTap: _onTabChanged,
                 isScrollable: true,
-                indicator: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFF0A84FF), Color(0xFF0066CC)],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
+                indicator: const UnderlineTabIndicator(
+                  borderSide: BorderSide(
+                    width: 3.0,
+                    color: Color(0xFF0066CC),
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: tabSelectedColor.withOpacity(0.3),
-                      blurRadius: 8,
-                      spreadRadius: 1,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
+                  insets: EdgeInsets.symmetric(horizontal: 5.0),
                 ),
+                indicatorSize: TabBarIndicatorSize.label,
                 dividerColor: Colors.transparent,
-                indicatorWeight: 0,
-                indicatorSize: TabBarIndicatorSize.tab,
-                labelColor: tabTextSelectedColor,
-                unselectedLabelColor: tabTextUnselectedColor,
+                labelColor: Colors.black,
+                unselectedLabelColor: Colors.grey.shade600,
                 labelStyle: GoogleFonts.poppins(
                   fontWeight: FontWeight.w600,
                   fontSize: 14,
@@ -834,33 +754,27 @@ class _ParaempresaState extends State<Paraempresa>
                 tabs: [
                   ..._combos
                       .where((combo) => combo['isVisible'] ?? true)
-                      .map<Widget>((combo) {
-                    return Tab(
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Text(
-                          combo['title'],
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    );
-                  }),
-                  const Tab(text: '+TELECINE'),
-                  const Tab(text: '+MAX'),
-                  const Tab(text: '+PREMIERE'),
-                  const Tab(text: '+DEEZER'),
-                  const Tab(text: '+GLOBOPLAY'),
+                      .map<Widget>((combo) => Tab(
+                            child: Text(
+                              combo['title'],
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          )),
+                  if (hasTelecine) const Tab(text: '+TELECINE'),
+                  if (hasMax) const Tab(text: '+MAX'),
+                  if (hasPremiere) const Tab(text: '+PREMIERE'),
+                  if (hasDeezer) const Tab(text: '+DEEZER'),
+                  if (hasGloboplay) const Tab(text: '+GLOBOPLAY'),
+                  if (hasCanais) const Tab(text: "GLOBOPLAY + CANAIS"),
                 ],
               ),
             ),
           ),
-        ),
-      ],
-    ),
-  );
-}
-
+        ],
+      ),
+    );
+  }
 
   Widget _buildComboContent() {
     final isMobile = MediaQuery.of(context).size.width < 600;
@@ -946,13 +860,16 @@ class _ParaempresaState extends State<Paraempresa>
               ),
             ),
             child: Center(
-              child: Text(
-                'ESCOLHA A SUA VELOCIDADE',
-                style: GoogleFonts.poppins(
-                  fontSize: isMobile ? 13.sp : 10.sp,
-                  fontWeight: FontWeight.w600,
-                  color: const Color(0xFF495057),
-                  letterSpacing: 0.5.sp,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Text(
+                  'ESCOLHA A SUA VELOCIDADE',
+                  style: GoogleFonts.poppins(
+                    fontSize: isMobile ? 13.sp : 10.sp,
+                    fontWeight: FontWeight.w600,
+                    color: const Color(0xFF495057),
+                    letterSpacing: 0.5.sp,
+                  ),
                 ),
               ),
             ),
@@ -1225,16 +1142,191 @@ class _ParaempresaState extends State<Paraempresa>
     final bool isSvg = app.image.toLowerCase().startsWith('data:image/svg');
     final int appPrice = currentAppValues[index];
 
+    Color appColor = app.color.isNotEmpty
+        ? Color(int.parse('0xFF${app.color.replaceFirst('#', '')}'))
+        : const Color(0xFF4DABF7);
+
+    void _showAppDetails() {
+      Color appColor = app.color.isNotEmpty
+          ? Color(int.parse('0xFF${app.color.replaceFirst('#', '')}'))
+          : const Color(0xFF4DABF7); // Cor padrão
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          final isMobile = MediaQuery.of(context).size.width < 600;
+
+          return Center(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: isMobile ? 340 : 400,
+                maxHeight: MediaQuery.of(context).size.height * 0.9,
+              ),
+              child: Dialog(
+                insetPadding: EdgeInsets.zero,
+                backgroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Stack(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(24),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const SizedBox(height: 32), // espaço para o botão X
+
+                            // Imagem com sombra própria
+                            Container(
+                              width: 100,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: appColor.withOpacity(0.3),
+                                    blurRadius: 20,
+                                    offset: const Offset(0, 10),
+                                  ),
+                                ],
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(12),
+                                child: isSvg
+                                    ? SvgPicture.network(app.image)
+                                    : Image.memory(base64Decode(app.image)),
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+
+                            // Nome
+                            Text(
+                              app.name.toUpperCase(),
+                              style: GoogleFonts.poppins(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                                color: appColor,
+                              ),
+                            ),
+
+                            const SizedBox(height: 20),
+
+                            // Benefícios
+                            if (app.benefitDetails.isNotEmpty) ...[
+                              Text(
+                                'INCLUSO NO PLANO:',
+                                style: GoogleFonts.poppins(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.grey[800],
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                              Column(
+                                children: app.benefitDetails.map((detail) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(bottom: 8),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Icon(Icons.check_circle,
+                                            size: 20, color: appColor),
+                                        const SizedBox(width: 10),
+                                        Expanded(
+                                          child: Text(
+                                            detail,
+                                            style: GoogleFonts.poppins(
+                                              fontSize: 14,
+                                              color: Colors.grey[700],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                              const SizedBox(height: 20),
+                            ],
+
+                            const SizedBox(height: 24),
+
+                            // Botões
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                // TextButton(
+                                //   onPressed: () => Navigator.pop(context),
+                                //   child: Text(
+                                //     'FECHAR',
+                                //     style: GoogleFonts.poppins(
+                                //       fontWeight: FontWeight.w600,
+                                //       color: Colors.grey[600],
+                                //     ),
+                                //   ),
+                                // ),
+                                const SizedBox(width: 12),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: appColor,
+                                    foregroundColor: Colors.white,
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 24, vertical: 12),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    elevation: 3,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    _toggleAppSelection(index);
+                                  },
+                                  child: Text(
+                                    isSelected ? 'REMOVER' : 'ADICIONAR',
+                                    style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    // Botão X no canto superior direito
+                    Positioned(
+                      top: 8,
+                      right: 8,
+                      child: IconButton(
+                        icon: const Icon(Icons.close,
+                            size: 24, color: Colors.grey),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      );
+    }
+
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: isMobile ? 6.sp : 0.sp,
-        vertical: 8.sp,
-      ),
+          horizontal: isMobile ? 6.sp : 0.sp, vertical: 8.sp),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(8),
           onTap: isSpeedSelected ? () => _toggleAppSelection(index) : null,
+          onLongPress: _showAppDetails,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -1257,39 +1349,19 @@ class _ParaempresaState extends State<Paraempresa>
                       ),
                     ),
                     child: Padding(
-                      padding: isMobile
-                          ? const EdgeInsets.only(top: 3, left: 7, right: 10)
-                          : const EdgeInsets.only(top: 8, left: 8, right: 14),
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           _buildSelectionIndicator(
                               isSelected && isSpeedSelected),
-                          SizedBox(
-                            width: isMobile ? 110.sp : null,
-                            height: isMobile ? 25.sp : null,
-                            child: isSvg
-                                ? SvgPicture.network(
-                                    app.image,
-                                    fit: BoxFit.cover,
-                                  )
-                                : _buildAppImage(app.image),
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.baseline,
-                            textBaseline: TextBaseline.alphabetic,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  _showAppDetails(context, app);
-                                },
-                                child: Icon(
-                                  PhosphorIcons.info,
-                                  color: const Color(0xFF495057),
-                                  size: isMobile ? 20.sp : 20.sp,
-                                ),
-                              ),
-                            ],
+                          isSvg
+                              ? SvgPicture.network(app.image, width: 100)
+                              : _buildAppImage(app.image),
+                          IconButton(
+                            onPressed: _showAppDetails,
+                            icon: Icon(PhosphorIcons.info,
+                                size: 20.sp, color: Colors.grey[700]),
                           ),
                         ],
                       ),
@@ -1300,11 +1372,8 @@ class _ParaempresaState extends State<Paraempresa>
                       top: 4,
                       right: 4,
                       child: IconButton(
-                        icon: const Icon(
-                          Icons.close,
-                          size: 18,
-                          color: Colors.transparent, // oculto
-                        ),
+                        icon: const Icon(Icons.close,
+                            size: 18, color: Colors.transparent),
                         onPressed: () {
                           widget.onRemoveApp?.call(index);
                           setState(() {
@@ -1325,7 +1394,10 @@ class _ParaempresaState extends State<Paraempresa>
   Widget _buildSummaryColumn() {
     final isMobile = MediaQuery.of(context).size.width < 600;
     final lateralPadding = isMobile ? 8.0 : 12.0;
-    final bool isSpeedSelected = _selectedMegaIndex != -1;
+    final bool isSpeedSelected = _selectedMegaIndex != -1 &&
+        _planos.isNotEmpty &&
+        _selectedMegaIndex < _planos.length;
+    final bool hasSelectedApps = _selectedAppIndices.isNotEmpty;
 
     return Container(
       width: isMobile ? 500 - (2 * lateralPadding) : 200.sp,
@@ -1347,8 +1419,9 @@ class _ParaempresaState extends State<Paraempresa>
         ),
       ),
       child: Column(
-        mainAxisSize: isMobile ? MainAxisSize.min : MainAxisSize.max,
+        mainAxisSize: MainAxisSize.min,
         children: [
+          // Header com contador de apps
           Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: isMobile ? 8.sp : 6.sp,
@@ -1377,6 +1450,8 @@ class _ParaempresaState extends State<Paraempresa>
               ],
             ),
           ),
+
+          // Container do Plano selecionado
           Container(
             width: isMobile ? 260.sp : 150.sp,
             height: isMobile ? 28.sp : 30.sp,
@@ -1390,11 +1465,13 @@ class _ParaempresaState extends State<Paraempresa>
             ),
             child: Center(
               child: Text(
-                isSpeedSelected && _planos.isNotEmpty
+                isSpeedSelected
                     ? '${(_planos[_selectedMegaIndex]['nome'] as String).replaceAll('MEGA', '').trim()} Megas'
                     : 'Selecione um plano',
                 style: GoogleFonts.poppins(
-                  color: const Color(0xFF495057),
+                  color: isSpeedSelected
+                      ? const Color(0xFF495057)
+                      : const Color(0xFFADB5BD),
                   fontSize: isMobile ? 10.sp : 10.sp,
                   fontWeight: FontWeight.w500,
                 ),
@@ -1402,6 +1479,8 @@ class _ParaempresaState extends State<Paraempresa>
             ),
           ),
           SizedBox(height: isMobile ? 4.sp : 8.sp),
+
+          // Container do Valor
           Container(
             width: isMobile ? 260.sp : 150.sp,
             height: isMobile ? 46.sp : 40.sp,
@@ -1424,7 +1503,9 @@ class _ParaempresaState extends State<Paraempresa>
                     child: Text(
                       'R\$',
                       style: GoogleFonts.poppins(
-                        color: const Color(0xFF495057),
+                        color: isSpeedSelected
+                            ? const Color(0xFF495057)
+                            : const Color(0xFFADB5BD),
                         fontSize: isMobile ? 12.sp : 8.sp,
                         fontWeight: FontWeight.w500,
                       ),
@@ -1432,9 +1513,11 @@ class _ParaempresaState extends State<Paraempresa>
                   ),
                   SizedBox(width: 1.sp),
                   Text(
-                    '$totalValue',
+                    isSpeedSelected ? '$totalValue' : '--',
                     style: GoogleFonts.poppins(
-                      color: const Color(0xFF212529),
+                      color: isSpeedSelected
+                          ? const Color(0xFF212529)
+                          : const Color(0xFFADB5BD),
                       fontSize: isMobile ? 28.sp : 19.sp,
                       fontWeight: FontWeight.w700,
                     ),
@@ -1442,15 +1525,17 @@ class _ParaempresaState extends State<Paraempresa>
                   Transform.translate(
                     offset: Offset(0, isMobile ? -3.sp : -1.sp),
                     child: Text(
-                      ',99',
+                      isSpeedSelected ? ',99' : '',
                       style: GoogleFonts.poppins(
-                        color: const Color(0xFF495057),
+                        color: isSpeedSelected
+                            ? const Color(0xFF495057)
+                            : const Color(0xFFADB5BD),
                         fontSize: isMobile ? 12.sp : 10.sp,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
-                  if (!isMobile) ...[
+                  if (!isMobile && isSpeedSelected) ...[
                     SizedBox(width: 2.sp),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -1479,10 +1564,12 @@ class _ParaempresaState extends State<Paraempresa>
               ),
             ),
           ),
-          Column(
-            children: [
-              if (isMobile) SizedBox(height: 3.sp),
-              if (isMobile)
+
+          // Texto "até o vencimento" para mobile
+          if (isMobile && isSpeedSelected)
+            Column(
+              children: [
+                SizedBox(height: 3.sp),
                 Text(
                   'até o vencimento',
                   style: GoogleFonts.poppins(
@@ -1491,12 +1578,14 @@ class _ParaempresaState extends State<Paraempresa>
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-            ],
-          ),
-          if (_selectedAppIndices.isNotEmpty)
+              ],
+            ),
+
+          // Lista de Apps selecionados
+          if (hasSelectedApps)
             Container(
               width: isMobile ? 260.sp : 190.sp,
-              height: isMobile ? 90.sp : 150.sp,
+              height: isMobile ? 90.sp : 130.sp,
               padding:
                   EdgeInsets.symmetric(horizontal: isMobile ? 8.sp : 12.sp),
               child: ListView.builder(
@@ -1526,13 +1615,29 @@ class _ParaempresaState extends State<Paraempresa>
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            appName,
-                            style: GoogleFonts.poppins(
-                              color: const Color(0xFF212529),
-                              fontSize: isMobile ? 9.sp : 8.sp,
-                              fontWeight: FontWeight.w600,
+                          Expanded(
+                            child: Text(
+                              appName,
+                              style: GoogleFonts.poppins(
+                                color: const Color(0xFF212529),
+                                fontSize: isMobile ? 9.sp : 8.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              overflow: TextOverflow.ellipsis,
                             ),
+                          ),
+                          IconButton(
+                            icon: const Icon(
+                              Icons.close,
+                              size: 18,
+                              color: Colors.red,
+                            ),
+                            onPressed: () {
+                              widget.onRemoveApp?.call(index);
+                              setState(() {
+                                _selectedAppIndices.removeAt(index);
+                              });
+                            },
                           ),
                         ],
                       ),
@@ -1541,85 +1646,194 @@ class _ParaempresaState extends State<Paraempresa>
                 },
               ),
             ),
-          Padding(
+
+          // Espaçamento antes dos botões
+          const Spacer(),
+
+          // Botões fixos no rodapé
+          Container(
             padding: EdgeInsets.symmetric(
-              vertical: isMobile ? 30.sp : 8.sp,
+              vertical: isMobile ? 10.sp : 8.sp,
               horizontal: isMobile ? 10.sp : 10.sp,
             ),
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                borderRadius: BorderRadius.circular(10.sp),
-                onTap: isSpeedSelected
-                    ? () {
-                        if (_selectedMegaIndex == -1) return;
-
-                        final selectedPlan = _planos[_selectedMegaIndex];
-                        final selectedApps = _selectedAppIndices
-                            .map((i) => _beneficios[i].name)
-                            .join(', ');
-
-                        final message =
-                            'Olá, gostaria de contratar o plano ${selectedPlan['nome'].replaceAll('MEGA', '').trim()} MEGA '
-                            'no valor de R\$ ${selectedPlan['valor']},99 '
-                            '${_selectedAppIndices.isNotEmpty ? 'com os seguintes benefícios: $selectedApps' : 'sem benefícios adicionais'} '
-                            '(Total: R\$ $totalValue,99)';
-
-                        launchUrl(Uri.parse(
-                            "https://api.whatsapp.com/send?phone=+5594992600430&text=${Uri.encodeComponent(message)}"));
-                      }
-                    : null,
-                child: Opacity(
-                  opacity: isSpeedSelected ? 1.0 : 0.6,
-                  child: Container(
-                    height: isMobile ? 38.sp : 40.sp,
-                    width: isMobile ? 240.sp : 155.sp,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.sp),
-                      gradient: const LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          Color(0xFF25D366),
-                          Color(0xFF128C7E),
-                        ],
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color(0xFF25D366).withOpacity(0.3),
-                          spreadRadius: 3.sp,
-                          blurRadius: 5,
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          PhosphorIcons.whatsapp_logo,
-                          color: Colors.white,
-                          size: isMobile ? 16.sp : 17.sp,
-                        ),
-                        SizedBox(width: isMobile ? 4.sp : 6.sp),
-                        Text(
-                          'Contrate agora',
-                          style: GoogleFonts.poppins(
-                            color: Colors.white,
-                            fontSize: isMobile ? 11.sp : 13.sp,
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: 0.5.sp,
+            child: Column(
+              children: [
+                // Botão WhatsApp
+                Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(10.sp),
+                    onTap: isSpeedSelected
+                        ? () {
+                            _handleWhatsAppContact();
+                          }
+                        : null,
+                    child: Opacity(
+                      opacity: isSpeedSelected ? 1.0 : 0.6,
+                      child: Container(
+                        height: isMobile ? 38.sp : 35.sp,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.sp),
+                          gradient: const LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              Color(0xFF25D366),
+                              Color(0xFF128C7E),
+                            ],
                           ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color(0xFF25D366).withOpacity(0.3),
+                              spreadRadius: 3.sp,
+                              blurRadius: 5,
+                            ),
+                          ],
                         ),
-                      ],
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              PhosphorIcons.whatsapp_logo,
+                              color: Colors.white,
+                              size: isMobile ? 16.sp : 17.sp,
+                            ),
+                            SizedBox(width: isMobile ? 4.sp : 6.sp),
+                            Text(
+                              'Contrate agora',
+                              style: GoogleFonts.poppins(
+                                color: Colors.white,
+                                fontSize: isMobile ? 11.sp : 10.sp,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 0.5.sp,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
+                SizedBox(height: isMobile ? 10.sp : 8.sp),
+
+                // Botão PDF
+                Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(10.sp),
+                    onTap: isSpeedSelected
+                        ? () async {
+                            await _handlePdfGeneration();
+                          }
+                        : null,
+                    child: Opacity(
+                      opacity: isSpeedSelected ? 1.0 : 0.6,
+                      child: Container(
+                        height: isMobile ? 38.sp : 35.sp,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.sp),
+                          color: Colors.black,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.3),
+                              spreadRadius: 3.sp,
+                              blurRadius: 5,
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              PhosphorIcons.file_pdf,
+                              color: Colors.white,
+                              size: isMobile ? 16.sp : 17.sp,
+                            ),
+                            SizedBox(width: isMobile ? 4.sp : 6.sp),
+                            Text(
+                              'Baixar Resumo',
+                              style: GoogleFonts.poppins(
+                                color: Colors.white,
+                                fontSize: isMobile ? 11.sp : 10.sp,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 0.5.sp,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
       ),
     );
+  }
+
+// Métodos auxiliares
+  void _handleWhatsAppContact() {
+    if (_selectedMegaIndex == -1) return;
+
+    final selectedPlan = _planos[_selectedMegaIndex];
+    final selectedApps =
+        _selectedAppIndices.map((i) => _beneficios[i].name).join(', ');
+
+    final message =
+        'Olá, gostaria de contratar o plano ${selectedPlan['nome'].replaceAll('MEGA', '').trim()} MEGA '
+        'no valor de R\$ ${selectedPlan['valor']},99 '
+        '${_selectedAppIndices.isNotEmpty ? 'com os seguintes benefícios: $selectedApps' : 'sem benefícios adicionais'} '
+        '(Total: R\$ $totalValue,99)';
+
+    launchUrl(Uri.parse(
+        "https://api.whatsapp.com/send?phone=+5594992600430&text=${Uri.encodeComponent(message)}"));
+  }
+
+  Future<void> _handlePdfGeneration() async {
+    if (_selectedMegaIndex == -1) return;
+
+    try {
+      final selectedPlan = _planos[_selectedMegaIndex];
+      final selectedApps =
+          _selectedAppIndices.map((i) => _beneficios[i]).toList();
+
+      final combo = SelectedCombo(
+        mega: selectedPlan['nome'].replaceAll('MEGA', '').trim(),
+        megaPrice: (selectedPlan['valor'] as num).toInt(),
+        apps: selectedApps,
+        total: totalValue,
+        isVisible: true,
+      );
+
+      final pdfBytes = await gerarPdfRelatorio(combo);
+
+      if (kIsWeb) {
+        final blob = html.Blob([pdfBytes], 'application/pdf');
+        final url = html.Url.createObjectUrlFromBlob(blob);
+        final anchor = html.AnchorElement(href: url)
+          ..download = 'resumo_velocity.pdf'
+          ..style.display = 'none';
+
+        html.document.body?.children.add(anchor);
+        anchor.click();
+        html.document.body?.children.remove(anchor);
+        html.Url.revokeObjectUrl(url);
+      } else {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => PreviewPdf(combo: combo),
+          ),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro ao gerar PDF: ${e.toString()}')),
+      );
+    }
   }
 
   Widget _buildLoadingState() {
@@ -1688,8 +1902,12 @@ class _ParaempresaState extends State<Paraempresa>
   }
 
   Widget _buildAppImage(String imageData) {
+    final isMobile = MediaQuery.of(context).size.width < 600;
+
     try {
       return Image.memory(
+        height: isMobile ? 70 : 80,
+        width: isMobile ? 130 : 180,
         fit: BoxFit.contain,
         filterQuality: FilterQuality.high,
         base64Decode(imageData),
@@ -1700,190 +1918,202 @@ class _ParaempresaState extends State<Paraempresa>
   }
 
   void _showSpeedDetails(BuildContext context, String mega, int price) {
-    final isMobile = MediaQuery.of(context).size.width < 600;
-    final plano = _planos.firstWhere(
-      (plano) =>
-          (plano['nome'] as String).replaceAll('MEGA', '').trim() == mega,
-      orElse: () => null,
-    );
+  final isMobile = MediaQuery.of(context).size.width < 600;
+  final plano = _planos.firstWhere(
+    (plano) =>
+        (plano['nome'] as String).replaceAll('MEGA', '').trim() == mega,
+    orElse: () => null,
+  );
 
-    if (plano == null) {
-      return _showBasicSpeedDetails(context, mega, price);
-    }
+  if (plano == null) {
+    return _showBasicSpeedDetails(context, mega, price);
+  }
 
-    List<Map<String, dynamic>> speedDetails = [];
-    if (plano['detalhes'] is List) {
-      speedDetails = (plano['detalhes'] as List).map((detalhe) {
-        return {
-          'text': detalhe['text'] ?? 'Descrição não disponível',
-          'icon': detalhe['icon'] ?? 0,
-        };
-      }).toList();
-    }
+  List<Map<String, dynamic>> speedDetails = [];
+  if (plano['detalhes'] is List) {
+    speedDetails = (plano['detalhes'] as List).map((detalhe) {
+      return {
+        'text': detalhe['text'] ?? 'Descrição não disponível',
+        'icon': detalhe['icon'] ?? 0,
+      };
+    }).toList();
+  }
 
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
+  showDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (BuildContext context) {
+      return GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () => Navigator.of(context).pop(), // Tocar fora = fechar
+        child: Dialog(
           backgroundColor: Colors.transparent,
           insetPadding: EdgeInsets.symmetric(
             horizontal: isMobile ? 16 : 32,
             vertical: isMobile ? 16 : 24,
           ),
-          child: Center(
-            child: Container(
-              width: isMobile ? double.infinity : 380,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(24),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
-                    blurRadius: 20,
-                    offset: const Offset(0, 8),
-                  ),
-                ],
-              ),
-              padding: const EdgeInsets.all(24),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+          child: GestureDetector(
+            onTap: () {}, // Impede que clique dentro feche
+            child: Center(
+              child: Container(
+                width: isMobile ? double.infinity : 380,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(24),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      blurRadius: 20,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
+                ),
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Detalhes da Velocidade',
+                          style: GoogleFonts.poppins(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF2D2D2D),
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.close, color: Colors.black54),
+                          onPressed: () => Navigator.of(context).pop(),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      'Internet Fibra Óptica - ${mega}MEGA',
+                      style: GoogleFonts.poppins(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xFF003366),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    if (speedDetails.isNotEmpty)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: speedDetails.map((detalhe) {
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 8),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Icon(
+                                  PhosphorIconsData(detalhe['icon']),
+                                  color: const Color(0xFF003366),
+                                  size: 20,
+                                ),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: Text(
+                                    detalhe['text'],
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 13,
+                                      color: const Color(0xFF6B7A90),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                      )
+                    else
                       Text(
-                        'Detalhes da Velocidade',
+                        '• Conexão estável e simétrica\n'
+                        '• Download e Upload na mesma velocidade\n'
+                        '• Sem limite de franquia\n'
+                        '• Suporte técnico 24/7',
                         style: GoogleFonts.poppins(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: const Color(0xFF2D2D2D),
+                          fontSize: 13,
+                          color: const Color(0xFF6B7A90),
                         ),
                       ),
-                      IconButton(
-                        icon: const Icon(Icons.close, color: Colors.black54),
-                        onPressed: () => Navigator.of(context).pop(),
+                    const SizedBox(height: 20),
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 14,
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    'Internet Fibra Óptica - ${mega}MEGA',
-                    style: GoogleFonts.poppins(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xFF003366),
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  if (speedDetails.isNotEmpty)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: speedDetails.map((detalhe) {
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 8),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: const Color(0xFFE9ECEF)),
+                        borderRadius: BorderRadius.circular(16),
+                        color: Colors.white,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Valor:',
+                            style: GoogleFonts.poppins(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black87,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Icon(
-                                PhosphorIconsData(detalhe['icon']),
-                                color: const Color(0xFF003366),
-                                size: 20,
+                              Text(
+                                'R\$ ',
+                                style: GoogleFonts.poppins(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xFF003366),
+                                ),
                               ),
-                              const SizedBox(width: 8),
-                              Expanded(
-                                child: Text(
-                                  detalhe['text'],
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 13,
-                                    color: const Color(0xFF6B7A90),
-                                  ),
+                              Text(
+                                '$price',
+                                style: GoogleFonts.poppins(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700,
+                                  color: const Color(0xFF003366),
+                                ),
+                              ),
+                              Text(
+                                ',99/mês',
+                                style: GoogleFonts.poppins(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xFF003366),
                                 ),
                               ),
                             ],
                           ),
-                        );
-                      }).toList(),
-                    )
-                  else
-                    Text(
-                      '• Conexão estável e simétrica\n'
-                      '• Download e Upload na mesma velocidade\n'
-                      '• Sem limite de franquia\n'
-                      '• Suporte técnico 24/7',
-                      style: GoogleFonts.poppins(
-                        fontSize: 13,
-                        color: const Color(0xFF6B7A90),
+                        ],
                       ),
                     ),
-                  const SizedBox(height: 20),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 14,
-                    ),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: const Color(0xFFE9ECEF)),
-                      borderRadius: BorderRadius.circular(16),
-                      color: Colors.white,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Valor:',
-                          style: GoogleFonts.poppins(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black87,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              'R\$ ',
-                              style: GoogleFonts.poppins(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: const Color(0xFF003366),
-                              ),
-                            ),
-                            Text(
-                              '$price',
-                              style: GoogleFonts.poppins(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700,
-                                color: const Color(0xFF003366),
-                              ),
-                            ),
-                            Text(
-                              ',99/mês',
-                              style: GoogleFonts.poppins(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w500,
-                                color: const Color(0xFF003366),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
-        );
-      },
-    );
-  }
+        ),
+      );
+    },
+  );
+}
+
+
+
 
   void _showBasicSpeedDetails(BuildContext context, String mega, int price) {
     showDialog(
       context: context,
+      barrierDismissible: true,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Internet ${mega}MEGA'),
@@ -1894,116 +2124,6 @@ class _ParaempresaState extends State<Paraempresa>
               child: const Text('Fechar'),
             ),
           ],
-        );
-      },
-    );
-  }
-
-  void _showAppDetails(BuildContext context, SelectedApp app) {
-    final isMobile = MediaQuery.of(context).size.width < 600;
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          backgroundColor: Colors.transparent,
-          insetPadding: EdgeInsets.all(isMobile ? 8.sp : 12.sp),
-          child: Container(
-            width: isMobile ? double.infinity : 320.sp,
-            padding: EdgeInsets.all(isMobile ? 12.sp : 16.sp),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16.sp),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 16,
-                  offset: const Offset(0, 6),
-                ),
-              ],
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        app.name,
-                        style: GoogleFonts.poppins(
-                          fontSize: isMobile ? 12.sp : 13.sp,
-                          fontWeight: FontWeight.w600,
-                          color: const Color(0xFF1A2D45),
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.close,
-                          size: isMobile ? 16.sp : 18.sp,
-                          color: const Color(0xFF1A2D45)),
-                      onPressed: () => Navigator.of(context).pop(),
-                      padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(),
-                    ),
-                  ],
-                ),
-                SizedBox(height: isMobile ? 8.sp : 10.sp),
-                Container(
-                  width: 70.sp,
-                  height: 70.sp,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFF0F4FA),
-                    borderRadius: BorderRadius.circular(12.sp),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.all(6.sp),
-                    child: _buildAppImage(app.image),
-                  ),
-                ),
-                SizedBox(height: isMobile ? 10.sp : 12.sp),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Benefícios:',
-                    style: GoogleFonts.poppins(
-                      fontSize: isMobile ? 11.sp : 12.sp,
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xFF1A2D45),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 4.sp),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    '• Acesso ilimitado\n'
-                    '• Qualidade HD/4K\n'
-                    '• Perfis personalizados\n'
-                    '• Download offline',
-                    style: GoogleFonts.poppins(
-                      fontSize: isMobile ? 10.sp : 11.sp,
-                      color: const Color(0xFF5A6C88),
-                      height: 1.4,
-                    ),
-                  ),
-                ),
-                SizedBox(height: isMobile ? 10.sp : 12.sp),
-                Container(
-                  width: double.infinity,
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    'R\$ ${app.price},99/mês',
-                    style: GoogleFonts.poppins(
-                      fontSize: isMobile ? 11.sp : 12.sp,
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xFF007BFF),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
         );
       },
     );

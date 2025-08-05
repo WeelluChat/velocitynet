@@ -27,19 +27,14 @@ class _FooterState extends State<Footer> {
       width: double.infinity,
       color: Colors.white,
       child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: isMobile ? 20 : 40,
-          vertical: 60,
-        ),
+        padding: EdgeInsets.symmetric(),
         child: Column(
           children: [
-            isMobile ? _buildMobileLayout(currentRoute) : _buildDesktopLayout(currentRoute),
+            isMobile
+                ? _buildMobileLayout(currentRoute)
+                : _buildDesktopLayout(currentRoute),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 40),
-              child: Divider(
-                color: Colors.black.withOpacity(0.1),
-                thickness: 1,
-              ),
             ),
             _buildFooterBottom(),
           ],
@@ -49,14 +44,17 @@ class _FooterState extends State<Footer> {
   }
 
   Widget _buildDesktopLayout(String? currentRoute) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // _buildCategorySection(currentRoute),
-        _buildContactSection(),
-        _buildScheduleSection(),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 100),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // _buildCategorySection(currentRoute),
+          _buildContactSection(),
+          _buildScheduleSection(),
+        ],
+      ),
     );
   }
 
@@ -205,36 +203,46 @@ class _FooterState extends State<Footer> {
   }
 
   Widget _buildFooterBottom() {
-    return Column(
-      children: [
-        Text(
-          '© 2024 Velocitynet | Todos os direitos reservados.',
-          style: GoogleFonts.poppins(
-            color: Colors.black87,
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
+    return Container(
+      width: double.infinity,
+      height: 200,
+      decoration: BoxDecoration(
+          gradient: LinearGradient(colors: [
+        const Color.fromARGB(255, 7, 28, 54),
+        const Color.fromARGB(255, 9, 46, 102)
+      ])),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            '© 2024 Velocitynet | Todos os direitos reservados.',
+            style: GoogleFonts.poppins(
+              color: const Color.fromARGB(255, 255, 255, 255),
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+            ),
+            textAlign: TextAlign.center,
           ),
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 8),
-        Text(
-          'Velocitynet Telecom LTDA - CNPJ: 24.513.378/0001-57',
-          style: GoogleFonts.poppins(
-            color: Colors.black54,
-            fontSize: 13,
+          const SizedBox(height: 8),
+          Text(
+            'Velocitynet Telecom LTDA - CNPJ: 24.513.378/0001-57',
+            style: GoogleFonts.poppins(
+              color: const Color.fromARGB(255, 255, 255, 255),
+              fontSize: 13,
+            ),
+            textAlign: TextAlign.center,
           ),
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 4),
-        Text(
-          'velocitynet@velocitynet.com.br',
-          style: GoogleFonts.poppins(
-            color: Colors.black54,
-            fontSize: 13,
+          const SizedBox(height: 4),
+          Text(
+            'velocitynet@velocitynet.com.br',
+            style: GoogleFonts.poppins(
+              color: const Color.fromARGB(255, 255, 255, 255),
+              fontSize: 13,
+            ),
+            textAlign: TextAlign.center,
           ),
-          textAlign: TextAlign.center,
-        ),
-      ],
+        ],
+      ),
     );
   }
 

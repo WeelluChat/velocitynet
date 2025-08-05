@@ -1,15 +1,20 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:universal_html/html.dart' as html;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:velocity_net/modules/benefits/tv.dart';
 import 'package:velocity_net/modules/description/description.dart';
 import 'package:velocity_net/modules/footer/footer.dart';
 import 'package:velocity_net/modules/plans/repository/Paraempresa.dart';
+import 'package:velocity_net/modules/plans/repository/selectedapp.dart';
 import 'package:velocity_net/modules/questions/questions.dart';
 import 'package:velocity_net/modules/slider/slider.dart';
+import 'package:velocity_net/pages/pdf.dart';
+import 'package:velocity_net/pages/previewpdf.dart';
 
 const Color primaryDarkColor = Color(0xFFFFFFFF);
 const Color primaryLightColor = Color(0xff08203E);
@@ -66,21 +71,19 @@ class _HomepagemobileState extends State<Homepagemobile> {
   }
 
   void _removeInternet() {
-    if (selectedCombo == null || selectedCombo!.mega.isEmpty) return;
+    if (selectedCombo == null) return;
 
     setState(() {
-      final apps = List<SelectedApp>.from(selectedCombo!.apps);
-      final appsTotal = apps.fold<int>(0, (sum, app) => sum + app.price);
-
+      // Limpa internet e apps, zera total e fecha summary
       selectedCombo = SelectedCombo(
         mega: '',
         megaPrice: 0,
-        apps: apps,
-        total: appsTotal,
-        isVisible: selectedCombo!.isVisible,
+        apps: [],
+        total: 0,
+        isVisible: false,
       );
 
-      showSummary = selectedCombo!.apps.isNotEmpty;
+      showSummary = false;
     });
   }
 
@@ -106,18 +109,24 @@ class _HomepagemobileState extends State<Homepagemobile> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      margin: EdgeInsets.only(bottom: isMobile ? 30 : 45),
-                      child: Text(
-                        'Venha ser Velocity',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.poppins(
-                          color: const Color.fromARGB(255, 0, 0, 0),
-                          fontSize: isMobile ? 24 : 36,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    Text(
+                      'Venha fazer parte da Velocity!',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                        color: const Color.fromARGB(255, 0, 0, 0),
+                        fontSize: isMobile ? 24 : 36,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
+                    Text(
+                      'Escolha sua velocidade ideal, adicione os streamings que você ama e aproveite internet + entretenimento do seu jeito.',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                        color: const Color.fromARGB(255, 134, 134, 134),
+                        fontSize: 17,
+                      ),
+                    ),
+                    const SizedBox(height: 40),
                     DefaultTabController(
                       length: 3,
                       child: Column(
@@ -127,7 +136,7 @@ class _HomepagemobileState extends State<Homepagemobile> {
                             maintainSize: false,
                             maintainAnimation: false,
                             maintainState: false,
-                            child: SizedBox(
+                            child: const SizedBox(
                               height: 0,
                               child: TabBar(
                                 tabs: [
@@ -147,14 +156,13 @@ class _HomepagemobileState extends State<Homepagemobile> {
                                   selectedCombo: selectedCombo,
                                   onRemoveApp: _removeApp,
                                   onRemoveInternet: _removeInternet,
-                                ), // Paraempresa
+                                ),
                               ],
                             ),
                           ),
                         ],
                       ),
                     ),
-                    /*  */
                     SizedBox(height: isMobile ? 50 : 10),
                   ],
                 ),
@@ -170,14 +178,8 @@ class _HomepagemobileState extends State<Homepagemobile> {
     );
   }
 
-  // Coloque esse controller na sua classe (como variável de estado)
-  final ScrollController _appsScrollController = ScrollController();
-
   Widget _buildSummaryBottomBar(bool isMobile) {
-    // Se **não** for mobile, não exibe nada
     if (!isMobile) return const SizedBox.shrink();
-
-    final screenHeight = MediaQuery.of(context).size.height;
 
     return AnimatedSlide(
       duration: const Duration(milliseconds: 500),
@@ -187,8 +189,7 @@ class _HomepagemobileState extends State<Homepagemobile> {
         duration: const Duration(milliseconds: 400),
         opacity: showSummary ? 1 : 0,
         child: Container(
-          height: 295,
-          padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+          padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: const BorderRadius.vertical(top: Radius.circular(18)),
@@ -202,199 +203,219 @@ class _HomepagemobileState extends State<Homepagemobile> {
             border: Border(top: BorderSide(color: Colors.grey.shade300)),
           ),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              // CONTEÚDO ROLÁVEL
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 5),
-                      if (selectedCombo != null) ...[
-                        // INTERNET
-                        if (selectedCombo!.mega.isNotEmpty)
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: _buildSummaryItem(
-                                  isMobile,
-                                  'INTERNET ${selectedCombo!.mega} Megas',
-                                  'R\$ ${selectedCombo!.megaPrice},99',
-                                  const Color(0xFF0A84FF),
-                                ),
-                              ),
-                              IconButton(
-                                icon: const Icon(Icons.close,
-                                    color: Colors.redAccent, size: 18),
-                                onPressed: _removeInternet,
-                                padding: EdgeInsets.zero,
-                                constraints: const BoxConstraints(),
-                              ),
-                            ],
-                          ),
-
-                        const SizedBox(height: 10),
-
-                        // APPS COM SCROLLBAR
-                        if (selectedCombo!.apps.isNotEmpty) ...[
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "Apps selecionados:",
-                              style: GoogleFonts.poppins(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: const Color(0xFF444444),
-                              ),
+              if (selectedCombo != null) ...[
+                if (selectedCombo!.mega.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'INTERNET ${selectedCombo!.mega} Megas',
+                            style: GoogleFonts.poppins(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: const Color(0xFF0A84FF),
                             ),
                           ),
-                          const SizedBox(height: 6),
-                          ConstrainedBox(
-                            constraints: const BoxConstraints(maxHeight: 125),
-                            child: Scrollbar(
-                              controller: _appsScrollController,
-                              thumbVisibility: true,
-                              radius: const Radius.circular(8),
-                              child: SingleChildScrollView(
-                                controller: _appsScrollController,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: selectedCombo!.apps
-                                      .asMap()
-                                      .entries
-                                      .map((entry) {
-                                    return Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 3),
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                            child: Text(
-                                              entry.value.name,
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 13,
-                                                color: const Color(0xFF555555),
-                                              ),
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                          IconButton(
-                                            icon: const Icon(Icons.close,
-                                                color: Colors.redAccent,
-                                                size: 18),
-                                            onPressed: () =>
-                                                _removeApp(entry.key),
-                                            padding: EdgeInsets.zero,
-                                            constraints: const BoxConstraints(),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  }).toList(),
+                        ),
+                        Text(
+                          'R\$ ${selectedCombo!.megaPrice},99',
+                          style: GoogleFonts.poppins(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF0A84FF),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        GestureDetector(
+                          onTap: _removeInternet,
+                          child: const Icon(Icons.close,
+                              color: Colors.redAccent, size: 20),
+                        ),
+                      ],
+                    ),
+                  ),
+                if (selectedCombo!.apps.isNotEmpty) ...[
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 4),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Apps selecionados:",
+                        style: GoogleFonts.poppins(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: const Color(0xFF444444),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: selectedCombo!.apps
+                        .map(
+                          (app) => Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 2),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    app.name,
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 13,
+                                      color: const Color(0xFF555555),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                GestureDetector(
+                                  onTap: () => _removeApp(
+                                      selectedCombo!.apps.indexOf(app)),
+                                  child: const Icon(Icons.close,
+                                      color: Colors.redAccent, size: 18),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Column(
+                    children: [
+                      const Divider(thickness: 1, color: Color(0xFFE0E0E0)),
+                      const SizedBox(height: 6),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Total mensal:',
+                            style: GoogleFonts.poppins(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: const Color(0xFF00C853),
+                            ),
+                          ),
+                          Text(
+                            'R\$ ${selectedCombo!.total},99',
+                            style: GoogleFonts.poppins(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w700,
+                              color: const Color(0xFF00C853),
                             ),
                           ),
                         ],
-
-                        const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 10),
-                          child:
-                              Divider(thickness: 1, color: Color(0xFFE0E0E0)),
-                        ),
-
-                        _buildSummaryItem(
-                          isMobile,
-                          'Total mensal:',
-                          'R\$ ${selectedCombo!.total},99',
-                          const Color(0xFF00C853),
-                          isTotal: true,
-                        ),
-                      ],
+                      ),
                     ],
                   ),
                 ),
-              ),
-
-              const SizedBox(height: 12),
-
-              // BOTÃO CONTRATAR FIXO
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF25D366),
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 250,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF25D366),
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          elevation: 2,
+                        ),
+                        onPressed: () {
+                          final message = selectedCombo!.apps.isEmpty
+                              ? 'Olá, gostaria de contratar o plano de ${selectedCombo!.mega} Mega'
+                              : 'Olá, gostaria de contratar o plano de ${selectedCombo!.mega} Mega com '
+                                  '${selectedCombo!.apps.map((app) => app.name).join(', ')}';
+                          launchUrl(Uri.parse(
+                            "https://api.whatsapp.com/send?phone=+5594992600430&text=${Uri.encodeComponent(message)}",
+                          ));
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(PhosphorIcons.whatsappLogo(),
+                                color: Colors.white, size: 20),
+                            const SizedBox(width: 8),
+                            Text(
+                              'Contratar agora',
+                              style: GoogleFonts.poppins(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                    elevation: 3,
-                  ),
-                  onPressed:
-                      selectedCombo != null && selectedCombo!.mega.isNotEmpty
-                          ? () {
-                              final message = selectedCombo!.apps.isEmpty
-                                  ? 'Olá, gostaria de contratar o plano de ${selectedCombo!.mega} Mega'
-                                  : 'Olá, gostaria de contratar o plano de ${selectedCombo!.mega} Mega com '
-                                      '${selectedCombo!.apps.map((app) => app.name).join(', ')}';
-                              launchUrl(Uri.parse(
-                                "https://api.whatsapp.com/send?phone=+5594992600430&text=${Uri.encodeComponent(message)}",
-                              ));
-                            }
-                          : null,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      PhosphorIcon(
-                        PhosphorIcons.whatsappLogo(),
-                        color: Colors.white,
-                        size: 18,
+                    SizedBox(width: 8),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      const SizedBox(width: 6),
-                      Text(
-                        'Contratar agora',
-                        style: GoogleFonts.poppins(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
+                      width: 100,
+                      child: TextButton(
+                        onPressed: () async {
+                          if (selectedCombo != null) {
+                            try {
+                              final pdfBytes =
+                                  await gerarPdfRelatorio(selectedCombo!);
+
+                              if (kIsWeb) {
+                                // Implementação para WEB
+                                final blob =
+                                    html.Blob([pdfBytes], 'application/pdf');
+                                final url =
+                                    html.Url.createObjectUrlFromBlob(blob);
+                                final anchor = html.AnchorElement(href: url)
+                                  ..download = 'resumo_velocity.pdf'
+                                  ..style.display = 'none';
+
+                                html.document.body?.children.add(anchor);
+                                anchor.click();
+                                html.document.body?.children.remove(anchor);
+                                html.Url.revokeObjectUrl(url);
+                              } else {
+                                // Implementação para MOBILE/DESKTOP
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (_) =>
+                                        PreviewPdf(combo: selectedCombo!),
+                                  ),
+                                );
+                              }
+                            } catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                    content: Text(
+                                        'Erro ao gerar PDF: ${e.toString()}')),
+                              );
+                            }
+                          }
+                        },
+                        child: Text(
+                          "PDF",
+                          style: GoogleFonts.poppins(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                    ],
-                  ),
+                    )
+                  ],
                 ),
-              ),
+              ],
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildSummaryItem(
-      bool isMobile, String title, String value, Color valueColor,
-      {bool isTotal = false}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            title,
-            style: GoogleFonts.poppins(
-              fontSize: isMobile ? (isTotal ? 16 : 15) : (isTotal ? 18 : 17),
-              fontWeight: isTotal ? FontWeight.w600 : FontWeight.w500,
-              color: const Color(0xFF333333),
-            ),
-          ),
-          Text(
-            value,
-            style: GoogleFonts.poppins(
-              fontSize: isMobile ? (isTotal ? 18 : 16) : (isTotal ? 20 : 18),
-              fontWeight: FontWeight.bold,
-              color: valueColor,
-            ),
-          ),
-        ],
       ),
     );
   }

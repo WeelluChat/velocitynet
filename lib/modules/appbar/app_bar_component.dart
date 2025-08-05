@@ -57,11 +57,11 @@ class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
                     children: [
                       _buildMenuItem("INÍCIO", () => navigateAndScroll(0)),
                       const SizedBox(width: 24),
-                      _buildMenuItem("PLANOS", () => navigateAndScroll(800)),
+                      _buildMenuItem("PLANOS", () => navigateAndScroll(550)),
                       const SizedBox(width: 24),
-                      _buildMenuItem("SOBRE NÓS", () => navigateAndScroll(1600)),
+                      _buildMenuItem("SOBRE NÓS", () => navigateAndScroll(1580)),
                       const SizedBox(width: 24),
-                      _buildMenuItem("OFERTA", () => navigateAndScroll(2120)),
+                      _buildMenuItem("OFERTA", () => navigateAndScroll(2100)),
                       const SizedBox(width: 24),
                       _buildMenuItem("TV", () {
                         if (currentRoute != '/tvplanos') {

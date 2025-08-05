@@ -56,7 +56,11 @@ class _QuestionsState extends State<Questions> with SingleTickerProviderStateMix
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 80),
       width: double.infinity,
-      color: const Color(0xFF08203E),
+      decoration: BoxDecoration(
+          gradient: LinearGradient(colors: [
+        const Color.fromARGB(255, 7, 28, 54),
+        const Color.fromARGB(255, 8, 42, 92)
+      ])),
       child: Flex(
         direction: Axis.horizontal,
         mainAxisAlignment: MainAxisAlignment.center,

@@ -1,6 +1,6 @@
 class SelectedApp {
   final String name;
-  final int price;
+  final double price; // <-- Alterado para double
   final String image;
   final bool isVisible;
   final String id;
@@ -16,30 +16,34 @@ class SelectedApp {
     required this.id,
     this.minPlan = 0,
     this.color = '',
-    this.benefitDetails = const[]
+    this.benefitDetails = const [],
   });
 
   SelectedApp copyWith({
     String? name,
-    int? price,
+    double? price, // <-- Alterado para double
     String? image,
     bool? isVisible,
+    String? id, // <-- Adicionado id para o copyWith
   }) {
     return SelectedApp(
       name: name ?? this.name,
       price: price ?? this.price,
       image: image ?? this.image,
       isVisible: isVisible ?? this.isVisible,
-      id: '',
+      id: id ?? this.id,
+      minPlan: minPlan, // <-- Adicionado para o copyWith
+      color: color, // <-- Adicionado para o copyWith
+      benefitDetails: benefitDetails, // <-- Adicionado para o copyWith
     );
   }
 }
 
 class SelectedCombo {
   final String mega;
-  final int megaPrice;
+  final double megaPrice; // <-- Alterado para double
   final List<SelectedApp> apps;
-  final int total;
+  final double total; // <-- Alterado para double
   final bool isVisible;
 
   SelectedCombo({
@@ -52,9 +56,9 @@ class SelectedCombo {
 
   SelectedCombo copyWith({
     String? mega,
-    int? megaPrice,
+    double? megaPrice, // <-- Alterado para double
     List<SelectedApp>? apps,
-    int? total,
+    double? total, // <-- Alterado para double
     bool? isVisible,
   }) {
     return SelectedCombo(
@@ -66,5 +70,3 @@ class SelectedCombo {
     );
   }
 }
-
-

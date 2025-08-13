@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart'; // 👈 Adicione esta importação
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:url_launcher/url_launcher.dart';
@@ -22,6 +23,12 @@ const Color accentColor = Color(0xFFE3F2FD);
 const Color borderColor = Color(0xFFE0E0E0);
 const Color textColor = Color(0xFF1A237E);
 const Color disabledColor = Color(0xFFBDBDBD);
+
+// ✨ FUNÇÃO AUXILIAR PARA FORMATAR MOEDA
+String formatCurrency(double value) {
+  final format = NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
+  return format.format(value);
+}
 
 class Homepagemobile extends StatefulWidget {
   final ScrollController scrollController;
@@ -53,7 +60,7 @@ class _HomepagemobileState extends State<Homepagemobile> {
       apps.removeAt(index);
 
       final newTotal = selectedCombo!.megaPrice +
-          apps.fold<int>(0, (sum, app) => sum + app.price);
+          apps.fold<double>(0, (sum, app) => sum + app.price);
 
       selectedCombo = SelectedCombo(
         mega: selectedCombo!.mega,
@@ -128,23 +135,9 @@ class _HomepagemobileState extends State<Homepagemobile> {
                     ),
                     const SizedBox(height: 40),
                     DefaultTabController(
-                      length: 3,
+                      length: 1, // Ajustado para 1, pois só há uma aba visível
                       child: Column(
                         children: [
-                          Visibility(
-                            visible: false,
-                            maintainSize: false,
-                            maintainAnimation: false,
-                            maintainState: false,
-                            child: const SizedBox(
-                              height: 0,
-                              child: TabBar(
-                                tabs: [
-                                  Tab(text: 'PARA EMPRESA'),
-                                ],
-                              ),
-                            ),
-                          ),
                           SizedBox(
                             height: isMobile ? 1132 : 850,
                             child: TabBarView(
@@ -223,7 +216,8 @@ class _HomepagemobileState extends State<Homepagemobile> {
                           ),
                         ),
                         Text(
-                          'R\$ ${selectedCombo!.megaPrice},99',
+                          // ✨ CORREÇÃO APLICADA AQUI
+                          formatCurrency(selectedCombo!.megaPrice),
                           style: GoogleFonts.poppins(
                             fontSize: 15,
                             fontWeight: FontWeight.w600,
@@ -302,7 +296,8 @@ class _HomepagemobileState extends State<Homepagemobile> {
                             ),
                           ),
                           Text(
-                            'R\$ ${selectedCombo!.total},99',
+                            // ✨ CORREÇÃO APLICADA AQUI
+                            formatCurrency(selectedCombo!.total),
                             style: GoogleFonts.poppins(
                               fontSize: 15,
                               fontWeight: FontWeight.w700,
@@ -316,8 +311,8 @@ class _HomepagemobileState extends State<Homepagemobile> {
                 ),
                 Row(
                   children: [
-                    SizedBox(
-                      width: 250,
+                    Expanded(
+                      // Botão expandido para ocupar mais espaço
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF25D366),
@@ -354,62 +349,63 @@ class _HomepagemobileState extends State<Homepagemobile> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 8),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(8),
+                    const SizedBox(width: 8),
+                    ElevatedButton(
+                      // Botão PDF com largura fixa
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 12, horizontal: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        elevation: 2,
                       ),
-                      width: 100,
-                      child: TextButton(
-                        onPressed: () async {
-                          if (selectedCombo != null) {
-                            try {
-                              final pdfBytes =
-                                  await gerarPdfRelatorio(selectedCombo!);
+                      onPressed: () async {
+                        if (selectedCombo != null) {
+                          try {
+                            final pdfBytes =
+                                await gerarPdfRelatorio(selectedCombo!);
 
-                              if (kIsWeb) {
-                                // Implementação para WEB
-                                final blob =
-                                    html.Blob([pdfBytes], 'application/pdf');
-                                final url =
-                                    html.Url.createObjectUrlFromBlob(blob);
-                                final anchor = html.AnchorElement(href: url)
-                                  ..download = 'resumo_velocity.pdf'
-                                  ..style.display = 'none';
+                            if (kIsWeb) {
+                              final blob =
+                                  html.Blob([pdfBytes], 'application/pdf');
+                              final url =
+                                  html.Url.createObjectUrlFromBlob(blob);
+                              final anchor = html.AnchorElement(href: url)
+                                ..download = 'resumo_velocity.pdf'
+                                ..style.display = 'none';
 
-                                html.document.body?.children.add(anchor);
-                                anchor.click();
-                                html.document.body?.children.remove(anchor);
-                                html.Url.revokeObjectUrl(url);
-                              } else {
-                                // Implementação para MOBILE/DESKTOP
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (_) =>
-                                        PreviewPdf(combo: selectedCombo!),
-                                  ),
-                                );
-                              }
-                            } catch (e) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                    content: Text(
-                                        'Erro ao gerar PDF: ${e.toString()}')),
+                              html.document.body?.children.add(anchor);
+                              anchor.click();
+                              html.document.body?.children.remove(anchor);
+                              html.Url.revokeObjectUrl(url);
+                            } else {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (_) =>
+                                      PreviewPdf(combo: selectedCombo!),
+                                ),
                               );
                             }
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                  content: Text(
+                                      'Erro ao gerar PDF: ${e.toString()}')),
+                            );
                           }
-                        },
-                        child: Text(
-                          "PDF",
-                          style: GoogleFonts.poppins(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w800,
-                            color: Colors.white,
-                          ),
+                        }
+                      },
+                      child: Text(
+                        "PDF",
+                        style: GoogleFonts.poppins(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w800,
+                          color: Colors.white,
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ],

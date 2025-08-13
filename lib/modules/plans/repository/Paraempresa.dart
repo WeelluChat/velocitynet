@@ -9,13 +9,11 @@ import 'package:url_launcher/url_launcher.dart';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
-import 'package:velocity_net/modules/plans/repository/Paraempresa.dart';
 import 'package:velocity_net/modules/plans/repository/apiservice.dart';
-import 'package:velocity_net/modules/plans/repository/app_details.dart';
-import 'package:velocity_net/modules/plans/repository/monteseucombo.dart';
 import 'package:velocity_net/modules/plans/repository/selectedapp.dart';
 import 'package:velocity_net/pages/pdf.dart';
 import 'package:velocity_net/pages/previewpdf.dart';
+import 'package:velocity_net/modules/plans/repository/monteseucombo.dart';
 
 const Color textColor = Colors.black;
 const Color megaColor = Color.fromARGB(255, 5, 45, 83);
@@ -96,7 +94,6 @@ class _ParaempresaState extends State<Paraempresa>
       final categoryPlans = await _apiService.getCategoryPlans();
 
       setState(() {
-        // Filtrar planos e verificar visibilidade
         telecinePlans = _apiService
             .filterPlans(categoryPlans, 'telecine')
             .where((plan) => plan['isVisible'] ?? true)
@@ -129,7 +126,6 @@ class _ParaempresaState extends State<Paraempresa>
         isLoadingGloboplay = false;
         isLoadingCanais = false;
 
-        // Determinar quais tabs devem ser exibidas
         final tabsToShow = [
           telecinePlans.isNotEmpty,
           maxPlans.isNotEmpty,
@@ -139,7 +135,6 @@ class _ParaempresaState extends State<Paraempresa>
           canaisPlans.isNotEmpty,
         ];
 
-        // Criar o TabController apenas com as tabs visíveis
         _streamingTabController = TabController(
           length: tabsToShow.where((visible) => visible).length,
           vsync: this,
@@ -269,9 +264,9 @@ class _ParaempresaState extends State<Paraempresa>
         _selectedAppIndices.clear();
         widget.onComboUpdated?.call(SelectedCombo(
           mega: "",
-          megaPrice: 0,
+          megaPrice: 0.0,
           apps: [],
-          total: 0,
+          total: 0.0,
           isVisible: false,
         ));
       });
@@ -282,12 +277,12 @@ class _ParaempresaState extends State<Paraempresa>
     return beneficios.map<SelectedApp>((b) {
       return SelectedApp(
         name: b['nome'] ?? 'App sem nome',
-        price: (b['valor'] as num?)?.toInt() ?? 0,
+        price: (b['valor'] as num?)?.toDouble() ?? 0.0,
         image: b['image'] ?? 'assets/default_app.png',
         isVisible: b['isVisible'] ?? true,
         id: b['_id']?.toString() ?? '',
-        color: b['color'] ?? '', // Novo campo
-        benefitDetails: (b['beneficioDetalhes'] as List?) // Novo campo
+        color: b['color'] ?? '',
+        benefitDetails: (b['beneficioDetalhes'] as List?)
                 ?.map<String>((detail) => detail['text']?.toString() ?? '')
                 .toList() ??
             [],
@@ -295,40 +290,40 @@ class _ParaempresaState extends State<Paraempresa>
     }).toList();
   }
 
-  List<int> get currentAppValues {
+  List<double> get currentAppValues {
     if (_selectedMegaIndex == -1 || _planos.isEmpty) {
-      return List.filled(_beneficios.length, 0);
+      return List.filled(_beneficios.length, 0.0);
     }
 
     final selectedPlano = _planos[_selectedMegaIndex];
     if (selectedPlano['beneficios'] is! List) {
-      return List.filled(_beneficios.length, 0);
+      return List.filled(_beneficios.length, 0.0);
     }
 
-    return (selectedPlano['beneficios'] as List).map<int>((b) {
-      return (b['valor'] as num?)?.toInt() ?? 0;
+    return (selectedPlano['beneficios'] as List).map<double>((b) {
+      return (b['valor'] as num?)?.toDouble() ?? 0.0;
     }).toList();
   }
 
-  int get _selectedMegaValue {
-    if (_selectedMegaIndex == -1 || _planos.isEmpty) return 0;
-    return (_planos[_selectedMegaIndex]['valor'] as num).toInt();
+  double get _selectedMegaValue {
+    if (_selectedMegaIndex == -1 || _planos.isEmpty) return 0.0;
+    return (_planos[_selectedMegaIndex]['valor'] as num).toDouble();
   }
 
-  int get _selectedAppValue {
+  double get _selectedAppValue {
     return _selectedAppIndices.fold(
-        0, (sum, index) => sum + currentAppValues[index]);
+        0.0, (sum, index) => sum + currentAppValues[index]);
   }
 
-  int get totalValue => _selectedMegaValue + _selectedAppValue;
+  double get totalValue => _selectedMegaValue + _selectedAppValue;
 
   void _updateSelectedCombo() {
     if (_selectedMegaIndex == -1) {
       widget.onComboUpdated?.call(SelectedCombo(
         mega: "",
-        megaPrice: 0,
+        megaPrice: 0.0,
         apps: [],
-        total: 0,
+        total: 0.0,
         isVisible: false,
       ));
       return;
@@ -340,7 +335,7 @@ class _ParaempresaState extends State<Paraempresa>
 
     final newCombo = SelectedCombo(
       mega: selectedPlan['nome'].replaceAll('MEGA', '').trim(),
-      megaPrice: (selectedPlan['valor'] as num).toInt(),
+      megaPrice: (selectedPlan['valor'] as num).toDouble(),
       apps: selectedBenefits,
       total: totalValue,
       isVisible: selectedPlan['isVisible'] ?? true,
@@ -429,16 +424,13 @@ class _ParaempresaState extends State<Paraempresa>
                         controller: scrollController,
                         scrollDirection: Axis.horizontal,
                         itemCount: images.length,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 60), // Aumento significativo do padding
+                        padding: const EdgeInsets.symmetric(horizontal: 60),
                         itemBuilder: (context, i) {
                           final imgUrl =
                               _apiService.getImageUrl(images[i]['filename']);
                           return Container(
                             width: isMobile ? 295 : 260,
-                            margin: const EdgeInsets.symmetric(
-                                horizontal:
-                                    30), // Espaçamento dobrado entre cards
+                            margin: const EdgeInsets.symmetric(horizontal: 30),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12),
                             ),
@@ -495,7 +487,6 @@ class _ParaempresaState extends State<Paraempresa>
                                       const SizedBox(height: 15),
                                     ],
                                   ),
-                                // Botão de contrato
                                 Center(
                                   child: Material(
                                     borderRadius: BorderRadius.circular(12),
@@ -561,8 +552,6 @@ class _ParaempresaState extends State<Paraempresa>
                           );
                         },
                       ),
-
-                      /// Botões de navegação (mantidos os mesmos)
                       Positioned(
                         left: 0,
                         top: 0,
@@ -586,8 +575,7 @@ class _ParaempresaState extends State<Paraempresa>
                               iconSize: 24,
                               onPressed: () {
                                 scrollController.animateTo(
-                                  scrollController.offset -
-                                      375, // Ajuste para o novo espaçamento
+                                  scrollController.offset - 375,
                                   duration: const Duration(milliseconds: 350),
                                   curve: Curves.easeOut,
                                 );
@@ -596,7 +584,6 @@ class _ParaempresaState extends State<Paraempresa>
                           ),
                         ),
                       ),
-
                       Positioned(
                         right: 0,
                         top: 0,
@@ -620,8 +607,7 @@ class _ParaempresaState extends State<Paraempresa>
                               iconSize: 24,
                               onPressed: () {
                                 scrollController.animateTo(
-                                  scrollController.offset +
-                                      375, // Ajuste para o novo espaçamento
+                                  scrollController.offset + 375,
                                   duration: const Duration(milliseconds: 400),
                                   curve: Curves.easeOut,
                                 );
@@ -724,7 +710,7 @@ class _ParaempresaState extends State<Paraempresa>
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(
-                  color: const Color(0xFF0066CC), // Borda azul clara
+                  color: const Color(0xFF0066CC),
                   width: 1.2,
                 ),
               ),
@@ -776,6 +762,9 @@ class _ParaempresaState extends State<Paraempresa>
     );
   }
 
+  /// O layout principal do montador de combos.
+  /// No mobile, usa uma `Column` com `Expanded` para dar um tamanho definido
+  /// para as listas, permitindo que elas rolem. No desktop, usa uma `Row`.
   Widget _buildComboContent() {
     final isMobile = MediaQuery.of(context).size.width < 600;
     final lateralPadding = isMobile ? 8.0 : 12.0;
@@ -786,52 +775,52 @@ class _ParaempresaState extends State<Paraempresa>
       splitScreenMode: true,
       builder: (context, child) {
         return Container(
-          padding: EdgeInsets.only(
-            left: lateralPadding,
-            right: lateralPadding,
+          padding: EdgeInsets.symmetric(
+            horizontal: lateralPadding,
+            vertical: 10.sp,
           ),
           width: double.infinity,
           decoration: const BoxDecoration(),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(height: isMobile ? 2.sp : 10.sp),
-              isMobile
-                  ? Column(
-                      children: [
-                        _buildMegaColumn(),
-                        SizedBox(height: 10.sp),
-                        _buildAppColumn(),
-                        SizedBox(height: 10.sp),
-                      ],
-                    )
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _buildMegaColumn(),
-                        SizedBox(width: 17.sp),
-                        _buildAppColumn(),
-                        SizedBox(width: 17.sp),
-                        _buildSummaryColumn(),
-                      ],
+          child: isMobile
+              ? Column(
+                  children: [
+                    Expanded(
+                      flex: 5, // Mais espaço para a lista de velocidades
+                      child: _buildMegaColumn(),
                     ),
-            ],
-          ),
+                    SizedBox(height: 10.sp),
+                    Expanded(
+                      flex: 4, // Menos espaço para a lista de apps
+                      child: _buildAppColumn(),
+                    ),
+                    SizedBox(height: 10.sp),
+                    _buildSummaryColumn(), // Ocupa o espaço necessário no final
+                  ],
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildMegaColumn(),
+                    SizedBox(width: 17.sp),
+                    _buildAppColumn(),
+                    SizedBox(width: 17.sp),
+                    _buildSummaryColumn(),
+                  ],
+                ),
         );
       },
     );
   }
 
+  /// Coluna para seleção da velocidade de internet.
+  /// O `Expanded` é essencial para que a `ListView` interna tenha um
+  /// tamanho limitado e possa rolar sem erros.
   Widget _buildMegaColumn() {
     final isMobile = MediaQuery.of(context).size.width < 600;
-    final lateralPadding = isMobile ? 8.0 : 12.0;
 
     return Container(
-      width: isMobile ? 500 - (2 * lateralPadding) : 300.sp,
-      height: isMobile ? null : 376.sp,
-      padding: EdgeInsets.only(bottom: 4.sp),
+      width: isMobile ? double.infinity : 300.sp,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
@@ -848,13 +837,12 @@ class _ParaempresaState extends State<Paraempresa>
         ),
       ),
       child: Column(
-        mainAxisSize: isMobile ? MainAxisSize.min : MainAxisSize.max,
         children: [
           Container(
             height: 36.sp,
             decoration: BoxDecoration(
               color: const Color(0xFFF8F9FA),
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(12),
                 topRight: Radius.circular(12),
               ),
@@ -874,16 +862,82 @@ class _ParaempresaState extends State<Paraempresa>
               ),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 2.sp),
-            child: ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: _planos.length,
-              itemBuilder: (context, index) {
-                final plano = _planos[index];
-                return _buildMegaItem(plano, index);
-              },
+          Expanded(
+            // Essencial para a rolagem da lista
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 5.sp),
+              child: ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: _planos.length,
+                itemBuilder: (context, index) {
+                  final plano = _planos[index];
+                  return _buildMegaItem(plano, index);
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Coluna para seleção dos apps de streaming.
+  /// Assim como a coluna de velocidade, o `Expanded` garante que a `ListView`
+  /// funcione corretamente no layout de `Column`.
+  Widget _buildAppColumn() {
+    final isMobile = MediaQuery.of(context).size.width < 600;
+    final bool isSpeedSelected = _selectedMegaIndex != -1;
+
+    return Container(
+      width: isMobile ? double.infinity : 300.sp,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 8,
+            offset: const Offset(0, 4),
+          ),
+        ],
+        border: Border.all(
+          color: const Color(0xFFE9ECEF),
+          width: 1,
+        ),
+      ),
+      child: Column(
+        children: [
+          Container(
+            height: 36.sp,
+            decoration: const BoxDecoration(
+              color: Color(0xFFF8F9FA),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(12),
+                topRight: Radius.circular(12),
+              ),
+            ),
+            child: Center(
+              child: Text(
+                'ESCOLHA SEUS STREAMING',
+                style: GoogleFonts.poppins(
+                  fontSize: isMobile ? 13.sp : 10.sp,
+                  fontWeight: FontWeight.w600,
+                  color: const Color(0xFF495057),
+                  letterSpacing: 0.5.sp,
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            // Essencial para a rolagem da lista
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 2.sp),
+              child: ListView.builder(
+                itemCount: _beneficios.length,
+                itemBuilder: (context, index) {
+                  return _buildAppItem(index, isSpeedSelected);
+                },
+              ),
             ),
           ),
         ],
@@ -895,7 +949,8 @@ class _ParaempresaState extends State<Paraempresa>
     final isMobile = MediaQuery.of(context).size.width < 600;
     final isSelected = _selectedMegaIndex == index;
     final mega = (plano['nome'] as String).replaceAll('MEGA', '').trim();
-    final price = (plano['valor'] as num).toInt();
+    final double price = (plano['valor'] as num).toDouble();
+    final String formattedPrice = price.toStringAsFixed(2).replaceAll('.', ',');
 
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -978,8 +1033,8 @@ class _ParaempresaState extends State<Paraempresa>
                     ),
                     Padding(
                       padding: isMobile
-                          ? EdgeInsets.only(left: 5)
-                          : EdgeInsetsGeometry.only(left: 30),
+                          ? const EdgeInsets.only(left: 5)
+                          : const EdgeInsets.only(left: 30),
                     ),
                     Flexible(
                       child: Padding(
@@ -992,7 +1047,7 @@ class _ParaempresaState extends State<Paraempresa>
                             text: TextSpan(
                               children: [
                                 TextSpan(
-                                  text: 'R\$ $price',
+                                  text: 'R\$ ${formattedPrice.split(',')[0]}',
                                   style: GoogleFonts.poppins(
                                     color: const Color(0xFF212529),
                                     fontWeight: FontWeight.w700,
@@ -1001,7 +1056,7 @@ class _ParaempresaState extends State<Paraempresa>
                                   ),
                                 ),
                                 TextSpan(
-                                  text: ',99\n',
+                                  text: ',${formattedPrice.split(',')[1]}\n',
                                   style: GoogleFonts.poppins(
                                     color: const Color(0xFF495057),
                                     fontSize: isMobile ? 10.sp : 13.sp,
@@ -1044,8 +1099,8 @@ class _ParaempresaState extends State<Paraempresa>
                   top: 4,
                   right: 4,
                   child: IconButton(
-                    icon: Icon(Icons.close,
-                        size: 18, color: const Color.fromARGB(0, 244, 67, 54)),
+                    icon: const Icon(Icons.close,
+                        size: 18, color: Color.fromARGB(0, 244, 67, 54)),
                     onPressed: () {
                       widget.onRemoveInternet?.call();
                       setState(() {
@@ -1061,88 +1116,17 @@ class _ParaempresaState extends State<Paraempresa>
     );
   }
 
-  Widget _buildAppColumn() {
-    final isMobile = MediaQuery.of(context).size.width < 600;
-    final lateralPadding = isMobile ? 8.0 : 12.0;
-    final bool isSpeedSelected = _selectedMegaIndex != -1;
-
-    return Container(
-      width: isMobile ? 500 - (2 * lateralPadding) : 300.sp,
-      height: isMobile ? null : 376.sp,
-      padding: EdgeInsets.only(bottom: 4.sp),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 8,
-            offset: const Offset(0, 4),
-          ),
-        ],
-        border: Border.all(
-          color: const Color(0xFFE9ECEF),
-          width: 1,
-        ),
-      ),
-      child: Column(
-        mainAxisSize: isMobile ? MainAxisSize.min : MainAxisSize.max,
-        children: [
-          Container(
-            height: 36.sp,
-            decoration: const BoxDecoration(
-              color: Color(0xFFF8F9FA),
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(12),
-                topRight: Radius.circular(12),
-              ),
-            ),
-            child: Center(
-              child: Text(
-                'ESCOLHA SEUS STREAMING',
-                style: GoogleFonts.poppins(
-                  fontSize: isMobile ? 13.sp : 10.sp,
-                  fontWeight: FontWeight.w600,
-                  color: const Color(0xFF495057),
-                  letterSpacing: 0.5.sp,
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 2.sp),
-              child: ListView.builder(
-                shrinkWrap: false,
-                physics: const ClampingScrollPhysics(), // 🔹 remove barra preta
-                itemCount: _beneficios.length,
-                itemBuilder: (context, index) {
-                  return _buildAppItem(index, isSpeedSelected);
-                },
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildAppItem(int index, bool isSpeedSelected) {
     final isMobile = MediaQuery.of(context).size.width < 600;
     final bool isSelected = _selectedAppIndices.contains(index);
     final app = _beneficios[index];
     if (!app.isVisible) return const SizedBox.shrink();
     final bool isSvg = app.image.toLowerCase().startsWith('data:image/svg');
-    final int appPrice = currentAppValues[index];
-
-    Color appColor = app.color.isNotEmpty
-        ? Color(int.parse('0xFF${app.color.replaceFirst('#', '')}'))
-        : const Color(0xFF4DABF7);
 
     void _showAppDetails() {
       Color appColor = app.color.isNotEmpty
           ? Color(int.parse('0xFF${app.color.replaceFirst('#', '')}'))
-          : const Color(0xFF4DABF7); // Cor padrão
+          : const Color(0xFF4DABF7);
 
       showDialog(
         context: context,
@@ -1169,9 +1153,7 @@ class _ParaempresaState extends State<Paraempresa>
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const SizedBox(height: 32), // espaço para o botão X
-
-                            // Imagem com sombra própria
+                            const SizedBox(height: 32),
                             Container(
                               width: 100,
                               height: 100,
@@ -1194,8 +1176,6 @@ class _ParaempresaState extends State<Paraempresa>
                               ),
                             ),
                             const SizedBox(height: 20),
-
-                            // Nome
                             Text(
                               app.name.toUpperCase(),
                               style: GoogleFonts.poppins(
@@ -1204,10 +1184,7 @@ class _ParaempresaState extends State<Paraempresa>
                                 color: appColor,
                               ),
                             ),
-
                             const SizedBox(height: 20),
-
-                            // Benefícios
                             if (app.benefitDetails.isNotEmpty) ...[
                               Text(
                                 'INCLUSO NO PLANO:',
@@ -1245,23 +1222,10 @@ class _ParaempresaState extends State<Paraempresa>
                               ),
                               const SizedBox(height: 20),
                             ],
-
                             const SizedBox(height: 24),
-
-                            // Botões
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                // TextButton(
-                                //   onPressed: () => Navigator.pop(context),
-                                //   child: Text(
-                                //     'FECHAR',
-                                //     style: GoogleFonts.poppins(
-                                //       fontWeight: FontWeight.w600,
-                                //       color: Colors.grey[600],
-                                //     ),
-                                //   ),
-                                // ),
                                 const SizedBox(width: 12),
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
@@ -1291,8 +1255,6 @@ class _ParaempresaState extends State<Paraempresa>
                         ),
                       ),
                     ),
-
-                    // Botão X no canto superior direito
                     Positioned(
                       top: 8,
                       right: 8,
@@ -1360,21 +1322,6 @@ class _ParaempresaState extends State<Paraempresa>
                       ),
                     ),
                   ),
-                  if (isSelected && isSpeedSelected)
-                    Positioned(
-                      top: 4,
-                      right: 4,
-                      child: IconButton(
-                        icon: const Icon(Icons.close,
-                            size: 18, color: Colors.transparent),
-                        onPressed: () {
-                          widget.onRemoveApp?.call(index);
-                          setState(() {
-                            _selectedAppIndices.remove(index);
-                          });
-                        },
-                      ),
-                    ),
                 ],
               ),
             ],
@@ -1384,18 +1331,28 @@ class _ParaempresaState extends State<Paraempresa>
     );
   }
 
+  /// Coluna que exibe o resumo do combo selecionado.
+  /// Foi ajustada para remover `Expanded` e `Spacer` que causavam
+  /// conflito com a `Column` de tamanho intrínseco (`mainAxisSize: min`),
+  /// o que gerava erro no layout mobile.
   Widget _buildSummaryColumn() {
     final isMobile = MediaQuery.of(context).size.width < 600;
-    final lateralPadding = isMobile ? 8.0 : 12.0;
+
+    // Se a tela for considerada mobile, retorna um widget vazio para "esconder" a coluna.
+    if (isMobile) {
+      return const SizedBox.shrink();
+    }
+
+    // O código abaixo só será executado em telas maiores (desktop).
     final bool isSpeedSelected = _selectedMegaIndex != -1 &&
         _planos.isNotEmpty &&
         _selectedMegaIndex < _planos.length;
     final bool hasSelectedApps = _selectedAppIndices.isNotEmpty;
 
     return Container(
-      width: isMobile ? 500 - (2 * lateralPadding) : 200.sp,
-      height: isMobile ? 370 : 376.sp,
-      padding: EdgeInsets.only(bottom: 4.sp),
+      width: isMobile ? double.infinity : 200.sp,
+      height: isMobile ? null : 376.sp, // Altura nula para mobile
+      padding: EdgeInsets.symmetric(vertical: 8.sp),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
@@ -1412,238 +1369,233 @@ class _ParaempresaState extends State<Paraempresa>
         ),
       ),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: isMobile ? MainAxisSize.min : MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // Header com contador de apps
-          Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: isMobile ? 8.sp : 6.sp,
-                vertical: isMobile ? 4.sp : 4.sp),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
+          Column(
+            // Agrupa a parte superior para o alinhamento
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: isMobile ? 8.sp : 6.sp,
+                    vertical: isMobile ? 4.sp : 4.sp),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      '${_selectedAppIndices.length}',
-                      style: GoogleFonts.poppins(
-                        color: const Color(0xFF495057),
-                        fontSize: isMobile ? 9.sp : 12.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    SizedBox(width: 2.sp),
-                    Icon(
-                      PhosphorIcons.shopping_cart,
-                      color: const Color(0xFF495057),
-                      size: isMobile ? 9.sp : 12.sp,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-
-          // Container do Plano selecionado
-          Container(
-            width: isMobile ? 260.sp : 150.sp,
-            height: isMobile ? 28.sp : 30.sp,
-            margin: EdgeInsets.symmetric(horizontal: isMobile ? 8.sp : 0),
-            decoration: BoxDecoration(
-              color: const Color(0xFFF8F9FA),
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(
-                color: const Color(0xFFE9ECEF),
-              ),
-            ),
-            child: Center(
-              child: Text(
-                isSpeedSelected
-                    ? '${(_planos[_selectedMegaIndex]['nome'] as String).replaceAll('MEGA', '').trim()} Megas'
-                    : 'Selecione um plano',
-                style: GoogleFonts.poppins(
-                  color: isSpeedSelected
-                      ? const Color(0xFF495057)
-                      : const Color(0xFFADB5BD),
-                  fontSize: isMobile ? 10.sp : 10.sp,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: isMobile ? 4.sp : 8.sp),
-
-          // Container do Valor
-          Container(
-            width: isMobile ? 260.sp : 150.sp,
-            height: isMobile ? 46.sp : 40.sp,
-            margin: EdgeInsets.symmetric(horizontal: isMobile ? 8.sp : 0),
-            decoration: BoxDecoration(
-              color: const Color(0xFFF8F9FA),
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(
-                color: const Color(0xFFE9ECEF),
-              ),
-            ),
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.baseline,
-                textBaseline: TextBaseline.alphabetic,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(top: isMobile ? 4.sp : 6.sp),
-                    child: Text(
-                      'R\$',
-                      style: GoogleFonts.poppins(
-                        color: isSpeedSelected
-                            ? const Color(0xFF495057)
-                            : const Color(0xFFADB5BD),
-                        fontSize: isMobile ? 12.sp : 8.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 1.sp),
-                  Text(
-                    isSpeedSelected ? '$totalValue' : '--',
-                    style: GoogleFonts.poppins(
-                      color: isSpeedSelected
-                          ? const Color(0xFF212529)
-                          : const Color(0xFFADB5BD),
-                      fontSize: isMobile ? 28.sp : 19.sp,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  Transform.translate(
-                    offset: Offset(0, isMobile ? -3.sp : -1.sp),
-                    child: Text(
-                      isSpeedSelected ? ',99' : '',
-                      style: GoogleFonts.poppins(
-                        color: isSpeedSelected
-                            ? const Color(0xFF495057)
-                            : const Color(0xFFADB5BD),
-                        fontSize: isMobile ? 12.sp : 10.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  if (!isMobile && isSpeedSelected) ...[
-                    SizedBox(width: 2.sp),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    Row(
                       children: [
                         Text(
-                          'até o',
+                          '${_selectedAppIndices.length}',
                           style: GoogleFonts.poppins(
                             color: const Color(0xFF495057),
-                            fontSize: 8.sp,
-                            fontWeight: FontWeight.w500,
+                            fontSize: isMobile ? 9.sp : 12.sp,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
-                        Text(
-                          'vencimento',
-                          style: GoogleFonts.poppins(
-                            color: const Color(0xFF495057),
-                            fontSize: 8.sp,
-                            fontWeight: FontWeight.w500,
-                          ),
+                        SizedBox(width: 2.sp),
+                        Icon(
+                          PhosphorIcons.shopping_cart,
+                          color: const Color(0xFF495057),
+                          size: isMobile ? 9.sp : 12.sp,
                         ),
                       ],
                     ),
                   ],
-                ],
+                ),
               ),
-            ),
-          ),
-
-          // Texto "até o vencimento" para mobile
-          if (isMobile && isSpeedSelected)
-            Column(
-              children: [
-                SizedBox(height: 3.sp),
-                Text(
-                  'até o vencimento',
-                  style: GoogleFonts.poppins(
-                    color: const Color(0xFF495057),
-                    fontSize: 9.sp,
-                    fontWeight: FontWeight.w500,
+              Container(
+                width: isMobile ? 260.sp : 150.sp,
+                height: isMobile ? 28.sp : 30.sp,
+                margin: EdgeInsets.symmetric(horizontal: isMobile ? 8.sp : 0),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF8F9FA),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: const Color(0xFFE9ECEF),
                   ),
                 ),
-              ],
-            ),
-
-          // Lista de Apps selecionados
-          if (hasSelectedApps)
-            Container(
-              width: isMobile ? 260.sp : 190.sp,
-              height: isMobile ? 90.sp : 130.sp,
-              padding:
-                  EdgeInsets.symmetric(horizontal: isMobile ? 8.sp : 12.sp),
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: _selectedAppIndices.length,
-                itemBuilder: (context, index) {
-                  int appIndex = _selectedAppIndices[index];
-                  String appName = _beneficios[appIndex].name;
-
-                  return Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: isMobile ? 1.sp : 4.sp,
-                      horizontal: isMobile ? 0.sp : 8.sp,
+                child: Center(
+                  child: Text(
+                    isSpeedSelected
+                        ? '${(_planos[_selectedMegaIndex]['nome'] as String).replaceAll('MEGA', '').trim()} Megas'
+                        : 'Selecione um plano',
+                    style: GoogleFonts.poppins(
+                      color: isSpeedSelected
+                          ? const Color(0xFF495057)
+                          : const Color(0xFFADB5BD),
+                      fontSize: isMobile ? 10.sp : 10.sp,
+                      fontWeight: FontWeight.w500,
                     ),
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: isMobile ? 4.sp : 4.sp,
-                        vertical: isMobile ? 3.sp : 4.sp,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(
-                          color: const Color(0xFFE9ECEF),
+                  ),
+                ),
+              ),
+              SizedBox(height: isMobile ? 4.sp : 8.sp),
+              Container(
+                width: isMobile ? 260.sp : 150.sp,
+                height: isMobile ? 46.sp : 40.sp,
+                margin: EdgeInsets.symmetric(horizontal: isMobile ? 8.sp : 0),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF8F9FA),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: const Color(0xFFE9ECEF),
+                  ),
+                ),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: isMobile ? 4.sp : 6.sp),
+                        child: Text(
+                          'R\$',
+                          style: GoogleFonts.poppins(
+                            color: isSpeedSelected
+                                ? const Color(0xFF495057)
+                                : const Color(0xFFADB5BD),
+                            fontSize: isMobile ? 12.sp : 8.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              appName,
+                      SizedBox(width: 1.sp),
+                      Text(
+                        isSpeedSelected
+                            ? '${totalValue.toStringAsFixed(2).split('.')[0]}'
+                            : '--',
+                        style: GoogleFonts.poppins(
+                          color: isSpeedSelected
+                              ? const Color(0xFF212529)
+                              : const Color(0xFFADB5BD),
+                          fontSize: isMobile ? 28.sp : 19.sp,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      Transform.translate(
+                        offset: Offset(0, isMobile ? -3.sp : -1.sp),
+                        child: Text(
+                          isSpeedSelected
+                              ? ',${totalValue.toStringAsFixed(2).split('.')[1]}'
+                              : '',
+                          style: GoogleFonts.poppins(
+                            color: isSpeedSelected
+                                ? const Color(0xFF495057)
+                                : const Color(0xFFADB5BD),
+                            fontSize: isMobile ? 12.sp : 10.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      if (!isMobile && isSpeedSelected) ...[
+                        SizedBox(width: 2.sp),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'até o',
                               style: GoogleFonts.poppins(
-                                color: const Color(0xFF212529),
-                                fontSize: isMobile ? 9.sp : 8.sp,
-                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF495057),
+                                fontSize: 8.sp,
+                                fontWeight: FontWeight.w500,
                               ),
-                              overflow: TextOverflow.ellipsis,
                             ),
-                          ),
-                          IconButton(
-                            icon: const Icon(
-                              Icons.close,
-                              size: 18,
-                              color: Colors.red,
+                            Text(
+                              'vencimento',
+                              style: GoogleFonts.poppins(
+                                color: const Color(0xFF495057),
+                                fontSize: 8.sp,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
-                            onPressed: () {
-                              widget.onRemoveApp?.call(index);
-                              setState(() {
-                                _selectedAppIndices.removeAt(index);
-                              });
-                            },
-                          ),
-                        ],
+                          ],
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+              ),
+              if (isMobile && isSpeedSelected)
+                Column(
+                  children: [
+                    SizedBox(height: 3.sp),
+                    Text(
+                      'até o vencimento',
+                      style: GoogleFonts.poppins(
+                        color: const Color(0xFF495057),
+                        fontSize: 9.sp,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
-                  );
-                },
-              ),
-            ),
-
-          // Espaçamento antes dos botões
-          const Spacer(),
-
-          // Botões fixos no rodapé
+                  ],
+                ),
+              SizedBox(height: 10.sp),
+              if (hasSelectedApps)
+                Container(
+                  width: isMobile ? 260.sp : 190.sp,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: _selectedAppIndices.length,
+                    itemBuilder: (context, index) {
+                      int appIndex = _selectedAppIndices[index];
+                      String appName = _beneficios[appIndex].name;
+                      return Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: isMobile ? 1.sp : 4.sp,
+                          horizontal: isMobile ? 0.sp : 8.sp,
+                        ),
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: isMobile ? 4.sp : 4.sp,
+                            vertical: isMobile ? 3.sp : 4.sp,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: const Color(0xFFE9ECEF),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  appName,
+                                  style: GoogleFonts.poppins(
+                                    color: const Color(0xFF212529),
+                                    fontSize: isMobile ? 9.sp : 8.sp,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.close,
+                                  size: 18,
+                                  color: Colors.red,
+                                ),
+                                onPressed: () {
+                                  widget.onRemoveApp?.call(index);
+                                  setState(() {
+                                    _selectedAppIndices.removeAt(index);
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+            ],
+          ),
           Container(
             padding: EdgeInsets.symmetric(
               vertical: isMobile ? 10.sp : 8.sp,
@@ -1651,16 +1603,11 @@ class _ParaempresaState extends State<Paraempresa>
             ),
             child: Column(
               children: [
-                // Botão WhatsApp
                 Material(
                   color: Colors.transparent,
                   child: InkWell(
                     borderRadius: BorderRadius.circular(10.sp),
-                    onTap: isSpeedSelected
-                        ? () {
-                            _handleWhatsAppContact();
-                          }
-                        : null,
+                    onTap: isSpeedSelected ? _handleWhatsAppContact : null,
                     child: Opacity(
                       opacity: isSpeedSelected ? 1.0 : 0.6,
                       child: Container(
@@ -1709,16 +1656,12 @@ class _ParaempresaState extends State<Paraempresa>
                   ),
                 ),
                 SizedBox(height: isMobile ? 10.sp : 8.sp),
-
-                // Botão PDF
                 Material(
                   color: Colors.transparent,
                   child: InkWell(
                     borderRadius: BorderRadius.circular(10.sp),
                     onTap: isSpeedSelected
-                        ? () async {
-                            await _handlePdfGeneration();
-                          }
+                        ? () async => await _handlePdfGeneration()
                         : null,
                     child: Opacity(
                       opacity: isSpeedSelected ? 1.0 : 0.6,
@@ -1768,7 +1711,6 @@ class _ParaempresaState extends State<Paraempresa>
     );
   }
 
-// Métodos auxiliares
   void _handleWhatsAppContact() {
     if (_selectedMegaIndex == -1) return;
 
@@ -1778,9 +1720,9 @@ class _ParaempresaState extends State<Paraempresa>
 
     final message =
         'Olá, gostaria de contratar o plano ${selectedPlan['nome'].replaceAll('MEGA', '').trim()} MEGA '
-        'no valor de R\$ ${selectedPlan['valor']},99 '
+        'no valor de R\$ ${(_planos[_selectedMegaIndex]['valor'] as num).toDouble().toStringAsFixed(2).replaceAll('.', ',')} '
         '${_selectedAppIndices.isNotEmpty ? 'com os seguintes benefícios: $selectedApps' : 'sem benefícios adicionais'} '
-        '(Total: R\$ $totalValue,99)';
+        '(Total: R\$ ${totalValue.toStringAsFixed(2).replaceAll('.', ',')})';
 
     launchUrl(Uri.parse(
         "https://api.whatsapp.com/send?phone=+5594992600430&text=${Uri.encodeComponent(message)}"));
@@ -1796,7 +1738,7 @@ class _ParaempresaState extends State<Paraempresa>
 
       final combo = SelectedCombo(
         mega: selectedPlan['nome'].replaceAll('MEGA', '').trim(),
-        megaPrice: (selectedPlan['valor'] as num).toInt(),
+        megaPrice: (selectedPlan['valor'] as num).toDouble(),
         apps: selectedApps,
         total: totalValue,
         isVisible: true,
@@ -1884,8 +1826,8 @@ class _ParaempresaState extends State<Paraempresa>
 
     return Padding(
       padding: isMobile
-          ? EdgeInsetsGeometry.only()
-          : EdgeInsetsGeometry.only(left: 7, bottom: 5),
+          ? const EdgeInsets.only()
+          : const EdgeInsets.only(left: 7, bottom: 5),
       child: Icon(
         selected ? Icons.check_circle : Icons.radio_button_unchecked,
         color: selected ? const Color(0xFF228BE6) : const Color(0xFFADB5BD),
@@ -1910,7 +1852,7 @@ class _ParaempresaState extends State<Paraempresa>
     }
   }
 
-  void _showSpeedDetails(BuildContext context, String mega, int price) {
+  void _showSpeedDetails(BuildContext context, String mega, double price) {
     final isMobile = MediaQuery.of(context).size.width < 600;
     final plano = _planos.firstWhere(
       (plano) =>
@@ -1938,7 +1880,7 @@ class _ParaempresaState extends State<Paraempresa>
       builder: (BuildContext context) {
         return GestureDetector(
           behavior: HitTestBehavior.opaque,
-          onTap: () => Navigator.of(context).pop(), // Tocar fora = fechar
+          onTap: () => Navigator.of(context).pop(),
           child: Dialog(
             backgroundColor: Colors.transparent,
             insetPadding: EdgeInsets.symmetric(
@@ -1946,7 +1888,7 @@ class _ParaempresaState extends State<Paraempresa>
               vertical: isMobile ? 16 : 24,
             ),
             child: GestureDetector(
-              onTap: () {}, // Impede que clique dentro feche
+              onTap: () {},
               child: Center(
                 child: Container(
                   width: isMobile ? double.infinity : 380,
@@ -2070,7 +2012,7 @@ class _ParaempresaState extends State<Paraempresa>
                                   ),
                                 ),
                                 Text(
-                                  '$price',
+                                  price.toStringAsFixed(2).split('.')[0],
                                   style: GoogleFonts.poppins(
                                     fontSize: 20,
                                     fontWeight: FontWeight.w700,
@@ -2078,7 +2020,7 @@ class _ParaempresaState extends State<Paraempresa>
                                   ),
                                 ),
                                 Text(
-                                  ',99/mês',
+                                  ',${price.toStringAsFixed(2).split('.')[1]}/mês',
                                   style: GoogleFonts.poppins(
                                     fontSize: 13,
                                     fontWeight: FontWeight.w500,
@@ -2101,14 +2043,15 @@ class _ParaempresaState extends State<Paraempresa>
     );
   }
 
-  void _showBasicSpeedDetails(BuildContext context, String mega, int price) {
+  void _showBasicSpeedDetails(BuildContext context, String mega, double price) {
     showDialog(
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Internet ${mega}MEGA'),
-          content: Text('Velocidade de ${mega}Mbps\nValor: R\$$price,99/mês'),
+          content: Text(
+              'Velocidade de ${mega}Mbps\nValor: R\$${price.toStringAsFixed(2).replaceAll('.', ',')}/mês'),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),

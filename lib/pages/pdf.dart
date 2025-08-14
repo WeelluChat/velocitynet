@@ -1,11 +1,15 @@
 import 'dart:typed_data';
-import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:http/http.dart' as http;
-import 'package:flutter/foundation.dart';
-import 'package:velocity_net/modules/plans/repository/selectedapp.dart';
+import 'package:velocity_net/modules/plans/repository/selectedapp.dart'; // Certifique-se que este import está correto para o seu projeto
+
+// Função auxiliar para formatar os valores monetários, convertendo 109.99 para "109,99"
+String _formatCurrency(num value) {
+  return value.toStringAsFixed(2).replaceAll('.', ',');
+}
 
 Future<Uint8List> gerarPdfRelatorio(SelectedCombo combo) async {
   try {
@@ -25,18 +29,18 @@ Future<Uint8List> gerarPdfRelatorio(SelectedCombo combo) async {
       font: pw.Font.helveticaBold(),
       fontSize: 10,
     );
-    
+
     final normalStyle = pw.TextStyle(
       font: pw.Font.helvetica(),
       fontSize: 10,
     );
 
     // Carregamento do logo com fallback
-    pw.MemoryImage logoImage;
+    pw.MemoryImage? logoImage; // Use nullable type
     try {
       final response = await http.get(Uri.parse(
-        'https://cdn.melhorplano.net/backoffice/logos/98ad256e-d6b7-4934-8f2c-d874a6cc9514'
-      )).timeout(const Duration(seconds: 10));
+              'https://cdn.melhorplano.net/backoffice/logos/98ad256e-d6b7-4934-8f2c-d874a6cc9514'))
+          .timeout(const Duration(seconds: 10));
 
       if (response.statusCode == 200) {
         logoImage = pw.MemoryImage(response.bodyBytes);
@@ -44,100 +48,118 @@ Future<Uint8List> gerarPdfRelatorio(SelectedCombo combo) async {
         throw Exception('Falha ao carregar logo: Status ${response.statusCode}');
       }
     } catch (e) {
-      debugPrint('Erro ao carregar logo: $e');
-      // Fallback para logo local
-      final ByteData data = await rootBundle.load('assets/images/logo_fallback.png');
-      logoImage = pw.MemoryImage(data.buffer.asUint8List());
+      debugPrint('Erro ao carregar logo da web: $e. Usando logo local.');
     }
+    
+    // Fallback para logo local se o download falhar
+    if (logoImage == null) {
+       final ByteData data = await rootBundle.load('assets/images/logo_fallback.png'); // Verifique o caminho do seu logo local
+       logoImage = pw.MemoryImage(data.buffer.asUint8List());
+    }
+
 
     // Conteúdo do PDF
     pdf.addPage(
       pw.MultiPage(
-        margin: const pw.EdgeInsets.all(24),
+        pageTheme: pw.PageTheme( // CORREÇÃO APLICADA AQUI
+          margin: const pw.EdgeInsets.symmetric(horizontal: 40, vertical: 24),
+          orientation: pw.PageOrientation.portrait,
+        ),
         header: (pw.Context context) {
-          return pw.Center(
-            child: pw.Image(logoImage, height: 60),
+          return pw.Column(
+            children: [
+               pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                children: [
+                    pw.Image(logoImage!, height: 40),
+                    pw.Column(
+                      crossAxisAlignment: pw.CrossAxisAlignment.end,
+                      children: [
+                        pw.Text('AVENIDA B, 23 QUADRA 298 - CIDADE JARDIM', style: normalStyle.copyWith(fontSize: 8)),
+                        pw.Text('CEP: 68515-000 WhatsApp: (94) 991045810', style: normalStyle.copyWith(fontSize: 8)),
+                        pw.Text('E-mail: FIBRANOSSA@FIBRANOSSA.COM', style: normalStyle.copyWith(fontSize: 8)),
+                      ]
+                    )
+                ]
+              ),
+              pw.SizedBox(height: 20),
+            ]
           );
         },
         footer: (pw.Context context) {
-          return pw.Column(
-            children: [
-              pw.Divider(),
-              pw.Text(
-                'Página ${context.pageNumber} de ${context.pagesCount}',
-                style: normalStyle.copyWith(fontSize: 8),
-              ),
-            ],
-          );
+          // Adicione seu rodapé personalizado aqui se necessário
+          return pw.Container();
         },
         build: (pw.Context context) => [
-          pw.SizedBox(height: 12),
+          pw.SizedBox(height: 20),
           pw.Center(
             child: pw.Text(
-              'Resumo do Combo Selecionado',
+              'RESUMO DO COMBO SELECIONADO',
               style: boldStyle.copyWith(fontSize: 14),
             ),
           ),
-          pw.Divider(),
+          pw.SizedBox(height: 30),
 
           // Seção de Internet
           if (combo.mega.isNotEmpty)
             pw.Container(
-              padding: const pw.EdgeInsets.symmetric(vertical: 6),
               child: pw.Row(
                 mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                 children: [
                   pw.Text(
                     'Plano de Internet:',
-                    style: boldStyle.copyWith(color: PdfColors.blue800),
+                    style: boldStyle.copyWith(color: PdfColors.blue700, fontSize: 11),
                   ),
                   pw.Text(
-                    '${combo.mega} Megas - R\$ ${combo.megaPrice},99',
-                    style: normalStyle,
+                    '${combo.mega} Megas',
+                    style: boldStyle.copyWith(fontSize: 11),
                   ),
                 ],
               ),
             ),
+          pw.SizedBox(height: 20),
 
           // Seção de Apps
           if (combo.apps.isNotEmpty) ...[
-            pw.SizedBox(height: 8),
-            pw.Text(
-              'Apps/Streamings selecionados:',
-              style: boldStyle.copyWith(color: PdfColors.blue800),
+            pw.Align(
+              alignment: pw.Alignment.centerLeft,
+              child: pw.Text(
+                'Apps/Streamings selecionados:',
+                style: boldStyle.copyWith(color: PdfColors.blue700, fontSize: 11),
+              ),
             ),
-            pw.SizedBox(height: 4),
+            pw.SizedBox(height: 8),
             ...combo.apps.map((app) {
               return pw.Padding(
-                padding: const pw.EdgeInsets.symmetric(vertical: 2),
+                padding: const pw.EdgeInsets.only(left: 10, top: 2, bottom: 2),
                 child: pw.Row(
                   mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                   children: [
                     pw.Text('- ${app.name}', style: normalStyle),
-                    // pw.Text('R\$ ${app.price},99', style: normalStyle),
+                    // pw.Text('R\$ ${_formatCurrency(app.price)}', style: normalStyle),
                   ],
                 ),
               );
             }).toList(),
           ],
 
+          pw.SizedBox(height: 20),
+
           // Total
-          pw.SizedBox(height: 12),
-          pw.Divider(thickness: 1),
           pw.Row(
             mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
             children: [
               pw.Text(
                 'TOTAL MENSAL:',
                 style: boldStyle.copyWith(
-                  color: PdfColors.green900,
+                  color: PdfColors.black,
                   fontSize: 12,
                 ),
               ),
               pw.Text(
-                'R\$ ${combo.total},99',
+                'R\$ ${_formatCurrency(combo.total)}',
                 style: boldStyle.copyWith(
-                  color: PdfColors.green900,
+                  color: PdfColors.black,
                   fontSize: 12,
                 ),
               ),
@@ -145,20 +167,26 @@ Future<Uint8List> gerarPdfRelatorio(SelectedCombo combo) async {
           ),
 
           // Informações adicionais
-          pw.SizedBox(height: 20),
-          pw.Text(
-            'Informações de Pagamento',
-            style: boldStyle.copyWith(
-              fontSize: 11,
-              color: PdfColors.grey800,
+          pw.SizedBox(height: 40),
+          pw.Align(
+            alignment: pw.Alignment.centerLeft,
+            child: pw.Text(
+              'Informações de Pagamento:',
+              style: boldStyle.copyWith(
+                fontSize: 11,
+                color: PdfColors.grey800,
+              ),
             ),
           ),
           pw.SizedBox(height: 6),
-          pw.Text(
-            'O pagamento será realizado mensalmente conforme as opções disponíveis no ato da contratação.\n'
-            'Este documento é apenas um resumo do combo selecionado.\n\n'
-            'VelocityNet © ${DateTime.now().year} - Todos os direitos reservados.',
-            style: normalStyle,
+          pw.Align(
+            alignment: pw.Alignment.centerLeft,
+            child: pw.Text(
+              'O pagamento será realizado mensalmente conforme as opções disponíveis no '
+              'ato da contratação. Este documento é apenas um resumo do combo selecionado.\n\n'
+              'VelocityNet © ${DateTime.now().year} - Todos os direitos reservados.',
+              style: normalStyle.copyWith(color: PdfColors.grey700),
+            ),
           ),
         ],
       ),
@@ -166,7 +194,7 @@ Future<Uint8List> gerarPdfRelatorio(SelectedCombo combo) async {
 
     // Geração do PDF
     final Uint8List pdfBytes = await pdf.save();
-    
+
     // Validação do PDF gerado
     if (pdfBytes.isEmpty) {
       throw Exception('PDF gerado está vazio');
@@ -176,6 +204,7 @@ Future<Uint8List> gerarPdfRelatorio(SelectedCombo combo) async {
   } catch (e, stackTrace) {
     debugPrint('Erro ao gerar PDF: $e');
     debugPrint('Stack trace: $stackTrace');
+    // Em produção, você pode querer usar um sistema de logging mais robusto
     throw Exception('Não foi possível gerar o PDF: ${e.toString()}');
   }
 }

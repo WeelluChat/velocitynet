@@ -1,12 +1,14 @@
 class SelectedApp {
   final String name;
-  final double price; // <-- Alterado para double
+  final double price;
   final String image;
   final bool isVisible;
   final String id;
   final int minPlan;
   final String color;
   final List<String> benefitDetails;
+  final bool isMultiple;
+  final int quantity; // <-- Alterado para final
 
   SelectedApp({
     required this.name,
@@ -17,14 +19,22 @@ class SelectedApp {
     this.minPlan = 0,
     this.color = '',
     this.benefitDetails = const [],
+    this.isMultiple = false,
+    this.quantity = 1,
   });
 
+  // MÉTODO copyWith COMPLETAMENTE CORRIGIDO
   SelectedApp copyWith({
     String? name,
-    double? price, // <-- Alterado para double
+    double? price,
     String? image,
     bool? isVisible,
-    String? id, // <-- Adicionado id para o copyWith
+    String? id,
+    int? minPlan,
+    String? color,
+    List<String>? benefitDetails,
+    bool? isMultiple,
+    int? quantity,
   }) {
     return SelectedApp(
       name: name ?? this.name,
@@ -32,9 +42,11 @@ class SelectedApp {
       image: image ?? this.image,
       isVisible: isVisible ?? this.isVisible,
       id: id ?? this.id,
-      minPlan: minPlan, // <-- Adicionado para o copyWith
-      color: color, // <-- Adicionado para o copyWith
-      benefitDetails: benefitDetails, // <-- Adicionado para o copyWith
+      minPlan: minPlan ?? this.minPlan,
+      color: color ?? this.color,
+      benefitDetails: benefitDetails ?? this.benefitDetails,
+      isMultiple: isMultiple ?? this.isMultiple,
+      quantity: quantity ?? this.quantity,
     );
   }
 }

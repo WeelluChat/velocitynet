@@ -50,32 +50,24 @@ class _HomepagemobileState extends State<Homepagemobile> {
     });
   }
 
-  void _removeApp(int index) {
-    if (selectedCombo == null ||
-        selectedCombo!.apps.isEmpty ||
-        index >= selectedCombo!.apps.length) return;
+  void _removeApp(String appId) {
+  if (selectedCombo == null) return;
 
-    setState(() {
-      final apps = List<SelectedApp>.from(selectedCombo!.apps);
-      apps.removeAt(index);
+  setState(() {
+    final apps = List<SelectedApp>.from(selectedCombo!.apps);
+    // Remove o app pelo seu ID, não pelo índice
+    apps.removeWhere((app) => app.id == appId);
 
-      final newTotal = selectedCombo!.megaPrice +
+    // Recalcula o total...
+    final newTotal = selectedCombo!.megaPrice +
           apps.fold<double>(0, (sum, app) => sum + app.price);
 
-      selectedCombo = SelectedCombo(
-        mega: selectedCombo!.mega,
-        megaPrice: selectedCombo!.megaPrice,
-        apps: apps,
-        total: newTotal,
-        isVisible: selectedCombo!.isVisible,
-      );
+    // Atualiza o combo
+    selectedCombo = selectedCombo!.copyWith(apps: apps, total: newTotal);
 
-      showSummary = selectedCombo!.apps.isNotEmpty ||
-          (selectedCombo!.mega.isNotEmpty && selectedCombo!.mega != "");
-
-      _updateSelectedCombo(selectedCombo!);
-    });
-  }
+    showSummary = selectedCombo!.apps.isNotEmpty || selectedCombo!.mega.isNotEmpty;
+  });
+}
 
   void _removeInternet() {
     if (selectedCombo == null) return;
@@ -267,7 +259,7 @@ class _HomepagemobileState extends State<Homepagemobile> {
                                 ),
                                 GestureDetector(
                                   onTap: () => _removeApp(
-                                      selectedCombo!.apps.indexOf(app)),
+                                      selectedCombo!.apps.indexOf(app) as String),
                                   child: const Icon(Icons.close,
                                       color: Colors.redAccent, size: 18),
                                 ),

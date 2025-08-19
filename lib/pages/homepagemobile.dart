@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart'; // 👈 Adicione esta importação
+import 'package:intl/intl.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:url_launcher/url_launcher.dart';
@@ -24,7 +24,6 @@ const Color borderColor = Color(0xFFE0E0E0);
 const Color textColor = Color(0xFF1A237E);
 const Color disabledColor = Color(0xFFBDBDBD);
 
-// ✨ FUNÇÃO AUXILIAR PARA FORMATAR MOEDA
 String formatCurrency(double value) {
   final format = NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
   return format.format(value);
@@ -51,29 +50,26 @@ class _HomepagemobileState extends State<Homepagemobile> {
   }
 
   void _removeApp(String appId) {
-  if (selectedCombo == null) return;
+    if (selectedCombo == null) return;
 
-  setState(() {
-    final apps = List<SelectedApp>.from(selectedCombo!.apps);
-    // Remove o app pelo seu ID, não pelo índice
-    apps.removeWhere((app) => app.id == appId);
+    setState(() {
+      final apps = List<SelectedApp>.from(selectedCombo!.apps);
+      apps.removeWhere((app) => app.id == appId);
 
-    // Recalcula o total...
-    final newTotal = selectedCombo!.megaPrice +
-          apps.fold<double>(0, (sum, app) => sum + app.price);
+      final newTotal = selectedCombo!.megaPrice +
+          apps.fold<double>(0, (sum, app) => sum + (app.price * app.quantity));
 
-    // Atualiza o combo
-    selectedCombo = selectedCombo!.copyWith(apps: apps, total: newTotal);
+      selectedCombo = selectedCombo!.copyWith(apps: apps, total: newTotal);
 
-    showSummary = selectedCombo!.apps.isNotEmpty || selectedCombo!.mega.isNotEmpty;
-  });
-}
+      showSummary =
+          selectedCombo!.apps.isNotEmpty || selectedCombo!.mega.isNotEmpty;
+    });
+  }
 
   void _removeInternet() {
     if (selectedCombo == null) return;
 
     setState(() {
-      // Limpa internet e apps, zera total e fecha summary
       selectedCombo = SelectedCombo(
         mega: '',
         megaPrice: 0,
@@ -81,7 +77,6 @@ class _HomepagemobileState extends State<Homepagemobile> {
         total: 0,
         isVisible: false,
       );
-
       showSummary = false;
     });
   }
@@ -127,7 +122,7 @@ class _HomepagemobileState extends State<Homepagemobile> {
                     ),
                     const SizedBox(height: 40),
                     DefaultTabController(
-                      length: 1, // Ajustado para 1, pois só há uma aba visível
+                      length: 1,
                       child: Column(
                         children: [
                           SizedBox(
@@ -208,7 +203,6 @@ class _HomepagemobileState extends State<Homepagemobile> {
                           ),
                         ),
                         Text(
-                          // ✨ CORREÇÃO APLICADA AQUI
                           formatCurrency(selectedCombo!.megaPrice),
                           style: GoogleFonts.poppins(
                             fontSize: 15,
@@ -258,8 +252,8 @@ class _HomepagemobileState extends State<Homepagemobile> {
                                   ),
                                 ),
                                 GestureDetector(
-                                  onTap: () => _removeApp(
-                                      selectedCombo!.apps.indexOf(app) as String),
+                                  // ✨ CORREÇÃO AQUI: Passando app.id (String) em vez de um índice (int).
+                                  onTap: () => _removeApp(app.id),
                                   child: const Icon(Icons.close,
                                       color: Colors.redAccent, size: 18),
                                 ),
@@ -288,7 +282,6 @@ class _HomepagemobileState extends State<Homepagemobile> {
                             ),
                           ),
                           Text(
-                            // ✨ CORREÇÃO APLICADA AQUI
                             formatCurrency(selectedCombo!.total),
                             style: GoogleFonts.poppins(
                               fontSize: 15,
@@ -304,7 +297,6 @@ class _HomepagemobileState extends State<Homepagemobile> {
                 Row(
                   children: [
                     Expanded(
-                      // Botão expandido para ocupar mais espaço
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF25D366),
@@ -343,7 +335,6 @@ class _HomepagemobileState extends State<Homepagemobile> {
                     ),
                     const SizedBox(width: 8),
                     ElevatedButton(
-                      // Botão PDF com largura fixa
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.black,
                         padding: const EdgeInsets.symmetric(

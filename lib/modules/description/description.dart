@@ -71,7 +71,10 @@ class _DescrptionState extends State<Descrption> {
                 child: Container(
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
-                      colors: [Color(0xFF0C2D5B), Color.fromARGB(255, 14, 57, 121)],
+                      colors: [
+                        Color(0xFF0C2D5B),
+                        Color.fromARGB(255, 14, 57, 121)
+                      ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),

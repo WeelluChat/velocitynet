@@ -8,7 +8,8 @@ class SelectedApp {
   final String color;
   final List<String> benefitDetails;
   final bool isMultiple;
-  final int quantity; // <-- Alterado para final
+  final bool incluso; // ✅ ADICIONADO: Novo campo 'incluso'
+  final int quantity;
 
   SelectedApp({
     required this.name,
@@ -20,10 +21,10 @@ class SelectedApp {
     this.color = '',
     this.benefitDetails = const [],
     this.isMultiple = false,
+    this.incluso = false,
     this.quantity = 1,
   });
 
-  // MÉTODO copyWith COMPLETAMENTE CORRIGIDO
   SelectedApp copyWith({
     String? name,
     double? price,
@@ -34,6 +35,7 @@ class SelectedApp {
     String? color,
     List<String>? benefitDetails,
     bool? isMultiple,
+    bool? incluso,
     int? quantity,
   }) {
     return SelectedApp(
@@ -46,6 +48,7 @@ class SelectedApp {
       color: color ?? this.color,
       benefitDetails: benefitDetails ?? this.benefitDetails,
       isMultiple: isMultiple ?? this.isMultiple,
+      incluso: incluso ?? this.incluso,
       quantity: quantity ?? this.quantity,
     );
   }
@@ -53,9 +56,9 @@ class SelectedApp {
 
 class SelectedCombo {
   final String mega;
-  final double megaPrice; // <-- Alterado para double
+  final double megaPrice;
   final List<SelectedApp> apps;
-  final double total; // <-- Alterado para double
+  final double total;
   final bool isVisible;
 
   SelectedCombo({
@@ -68,9 +71,9 @@ class SelectedCombo {
 
   SelectedCombo copyWith({
     String? mega,
-    double? megaPrice, // <-- Alterado para double
+    double? megaPrice,
     List<SelectedApp>? apps,
-    double? total, // <-- Alterado para double
+    double? total,
     bool? isVisible,
   }) {
     return SelectedCombo(

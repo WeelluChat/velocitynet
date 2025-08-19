@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart'; 
 
 class CardModel {
   final String title;
@@ -12,26 +13,21 @@ class CardModel {
   });
 
   factory CardModel.fromJson(Map<String, dynamic> json) {
-    final Map<String, IconData> iconMappings = {
-      "Icons.wifi_rounded": Icons.wifi_rounded,
-      "Icons.connected_tv": Icons.connected_tv,
-      "Icons.router_outlined": Icons.router_outlined,
-      "Icons.construction": Icons.construction,
-      "Icons.groups": Icons.groups,
-    };
+    IconData iconData = PhosphorIcons.question; 
 
-    IconData iconData = Icons.error;
-
-    if (json.containsKey('logo')) {
-      final String logoString = json['logo'];
-      if (iconMappings.containsKey(logoString)) {
-        iconData = iconMappings[logoString]!;
-      }
+    if (json['logo'] is num) {
+      final int codePoint = (json['logo'] as num).toInt();
+      
+      iconData = IconData(
+        codePoint,
+        fontFamily: 'Phosphor',
+        fontPackage: 'flutter_phosphor_icons',
+      );
     }
 
     return CardModel(
-      title: json['name'],
-      description: json['description'],
+      title: json['name'] ?? 'Título Indisponível',
+      description: json['description'] ?? 'Descrição Indisponível',
       icon: iconData,
     );
   }

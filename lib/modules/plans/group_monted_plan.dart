@@ -1,4 +1,3 @@
-import 'package:brasil_fields/brasil_fields.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -562,7 +561,6 @@ class _GroupMontedPlanState extends State<GroupMontedPlan> {
                           keyboardType: TextInputType.number,
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
-                            TelefoneInputFormatter()
                           ],
                           decoration: const InputDecoration(
                             border: InputBorder.none,

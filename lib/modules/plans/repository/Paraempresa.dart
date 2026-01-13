@@ -1085,16 +1085,6 @@ class _ParaempresaState extends State<Paraempresa>
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
-                                TextSpan(
-                                  text: 'até o vencimento',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: isMobile ? 8.sp : 9.sp,
-                                    fontWeight: FontWeight.w300,
-                                    color:
-                                        const Color.fromARGB(255, 88, 88, 88),
-                                    height: 1.0,
-                                  ),
-                                ),
                               ],
                             ),
                           ),

@@ -119,8 +119,6 @@ class _FooterState extends State<Footer> {
           const SizedBox(height: 25),
           _buildContactInfo(label: 'Financeiro', number: '+55 (94) 99104-5810'),
           const SizedBox(height: 15),
-          _buildContactInfo(label: 'WhatsApp', number: '+55 (94) 99260-0430'),
-          const SizedBox(height: 15),
           _buildContactInfo(label: 'Ligação', number: '+55 (94) 99132-6169'),
           const SizedBox(height: 25),
           Text(
